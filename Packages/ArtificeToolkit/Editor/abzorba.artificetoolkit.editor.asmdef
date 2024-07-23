@@ -1,0 +1,16 @@
+{
+    "name": "abzorba.artificetoolkit.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:89234c23c57a3b24fb4f43ae81befb91"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
