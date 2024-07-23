@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_VisualElements;
 using UnityEditor;
 using UnityEngine;
@@ -10,14 +10,14 @@ using UnityEngine.UIElements;
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ButtonAttribute
 {
     [Serializable]
-    [Artifice_CustomAttributeDrawer(typeof(Abz_ButtonAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(ButtonAttribute))]
     public class Artifice_CustomAttributeDrawer_ButtonAttribute : Artifice_CustomAttributeDrawer
     {
         public override bool IsReplacingPropertyField { get; } = true;
 
         public override VisualElement OnPropertyGUI(SerializedProperty property)
         {
-            var attribute = (Abz_ButtonAttribute)Attribute;
+            var attribute = (ButtonAttribute)Attribute;
 
             // Get reference to target object.
             // If property does not have a SerializedProperty parent, its parent is the serializedObject
@@ -61,7 +61,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
 
         private List<object> GetParameterList(SerializedProperty property)
         {
-            var attribute = (Abz_ButtonAttribute)Attribute;
+            var attribute = (ButtonAttribute)Attribute;
             var parametersList = new List<object>();
             
             // Iterate and find parameters

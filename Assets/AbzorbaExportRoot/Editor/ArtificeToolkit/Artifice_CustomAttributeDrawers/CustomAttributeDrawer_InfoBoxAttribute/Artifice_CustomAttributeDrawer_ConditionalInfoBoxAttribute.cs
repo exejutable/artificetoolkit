@@ -1,5 +1,5 @@
 using System.Linq;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -7,12 +7,12 @@ using UnityEngine.UIElements;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_InfoBoxAttribute
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_ConditionalInfoBoxAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(ConditionalInfoBoxAttribute))]
     public class Artifice_CustomAttributeDrawer_ConditionalInfoBoxAttribute : Artifice_CustomAttributeDrawer_InfoBoxAttribute
     {
         #region FIELDS
 
-        private Abz_ConditionalInfoBoxAttribute _attribute;
+        private ConditionalInfoBoxAttribute _attribute;
         private SerializedProperty _trackedProperty;
         private VisualElement _infoBoxElem;
         
@@ -22,7 +22,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
         {
             var wrapper = new VisualElement();
             
-            _attribute = (Abz_ConditionalInfoBoxAttribute)Attribute;
+            _attribute = (ConditionalInfoBoxAttribute)Attribute;
             
             // Set Data tracked property
             _trackedProperty = property.FindPropertyInSameScope(_attribute.PropertyName);

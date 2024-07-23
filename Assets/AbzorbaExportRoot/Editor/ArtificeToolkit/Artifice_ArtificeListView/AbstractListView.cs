@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_UIBuilder;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_VisualElements;
 using DG.DemiEditor;
@@ -49,7 +49,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.AbzEditor_ArtificeListView
         
         #region FIELDS
         
-        protected List<Abz_CustomAttribute> ChildrenInjectedCustomAttributes = new List<Abz_CustomAttribute>();
+        protected List<CustomAttribute> ChildrenInjectedCustomAttributes = new List<CustomAttribute>();
         
         protected readonly ArtificeDrawer ArtificeDrawer = new();
         private readonly AbzSlot_Editor_UIBuilder _uiBuilder = new AbzSlot_Editor_UIBuilder();
@@ -598,7 +598,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.AbzEditor_ArtificeListView
         
         #region Utility
         
-        public void SetChildrenInjectedCustomAttributes(List<Abz_CustomAttribute> childrenInjectedCustomAttributes)
+        public void SetChildrenInjectedCustomAttributes(List<CustomAttribute> childrenInjectedCustomAttributes)
         {
             ChildrenInjectedCustomAttributes = childrenInjectedCustomAttributes;
         }

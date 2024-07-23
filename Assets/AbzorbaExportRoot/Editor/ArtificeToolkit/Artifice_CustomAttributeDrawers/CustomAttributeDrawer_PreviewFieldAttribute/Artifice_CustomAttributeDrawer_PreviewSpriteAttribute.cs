@@ -1,4 +1,4 @@
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_PreviewFieldAttribute
 {
-    /// <summary> Custom drawer for <see cref="Abz_PreviewSpriteAttribute"/> attribute. </summary>
-    [Artifice_CustomAttributeDrawer(typeof(Abz_PreviewSpriteAttribute))]
+    /// <summary> Custom drawer for <see cref="PreviewSpriteAttribute"/> attribute. </summary>
+    [Artifice_CustomAttributeDrawer(typeof(PreviewSpriteAttribute))]
     public class Artifice_CustomAttributeDrawer_PreviewSpriteAttribute : Artifice_CustomAttributeDrawer
     {
         #region FIELDS
@@ -19,7 +19,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
         
         public override VisualElement OnPostPropertyGUI(SerializedProperty property)
         {
-            var attribute = (Abz_PreviewSpriteAttribute)Attribute;
+            var attribute = (PreviewSpriteAttribute)Attribute;
             _property = property;
             _property.serializedObject.Update();
             
@@ -51,7 +51,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
             image.TrackPropertyValue(property, _ => UpdateImageView());
             
             // Set image dimensions based on attribute
-            var attribute = (Abz_PreviewSpriteAttribute)Attribute;
+            var attribute = (PreviewSpriteAttribute)Attribute;
             image.style.width = attribute.Width;
             image.style.height = attribute.Height;
 

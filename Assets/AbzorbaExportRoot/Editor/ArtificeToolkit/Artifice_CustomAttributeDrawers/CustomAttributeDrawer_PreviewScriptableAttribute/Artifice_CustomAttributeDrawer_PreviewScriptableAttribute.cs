@@ -1,4 +1,4 @@
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CommonResources;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_VisualElements;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_VisualElements.AbzEditor_VisualElement_InfoBox;
@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_PreviewScriptableAttribute
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_PreviewScriptableAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(PreviewScriptableAttribute))]
     public class Artifice_CustomAttributeDrawer_PreviewScriptableAttribute : Artifice_CustomAttributeDrawer, IArtificePersistence
     {
         private VisualElement _wrapper;

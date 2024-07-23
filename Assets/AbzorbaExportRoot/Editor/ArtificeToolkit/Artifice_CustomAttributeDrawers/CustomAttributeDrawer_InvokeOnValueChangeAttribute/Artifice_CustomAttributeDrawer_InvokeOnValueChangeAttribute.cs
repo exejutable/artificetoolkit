@@ -1,16 +1,16 @@
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_InvokeOnValueChangeAttribute
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_InvokeOnValueChangeAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(InvokeOnValueChangeAttribute))]
     public class Artifice_CustomAttributeDrawer_InvokeOnValueChangeAttribute : Artifice_CustomAttributeDrawer
     {
         public override void OnPropertyBoundGUI(SerializedProperty property, VisualElement propertyField)
         {
-            var attribute = (Abz_InvokeOnValueChangeAttribute)Attribute;
+            var attribute = (InvokeOnValueChangeAttribute)Attribute;
             
             var tracker = new VisualElement();
             propertyField.Add(tracker);

@@ -1,17 +1,17 @@
 using System;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_TabGroupAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(TabGroupAttribute))]
     public class Artifice_CustomAttributeDrawer_TabGroupAttribute : Artifice_CustomAttributeDrawer_GroupAttribute
     {
         protected override Type VisualElementType { get; } = typeof(Artifice_VisualElement_TabGroup);
 
         protected override Artifice_VisualElement_Group CreateOrGetContainer(SerializedProperty property)
         {
-            var attribute = (Abz_TabGroupAttribute)Attribute;
+            var attribute = (TabGroupAttribute)Attribute;
 
             var groupTuple = Artifice_CustomAttributeUtility_GroupsHolder.Instance.Get(property, attribute.GroupName, VisualElementType);
             

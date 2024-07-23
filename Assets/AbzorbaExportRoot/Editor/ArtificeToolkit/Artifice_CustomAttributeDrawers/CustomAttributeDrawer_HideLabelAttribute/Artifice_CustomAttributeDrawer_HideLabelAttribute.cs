@@ -1,10 +1,10 @@
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_HideLabelAttribute
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_HideLabelAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(HideLabelAttribute))]
     public class Artifice_CustomAttributeDrawer_HideLabelAttribute : Artifice_CustomAttributeDrawer
     {
         public override void OnPropertyBoundGUI(SerializedProperty property, VisualElement propertyField)

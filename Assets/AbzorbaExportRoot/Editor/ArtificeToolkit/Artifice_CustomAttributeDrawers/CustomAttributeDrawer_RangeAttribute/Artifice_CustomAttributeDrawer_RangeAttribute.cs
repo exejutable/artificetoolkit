@@ -1,13 +1,13 @@
 using System;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using RangeAttribute = AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes.RangeAttribute;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_RangeAttribute
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_RangeAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(RangeAttribute))]
     public class Artifice_CustomAttributeDrawer_RangeAttribute : Artifice_CustomAttributeDrawer
     {
         public override bool IsReplacingPropertyField { get; } = true;
@@ -15,7 +15,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
         public override VisualElement OnPropertyGUI(SerializedProperty property)
         {
             // Cast attribute
-            var attribute = (Abz_RangeAttribute)Attribute;
+            var attribute = (RangeAttribute)Attribute;
 
             var container = new VisualElement();
             container.styleSheets.Add(Artifice_Utilities.GetStyle(GetType()));
@@ -60,7 +60,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
 
         private void OnPropertyValueChange(SerializedProperty property)
         {
-            var attribute = (Abz_RangeAttribute)Attribute;
+            var attribute = (RangeAttribute)Attribute;
             
             property.serializedObject.Update();
             

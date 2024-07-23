@@ -1,10 +1,10 @@
 using System;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEngine;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers
 {
-    /// <summary> This attribute marks specific classes as drawers for <see cref="Abz_CustomAttribute"/> </summary>
+    /// <summary> This attribute marks specific classes as drawers for <see cref="CustomAttribute"/> </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class Artifice_CustomAttributeDrawerAttribute : PropertyAttribute
     {

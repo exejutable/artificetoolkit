@@ -1,5 +1,5 @@
 using System.Linq;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -7,13 +7,13 @@ using UnityEngine.UIElements;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_EnableIfAttribute
 {
-    /// <summary> Custom VisualAttribute drawer for <see cref="Abz_EnableIfAttribute"/> </summary>
-    [Artifice_CustomAttributeDrawer(typeof(Abz_EnableIfAttribute))]
+    /// <summary> Custom VisualAttribute drawer for <see cref="EnableIfAttribute"/> </summary>
+    [Artifice_CustomAttributeDrawer(typeof(EnableIfAttribute))]
     public class Artifice_CustomAttributeDrawer_EnableIfAttribute : Artifice_CustomAttributeDrawer
     {
         #region FIELDS
 
-        private Abz_EnableIfAttribute _attribute;
+        private EnableIfAttribute _attribute;
         private SerializedProperty _trackedProperty;
         private VisualElement _targetElem;
        
@@ -23,7 +23,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
         // Note: This logic was initially executed in OnWrapGUI, but it causes PropertyBinding errors on list additions/removals.
         public override void OnPropertyBoundGUI(SerializedProperty property, VisualElement propertyField)
         {
-            _attribute = (Abz_EnableIfAttribute)Attribute;
+            _attribute = (EnableIfAttribute)Attribute;
             
             // Set Data tracked property
             _trackedProperty = property.FindPropertyInSameScope(_attribute.PropertyName);

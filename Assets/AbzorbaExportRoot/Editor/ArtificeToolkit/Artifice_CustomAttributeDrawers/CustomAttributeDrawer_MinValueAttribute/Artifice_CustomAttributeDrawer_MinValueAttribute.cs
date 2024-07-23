@@ -1,5 +1,5 @@
 using System;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_MinValueAttribute
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_MinValueAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(MinValueAttribute))]
     public class Artifice_CustomAttributeDrawer_MinValueAttribute : Artifice_CustomAttributeDrawer
     {
         public override VisualElement OnPrePropertyGUI(SerializedProperty property)
@@ -19,7 +19,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
 
         private void OnValueChanged(SerializedProperty property)
         {
-            var attribute = (Abz_MinValueAttribute)Attribute;
+            var attribute = (MinValueAttribute)Attribute;
             
             property.serializedObject.Update();
             

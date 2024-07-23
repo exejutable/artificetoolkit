@@ -1,11 +1,11 @@
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CommonResources;
 using UnityEditor;
 using UnityEngine;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_RequiredAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(RequiredAttribute))]
     public class Artifice_CustomAttributeDrawer_RequiredAttribute : Artifice_CustomAttributeDrawer_Validator_BASE
     {
         public override string LogMessage { get; } = "Property is required.";

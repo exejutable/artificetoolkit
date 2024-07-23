@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.AbzEditor_ArtificeListView;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_ArtificeListView;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_ArtificeListView.ArtificeTableListView;
@@ -12,6 +12,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using ListView = AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_ArtificeListView.ListView;
+using SpaceAttribute = AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes.SpaceAttribute;
 
 // ReSharper disable GCSuppressFinalizeForTypeWithoutDestructor
 // ReSharper disable CanSimplifyDictionaryLookupWithTryGetValue
@@ -57,18 +58,18 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit
         {
             ArrayAppliedCustomAttributes = new HashSet<Type>
             {
-                typeof(Abz_BoxGroupAttribute),
-                typeof(Abz_HorizontalGroupAttribute),
-                typeof(Abz_VerticalGroupAttribute),
-                typeof(Abz_FoldoutGroupAttribute),
-                typeof(Abz_TabGroupAttribute),
-                typeof(Abz_EnableIfAttribute),
-                typeof(Abz_InvokeOnValueChangeAttribute), 
-                typeof(Abz_SpaceAttribute), 
-                typeof(Abz_TitleAttribute), 
-                typeof(Abz_HideLabelAttribute),
-                typeof(Abz_InfoBoxAttribute), 
-                typeof(Abz_ConditionalInfoBoxAttribute) 
+                typeof(BoxGroupAttribute),
+                typeof(HorizontalGroupAttribute),
+                typeof(VerticalGroupAttribute),
+                typeof(FoldoutGroupAttribute),
+                typeof(TabGroupAttribute),
+                typeof(EnableIfAttribute),
+                typeof(InvokeOnValueChangeAttribute), 
+                typeof(SpaceAttribute), 
+                typeof(TitleAttribute), 
+                typeof(HideLabelAttribute),
+                typeof(InfoBoxAttribute), 
+                typeof(ConditionalInfoBoxAttribute) 
             };
 
             PropertyIgnoreSet = new HashSet<string>()
@@ -194,7 +195,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit
                     SplitCustomPropertiesForArrays(property, out var arrayCustomAttributes, out var childrenCustomAttributes);
                     
                     // Check whether it should be drawn with table list
-                    var isTableList = property.GetAttributes().Any(attribute => attribute.GetType() == typeof(Abz_TableListAttribute));
+                    var isTableList = property.GetAttributes().Any(attribute => attribute.GetType() == typeof(TableListAttribute));
                         
                     // Spawn either ListView or TableView
                     var listView = isTableList ? (AbstractListView)new TableListView() : new ListView();
@@ -234,7 +235,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit
             return container;
         }
         
-        /// <summary> Uses <see cref="Abz_CustomAttribute"/> and <see cref="Artifice_CustomAttributeDrawer"/> to change how the parameterized <see cref="VisualElement"/> will look like using the property's custom attributes. </summary>
+        /// <summary> Uses <see cref="CustomAttribute"/> and <see cref="Artifice_CustomAttributeDrawer"/> to change how the parameterized <see cref="VisualElement"/> will look like using the property's custom attributes. </summary>
         public VisualElement CreateCustomAttributesGUI(SerializedProperty property, VisualElement propertyField)
         {
             var customAttributes = property.GetCustomAttributes();
@@ -244,8 +245,8 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit
             return CreateCustomAttributesGUI(property, propertyField, customAttributes.ToList());
         }
         
-        /// <summary> Uses <see cref="Abz_CustomAttribute"/> and <see cref="Artifice_CustomAttributeDrawer"/> to change how the parameterized <see cref="VisualElement"/> will look like with any parameterized custom attributes. </summary>
-        public VisualElement CreateCustomAttributesGUI(SerializedProperty property, VisualElement propertyField, List<Abz_CustomAttribute> customAttributes)
+        /// <summary> Uses <see cref="CustomAttribute"/> and <see cref="Artifice_CustomAttributeDrawer"/> to change how the parameterized <see cref="VisualElement"/> will look like with any parameterized custom attributes. </summary>
+        public VisualElement CreateCustomAttributesGUI(SerializedProperty property, VisualElement propertyField, List<CustomAttribute> customAttributes)
         {
             var attributeDrawers = new List<Artifice_CustomAttributeDrawer>();
             foreach (var customAttribute in customAttributes)
@@ -366,7 +367,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit
             return serializedObject.GetIterator().GetVisibleChildren().Any(property => IsUsingCustomAttributes(property) || DoChildrenUseCustomAttributes(property));
         }
         
-        /// <summary> Returns true if the property is directly using any <see cref="Abz_CustomAttribute"/> </summary>
+        /// <summary> Returns true if the property is directly using any <see cref="CustomAttribute"/> </summary>
         private bool IsUsingCustomAttributes(SerializedProperty property)
         {
             if (_isUsingCustomAttributesCache.ContainsKey(property))
@@ -378,7 +379,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit
             return _isUsingCustomAttributesCache[property];
         }
 
-        /// <summary> Returns true if any nested child is using any <see cref="Abz_CustomAttribute"/> </summary>
+        /// <summary> Returns true if any nested child is using any <see cref="CustomAttribute"/> </summary>
         private bool DoChildrenUseCustomAttributes(SerializedProperty property)
         {
             if (_doChildrenUseCustomAttributesCache.ContainsKey(property))
@@ -423,7 +424,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit
             return false;
         }
         
-        /// <summary> Returns true if any nested field is using any <see cref="Abz_CustomAttribute"/> </summary>
+        /// <summary> Returns true if any nested field is using any <see cref="CustomAttribute"/> </summary>
         private bool DoChildrenOfTypeUseCustomAttributes(Type type)
         {
             // Create  queue and already-searched structures for BFS
@@ -456,12 +457,12 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit
             return false;
         }
         
-        /// <summary> Some <see cref="Abz_CustomAttribute"/> on lists are meant to be passed along its children, instead of the list it self. This method splits them and provides them as out parameters. </summary>
-        private void SplitCustomPropertiesForArrays(SerializedProperty property, out List<Abz_CustomAttribute> arrayCustomAttributes, out List<Abz_CustomAttribute> childrenCustomAttributes)
+        /// <summary> Some <see cref="CustomAttribute"/> on lists are meant to be passed along its children, instead of the list it self. This method splits them and provides them as out parameters. </summary>
+        private void SplitCustomPropertiesForArrays(SerializedProperty property, out List<CustomAttribute> arrayCustomAttributes, out List<CustomAttribute> childrenCustomAttributes)
         {
             // Create new lists
-            arrayCustomAttributes = new List<Abz_CustomAttribute>();
-            childrenCustomAttributes = new List<Abz_CustomAttribute>();
+            arrayCustomAttributes = new List<CustomAttribute>();
+            childrenCustomAttributes = new List<CustomAttribute>();
             
             // Get property attributes and parse-split them
             var attributes = property.GetCustomAttributes();

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -22,7 +22,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_StylesHolder
     {
         public string categoryName;
         
-        [Abz_Title("Data")]
+        [Title("Data")]
         public List<StyleData> styleData;
     }
 

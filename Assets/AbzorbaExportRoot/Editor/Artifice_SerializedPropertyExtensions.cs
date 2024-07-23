@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -148,28 +148,28 @@ namespace AbzorbaExportRoot.Editor
             }
         }
         
-        /// <summary> Returns an array of any <see cref="Abz_CustomAttribute"/> found in the property. Otherwise returns null. </summary>
+        /// <summary> Returns an array of any <see cref="CustomAttribute"/> found in the property. Otherwise returns null. </summary>
         public static Attribute[] GetAttributes(this SerializedProperty property)
         {
             var fieldInfo = GetFieldNested(property.serializedObject.targetObject, property.propertyPath);
 
             if (fieldInfo != null)
             {
-                // var attributes = (Abz_CustomAttribute[])fieldInfo.GetCustomAttributes(typeof(Abz_CustomAttribute), true);
+                // var attributes = (CustomAttribute[])fieldInfo.GetCustomAttributes(typeof(CustomAttribute), true);
                 return (Attribute[])fieldInfo.GetCustomAttributes(true);
             }
 
             return null;
         }
         
-        /// <summary> Returns an array of any <see cref="Abz_CustomAttribute"/> found in the property. Otherwise returns null. </summary>
-        public static Abz_CustomAttribute[] GetCustomAttributes(this SerializedProperty property)
+        /// <summary> Returns an array of any <see cref="CustomAttribute"/> found in the property. Otherwise returns null. </summary>
+        public static CustomAttribute[] GetCustomAttributes(this SerializedProperty property)
         {
             var fieldInfo = GetFieldNested(property.serializedObject.targetObject, property.propertyPath);
 
             if (fieldInfo != null)
             {
-                var attributes = (Abz_CustomAttribute[])fieldInfo.GetCustomAttributes(typeof(Abz_CustomAttribute), true);
+                var attributes = (CustomAttribute[])fieldInfo.GetCustomAttributes(typeof(CustomAttribute), true);
                 return attributes;
             }
 

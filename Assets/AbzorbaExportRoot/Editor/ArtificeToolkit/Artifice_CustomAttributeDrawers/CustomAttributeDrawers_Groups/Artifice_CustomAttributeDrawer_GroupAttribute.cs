@@ -1,11 +1,11 @@
 using System;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_GroupAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(GroupAttribute))]
     public abstract class Artifice_CustomAttributeDrawer_GroupAttribute : Artifice_CustomAttributeDrawer
     {
         protected virtual Type VisualElementType { get; } = null;
@@ -27,7 +27,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
             // Axiom: VisualElement root will use the name of propertyPath. On any build, this ensures to have unique copies only! 
             if (groupContainer.Query<VisualElement>(name: property.propertyPath).First() == null)
             {
-                groupContainer.name = ((Abz_GroupAttribute)Attribute).GroupName;
+                groupContainer.name = ((GroupAttribute)Attribute).GroupName;
                 root.AddToClassList("group-child");
                 groupContainer.Add(root);
             }
@@ -38,7 +38,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
         /* Inherited methods should override this to return the instance of their own reflected VisualElement type. */
         protected virtual Artifice_VisualElement_Group CreateOrGetContainer(SerializedProperty property)
         {
-            var attribute = (Abz_GroupAttribute)Attribute;
+            var attribute = (GroupAttribute)Attribute;
             var groupTuple = Artifice_CustomAttributeUtility_GroupsHolder.Instance.Get(property, attribute.GroupName, VisualElementType);
             groupTuple.lastElem.LoadPersistedData();
             groupTuple.lastElem.SetGroupColor(attribute.GroupColor);

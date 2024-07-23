@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_VisualElements;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -9,8 +9,8 @@ using UnityEngine.UIElements;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_EnumToggleAttribute
 {
-    /// <summary> Custom VisualAttribute drawer for <see cref="Abz_EnumToggleAttribute"/> </summary>
-    [Artifice_CustomAttributeDrawer(typeof(Abz_EnumToggleAttribute))]
+    /// <summary> Custom VisualAttribute drawer for <see cref="EnumToggleAttribute"/> </summary>
+    [Artifice_CustomAttributeDrawer(typeof(EnumToggleAttribute))]
     public class Artifice_CustomAttributeDrawer_EnumToggleAttribute : Artifice_CustomAttributeDrawer
     {
         #region FIELDS
@@ -20,7 +20,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
         private readonly Dictionary<object, AbzSlotEditor_LabeledButtonState> _buttonStateMap = new Dictionary<object, AbzSlotEditor_LabeledButtonState>();
 
         private SerializedProperty _property;
-        private Abz_EnumToggleAttribute _attribute;
+        private EnumToggleAttribute _attribute;
         private bool _useFlags;
         private int _intForAllFlags;
         private bool _disposed;
@@ -58,7 +58,7 @@ namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawe
         public override VisualElement OnPropertyGUI(SerializedProperty property)
         {
             _property = property;
-            _attribute = (Abz_EnumToggleAttribute)Attribute;
+            _attribute = (EnumToggleAttribute)Attribute;
             InitializeIntForAllFlags();
             DetectAndUpdateUseFlags();
 

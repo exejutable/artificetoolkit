@@ -1,11 +1,11 @@
-using AbzorbaExportRoot.CommonLibrariesAndResources.AbzorbaCustomAttributes;
+using AbzorbaExportRoot.CommonLibrariesAndResources.ArtificeAttributes;
 using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CommonResources;
 using UnityEditor;
 using UnityEngine;
 
 namespace AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
 {
-    [Artifice_CustomAttributeDrawer(typeof(Abz_AssetsOnlyAttribute))]
+    [Artifice_CustomAttributeDrawer(typeof(AssetsOnlyAttribute))]
     public class Artifice_CustomAttributeDrawer_AssetsOnlyAttribute : Artifice_CustomAttributeDrawer_Validator_BASE
     {
         public override string LogMessage { get; } = "Property must be an Asset";
