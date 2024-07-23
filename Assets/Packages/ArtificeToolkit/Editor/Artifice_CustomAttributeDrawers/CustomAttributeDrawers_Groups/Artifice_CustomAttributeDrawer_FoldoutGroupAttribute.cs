@@ -1,0 +1,12 @@
+using System;
+using Packages.ArtificeToolkit.CustomAttributes;
+
+namespace Packages.ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+{
+    /// <summary> Custom VisualAttribute drawer for <see cref="FoldoutGroupAttribute"/> </summary>
+    [Artifice_CustomAttributeDrawer(typeof(FoldoutGroupAttribute))]
+    public class Artifice_CustomAttributeDrawer_FoldoutGroupAttribute : Artifice_CustomAttributeDrawer_BoxGroupAttribute
+    {
+        protected override Type VisualElementType { get; } = typeof(Artifice_VisualElement_FoldoutGroup);
+    }
+}
