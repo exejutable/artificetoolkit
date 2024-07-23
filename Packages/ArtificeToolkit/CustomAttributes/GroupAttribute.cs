@@ -1,6 +1,6 @@
 namespace CustomAttributes
 {
-    public enum Abz_GroupColor
+    public enum GroupColor
     {
         Default,
         Red,
@@ -17,14 +17,14 @@ namespace CustomAttributes
     public abstract class GroupAttribute : CustomAttribute
     {
         public readonly string GroupName;
-        public readonly Abz_GroupColor GroupColor;
+        public readonly GroupColor GroupColor;
 
         protected GroupAttribute(string groupName)
         {
             GroupName = groupName;
-            GroupColor = Abz_GroupColor.Default;
+            GroupColor = GroupColor.Default;
         }
-        protected GroupAttribute(string groupName, Abz_GroupColor groupColor)
+        protected GroupAttribute(string groupName, GroupColor groupColor)
         {
             GroupName = groupName;
             GroupColor = groupColor;

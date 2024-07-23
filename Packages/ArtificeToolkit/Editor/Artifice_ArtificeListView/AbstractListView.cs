@@ -51,7 +51,7 @@ namespace Editor.Artifice_ArtificeListView
         protected List<CustomAttribute> ChildrenInjectedCustomAttributes = new List<CustomAttribute>();
         
         protected readonly ArtificeDrawer ArtificeDrawer = new();
-        private readonly AbzSlot_Editor_UIBuilder _uiBuilder = new AbzSlot_Editor_UIBuilder();
+        private readonly UIBuilder _uiBuilder = new UIBuilder();
         private readonly List<ChildElement> _children = new List<ChildElement>();
         
         private SerializedProperty _property;

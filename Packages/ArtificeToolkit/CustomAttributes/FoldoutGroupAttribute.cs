@@ -10,7 +10,7 @@ namespace CustomAttributes
         public FoldoutGroupAttribute(string groupName) : base(groupName)
         {
         }
-        public FoldoutGroupAttribute(string groupName, Abz_GroupColor groupColor) : base(groupName, groupColor)
+        public FoldoutGroupAttribute(string groupName, GroupColor groupColor) : base(groupName, groupColor)
         {
         }
     }

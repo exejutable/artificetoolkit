@@ -89,7 +89,7 @@ namespace Editor
 
         /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
         [MenuItem(ArtificeDrawerOn, priority = 10)]
-        private static void ToggleAbzorbaCustomDrawerOn()
+        private static void ToggleArtificeDrawerOn()
         {
             Artifice_Utilities.ArtificeDrawerEnabled = true;
             Debug.Log("<color=lime>[Artifice Inspector]</color> Enabled");
@@ -104,7 +104,7 @@ namespace Editor
 
         /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
         [MenuItem(ArtificeDrawerOff, priority = 10)]
-        private static void ToggleAbzorbaCustomDrawerOff()
+        private static void ToggleArtificeDrawerOff()
         {
             Artifice_Utilities.ArtificeDrawerEnabled = false;
             Debug.Log($"<color=orange>[Artifice Inspector]</color> Disabled");

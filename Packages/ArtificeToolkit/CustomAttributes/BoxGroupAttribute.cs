@@ -10,7 +10,7 @@ namespace CustomAttributes
         public BoxGroupAttribute(string groupName) : base(groupName)
         {
         }
-        public BoxGroupAttribute(string groupName, Abz_GroupColor groupColor) : base(groupName, groupColor)
+        public BoxGroupAttribute(string groupName, GroupColor groupColor) : base(groupName, groupColor)
         {
         }
     }

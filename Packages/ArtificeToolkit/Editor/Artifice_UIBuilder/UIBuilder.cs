@@ -8,10 +8,10 @@ namespace Editor.Artifice_UIBuilder
 {
     /// <summary>Helper class to compartmentalize rebuilding of VisualElements.</summary>
     /// <remarks>This way we avoid rebuilding everything when a change e.g. OrientationChange occurs.</remarks>
-    public class AbzSlot_Editor_UIBuilder
+    public class UIBuilder
     {
         /* NESTED CLASS */
-        private class AbzSlot_UIBuilderNode
+        private class UIBuilderNode
         {
             public string Name = "undef";
             public VisualElement VisualElement;
@@ -22,7 +22,7 @@ namespace Editor.Artifice_UIBuilder
 
         #region FIELDS
 
-        private readonly Dictionary<string, AbzSlot_UIBuilderNode> _nodeMap = new Dictionary<string, AbzSlot_UIBuilderNode>();
+        private readonly Dictionary<string, UIBuilderNode> _nodeMap = new Dictionary<string, UIBuilderNode>();
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace Editor.Artifice_UIBuilder
             if (_nodeMap.TryGetValue(name, out var queryTest) == false)
             {
                 // Create node
-                var newNode = new AbzSlot_UIBuilderNode
+                var newNode = new UIBuilderNode
                 {
                     Name = name,
                     VisualElement = Activator.CreateInstance<T>(),

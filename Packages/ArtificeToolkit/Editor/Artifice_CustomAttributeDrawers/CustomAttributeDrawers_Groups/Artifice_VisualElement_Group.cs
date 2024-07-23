@@ -50,32 +50,32 @@ namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
         {
         }
 
-        public virtual void SetGroupColor(Abz_GroupColor groupColor)
+        public virtual void SetGroupColor(GroupColor groupColor)
         {
             DefaultContentContainer.style.backgroundColor = DispatchGroupColor_Content(groupColor);
         }
         
-        protected Color DispatchGroupColor_Content(Abz_GroupColor groupColor)
+        protected Color DispatchGroupColor_Content(GroupColor groupColor)
         {
             switch (groupColor)
             {
-                case Abz_GroupColor.Default:
+                case GroupColor.Default:
                     return new Color(0.25f, 0.25f, 0.25f, 1f);
-                case Abz_GroupColor.Black:
+                case GroupColor.Black:
                     return new Color(0.141f, 0.141f, 0.141f, 1);
-                case Abz_GroupColor.Blue:
+                case GroupColor.Blue:
                     return new Color(0.314f, 0.4f, 0.49f, 1);
-                case Abz_GroupColor.Red:
+                case GroupColor.Red:
                     return new Color(0.49f, 0.314f, 0.314f, 1);
-                case Abz_GroupColor.Green:
+                case GroupColor.Green:
                     return new Color(0.333f, 0.49f, 0.314f, 1);
-                case Abz_GroupColor.Orange:
+                case GroupColor.Orange:
                     return new Color(0.588f, 0.486f, 0.361f, 1);
-                case Abz_GroupColor.Yellow:
+                case GroupColor.Yellow:
                     return new Color(0.482f, 0.49f, 0.314f, 1);
-                case Abz_GroupColor.Pink:
+                case GroupColor.Pink:
                     return new Color(0.588f, 0.361f, 0.482f, 1);
-                case Abz_GroupColor.Purple:
+                case GroupColor.Purple:
                     return new Color(0.486f, 0.361f, 0.588f, 1);
                 default:
                     throw new ArgumentException();

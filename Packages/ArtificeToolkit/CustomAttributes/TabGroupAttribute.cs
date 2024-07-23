@@ -9,7 +9,7 @@ namespace CustomAttributes
             TabSection = tabSection;
         }
         
-        public TabGroupAttribute(string tabSection, Abz_GroupColor groupColor) : base("Default Tab Group", groupColor)
+        public TabGroupAttribute(string tabSection, GroupColor groupColor) : base("Default Tab Group", groupColor)
         {
             TabSection = tabSection;
         }
@@ -19,7 +19,7 @@ namespace CustomAttributes
             TabSection = tabSection;
         }
         
-        public TabGroupAttribute(string groupName, string tabSection, Abz_GroupColor groupColor) : base(groupName, groupColor)
+        public TabGroupAttribute(string groupName, string tabSection, GroupColor groupColor) : base(groupName, groupColor)
         {
             TabSection = tabSection;
         }

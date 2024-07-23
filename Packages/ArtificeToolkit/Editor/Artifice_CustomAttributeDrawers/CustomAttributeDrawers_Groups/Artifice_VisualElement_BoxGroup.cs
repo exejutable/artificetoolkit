@@ -32,13 +32,13 @@ namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
             _titleLabel.text = title;
         }
 
-        public override void SetGroupColor(Abz_GroupColor groupColor)
+        public override void SetGroupColor(GroupColor groupColor)
         {
             base.SetGroupColor(groupColor);
             _titleContainer.style.backgroundColor = DispatchGroupColor_Title(groupColor);
         }
 
-        private Color DispatchGroupColor_Title(Abz_GroupColor groupColor)
+        private Color DispatchGroupColor_Title(GroupColor groupColor)
         {
             var contentColor = DispatchGroupColor_Content(groupColor);
             contentColor.r *= 0.8f;
