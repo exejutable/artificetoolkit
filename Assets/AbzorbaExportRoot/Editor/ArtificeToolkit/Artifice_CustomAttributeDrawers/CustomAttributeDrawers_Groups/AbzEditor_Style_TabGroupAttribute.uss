@@ -1,0 +1,37 @@
+.group-container{
+    border-width: 0px;
+}
+
+.default-content-container{
+    border-width: 1px;
+    border-color: black;
+    
+    margin: 0px;
+    padding: 3px;
+}
+
+.tab-container{
+    width: 100%;
+}
+
+.headers-container{
+    flex-direction: row;
+}
+
+.tab-title-container{
+    background-color: #2a2a2a;
+    -unity-text-align: middle-center;
+    padding: 6px;
+    
+    border-width: 1px;
+    border-bottom-width: 0px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-color: black;
+    
+    flex-grow: 1;
+}
+
+.tab-title-container-selected{
+    background-color: #2f5ea4;
+}

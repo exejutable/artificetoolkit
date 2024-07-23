@@ -1,0 +1,124 @@
+.hide{
+    display: none;
+}
+.show{
+    display: flex;
+}
+
+.red{
+    background-color: rgb(150, 0, 0);
+}
+.light-light-grey{
+    background-color: rgb(150, 150, 150);
+}
+.light-grey{
+    background-color: rgb(100, 100, 100);
+}
+.grey{
+    background-color: rgb(65, 65, 65);
+}
+.black{
+    background-color: rgb(25, 25, 25);
+}
+.border-black{
+    border-radius: 2px;
+    border-color: rgb(25, 25, 25);
+}
+.rounded-border{
+    border-radius: 25px;
+    padding: 15px;
+    margin: 3px;
+}
+
+.header1{
+    font-size: 15px;
+}
+.header2{
+    font-size: 13.5px;
+}
+.header3{
+    font-size: 12px;
+}
+
+.panel{
+    padding: 5px;
+}
+.align-horizontal{
+    display: flex;
+    flex-direction: row;
+}
+.align-vertical{
+    display: flex;
+    flex-direction: column;
+}
+.align-middle{
+    display: flex;
+    justify-content: center;
+}
+
+.wrap{
+    flex-wrap: wrap;
+}
+
+.m1{
+    margin: 5px;
+}
+.m2{
+    margin: 7px;
+}
+.m3{
+    margin: 10px;
+}
+.m1-horizontal
+{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.m1-vertical
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.p1{
+    padding: 5px;
+}
+.p2{
+    padding: 7px;
+}
+.p3{
+    padding: 10px;
+}
+
+.boldLabel{
+    -unity-font-style: bold;
+}
+.normalLabel{
+    -unity-font-style: normal;
+}
+.text-middle-left{
+    -unity-text-align: middle-left;
+    height: 100%;
+    padding-left: 5px;
+}
+.text-middle-center{
+    -unity-text-align: middle-center;
+    height: 100%;
+    padding-left: 5px;
+}
+.text-middle-right{
+    -unity-text-align: middle-right;
+    height: 100%;
+    padding-left: 5px;
+}
+
+.labeled-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 5px;
+    margin: 0px;
+}

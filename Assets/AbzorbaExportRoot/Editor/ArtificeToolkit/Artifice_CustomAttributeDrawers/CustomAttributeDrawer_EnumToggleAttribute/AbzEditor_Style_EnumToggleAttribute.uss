@@ -1,0 +1,36 @@
+.main-container{
+    border-width: 0px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.label{
+    min-width: 120px;
+    -unity-text-align: middle-left;
+}
+
+.buttons-container{
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    width: 100%;
+}
+.toggle-button{
+    flex-grow: 1;
+    min-width: 80px;
+    height: 34px;
+    overflow: hidden;
+    background-color: #585858;
+}
+
+.toggle-button-pressed{
+    background-color: #2f5ea4;
+}
+
+.extra-control-buttons-container{
+}
+
+.extra-control-button{
+    
+}

@@ -1,0 +1,74 @@
+.property-container{
+    margin-top: 1px;
+}
+
+.unity-base-field{  
+    margin-left: 0;
+}
+
+.property-container .unity-property-field__label{
+    flex-grow: 1;
+    max-width: 33%;
+    margin-right: 2px;
+}
+
+.property-container .unity-property-field__input{
+    min-width: 67%;
+    margin-right: 2px;
+}
+
+/* This line fixes a bug with toggle checkmarks not matching layout. */
+.property-container .unity-toggle__input{
+    height: 16px;
+}
+
+.nested-field-property{
+    /*Optional style for nested property field titles*/
+}
+
+.artifice-indicator{
+    position: absolute;
+    top: -19.5px;
+    right: 60px;
+    
+    width: 13px;
+    height: 13px;
+    
+    border-width: 1px;
+    border-color: black;
+    border-radius: 10px;
+}
+
+.indicator-enabled{
+    transition: 0.5s;
+    background-color: green;
+}
+.indicator-disabled{
+    transition: 0.5s;
+    background-color: red;
+}
+
+.label-container{
+    margin-top: 4px;
+    padding: 8px;
+    
+    width: 100%;
+    
+    flex-direction: row;
+    /*align-items: center;*/
+    
+    background-color: #404040;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 5px;
+}
+.label-container .flavor-icon{
+    align-self: center;
+    font-size: 20px;
+    margin-right: 5px;
+    color: #FFC107;
+}
+.label-container .text{
+    flex-shrink: 1;
+    white-space: normal;
+}

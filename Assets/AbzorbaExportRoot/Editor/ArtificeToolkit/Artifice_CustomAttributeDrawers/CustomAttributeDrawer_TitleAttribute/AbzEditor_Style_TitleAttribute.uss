@@ -1,0 +1,10 @@
+.title{
+    margin-top: 10px;
+    margin-bottom: 5px;
+ 
+    border-bottom-width: 1px;
+    border-color: grey;
+    
+    color: #D9D9D9;
+    -unity-font-style: bold;
+}

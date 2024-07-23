@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c04cc173ad5ed4589af30e1ad8f03a, type: 3}
+  m_Name: Artifice_StylesHolder
+  m_EditorClassIdentifier: 
+  globalStyle: {fileID: 7433441132597879392, guid: 7e08a791c7c8b7e40b54820308b9128f, type: 3}
+  categories:
+  - categoryName: Artifice
+    styleData:
+    - name: ArtificeDrawer
+      script: {fileID: 11500000, guid: f7949921cbfb66d48812e313b8c6b534, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: f60cdf00f0003c6419be14b38dc5a27d, type: 3}
+    - name: Abstract List View
+      script: {fileID: 11500000, guid: 313bc1ce24afbc2419cc293f575d5da3, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: b0f8adfa14786c64e8798dbbac01bdf1, type: 3}
+    - name: Table List
+      script: {fileID: 11500000, guid: 06d1d6f458c204c45a6c3f9dd3f9052b, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: fd7c83271dabce244b951612db6159fd, type: 3}
+  - categoryName: Custom Attributes
+    styleData:
+    - name: Group
+      script: {fileID: 11500000, guid: 22c56bfa8a53c6944afbf551039a8195, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 495cc8fbdb9e84143bd9c55cf9552408, type: 3}
+    - name: BoxGroup
+      script: {fileID: 11500000, guid: 1ffe88f0e1b9c144dac59320171e56a2, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 080e2cad4881ee345a501c43b6575408, type: 3}
+    - name: FoldoutGroup
+      script: {fileID: 11500000, guid: d94fe0a4e421cdd4a9fa8bd5c7f0c0be, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: ae491464e557043488ae69177a6fc3b3, type: 3}
+    - name: TabGroup
+      script: {fileID: 11500000, guid: 3b04bad2ef783924bbc2e20e506e9984, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 9a76a8288bc8d2c448371d2256e2cc65, type: 3}
+    - name: HorizontalGroup
+      script: {fileID: 11500000, guid: 92f21b5945e7b2f45972bb6e97c290aa, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 1a3b3d6932e97a44b9d03104b2707225, type: 3}
+    - name: VerticalGroup
+      script: {fileID: 11500000, guid: 6146aede57c26934ba877544eca2da6c, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 2c5d6c4990abe0d4a8af7b8b3738da7f, type: 3}
+    - name: Title
+      script: {fileID: 11500000, guid: 6813a4e48ecbc7c4b840c1985505e32a, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 9598a2e78aff2b14691316dc2593389b, type: 3}
+    - name: Border
+      script: {fileID: 11500000, guid: 0ce554d759ebe8746970fa715a33cb5f, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 20b60e081f67dbe4486f93d6d173a938, type: 3}
+    - name: Enum Toggle
+      script: {fileID: 11500000, guid: c434a882d0144da43b02a230479436cb, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 6c29bda4d259d424caf4800af26867db, type: 3}
+    - name: Label Width
+      script: {fileID: 11500000, guid: a3dd3238a22385d4c8bd5084f504ba43, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 2d393d990a9655544afc5d1d77c4579c, type: 3}
+    - name: Range
+      script: {fileID: 11500000, guid: 34bd2bcca5106f44e894cec378d484ed, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 951eaee928438a14fbeee19ab42f0c9f, type: 3}
+    - name: InfoBox VisualElement
+      script: {fileID: 11500000, guid: 4c49264fbf1ffef45a60722cf2d71b19, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 565490cff982993499f2655674920022, type: 3}
+    - name: PreviewField
+      script: {fileID: 11500000, guid: e276acdc848935f4da3ffbeb249157c0, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: f44c8e8be11ca9c4d8c98c34f317002b, type: 3}
+    - name: PreviewSO
+      script: {fileID: 11500000, guid: 77428062cdda7364ca1bafd2472cd8f3, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 4ad28f92479ce364f82119f9114ef7bf, type: 3}
+    - name: ChildGameObjectsOnly
+      script: {fileID: 11500000, guid: 4087ff22840b74c4790a33fa830b8830, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: dec4ca7d8f2dcdd4aaa800bc0b6c6285, type: 3}
+    - name: MeasureUnit
+      script: {fileID: 11500000, guid: fb581223c842a0d4fbda471630e7b03e, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: caf09d43851028b47952b5502db756d0, type: 3}
+  - categoryName: Browsers
+    styleData:
+    - name: GameObject Browsers
+      script: {fileID: 11500000, guid: 974b260c2937c25448b5467f70f6fe5a, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: e4f1840f355ba3e44bb7bbf6460932df, type: 3}
+  - categoryName: Visual Elements
+    styleData:
+    - name: Labeled Button
+      script: {fileID: 11500000, guid: 388bf92debb4f1e4594d4717264f7183, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 9857102eebba4894187aa6cd6fc0b431, type: 3}
+    - name: Toggle Button
+      script: {fileID: 11500000, guid: 141168ab4580667488242b4dc608914c, type: 3}
+      stylesheet: {fileID: 7433441132597879392, guid: 6c29bda4d259d424caf4800af26867db, type: 3}

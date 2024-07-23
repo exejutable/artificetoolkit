@@ -1,0 +1,38 @@
+.preview-field{
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+    
+    overflow: hidden
+}
+
+.preview-field-inline{
+    flex-direction: row;
+}
+
+.image{
+    padding: 5px;
+    
+    background-color: #404040;
+    border-radius: 2px;
+    border-width: 1px;
+    border-color: black;
+}
+
+.drag-hover{
+    transition: 0.3s;
+    background-color: dodgerblue;
+    opacity: 0.3;
+}
+
+.hover-options-container{
+    flex-direction: row;
+    flex-shrink: 1;
+    
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    
+    height: 15px;
+    align-self: center;
+}

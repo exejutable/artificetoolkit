@@ -1,0 +1,24 @@
+.labeled-button{
+    /* Remove inherited margin and width */
+    margin: 0px;
+    width: -1;
+        
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    
+    border-width: 1px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-color: #2d2d2d;
+
+    -unity-text-align: middle-center;
+}
+
+.labeled-button:hover{
+    background-color: #444444;
+}
+
+.labeled-button:active{
+    background-color: #4f4f4f;
+}

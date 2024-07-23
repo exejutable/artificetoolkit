@@ -1,0 +1,39 @@
+using AbzorbaExportRoot.Editor.ArtificeToolkit.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+// ReSharper disable InvertIf
+// ReSharper disable MemberCanBeMadeStatic.Local
+
+namespace AbzorbaExportRoot.Editor.ArtificeToolkit
+{
+    /// <summary> Propagates rendering to the <see cref="ArtificeDrawer"/></summary>
+    [CustomEditor(typeof(Object), true), CanEditMultipleObjects]
+    public class ArtificeInspector : UnityEditor.Editor
+    {
+        #region FIELDS
+
+        private ArtificeDrawer _drawer;
+
+        #endregion
+
+        /* Mono */
+        public override VisualElement CreateInspectorGUI()
+        {
+            _drawer = new ArtificeDrawer();
+            return _drawer.CreateInspectorGUI(serializedObject);
+        }
+
+        /* Mono */
+        private void OnDisable()
+        {
+            if (_drawer != null) // Folder inspectors would errors otherwise
+            {
+                _drawer.Dispose();
+                // Clear Box Group Holder data
+                Artifice_CustomAttributeUtility_GroupsHolder.Instance.ClearSerializedObject(serializedObject);
+            }
+        }
+    }
+}

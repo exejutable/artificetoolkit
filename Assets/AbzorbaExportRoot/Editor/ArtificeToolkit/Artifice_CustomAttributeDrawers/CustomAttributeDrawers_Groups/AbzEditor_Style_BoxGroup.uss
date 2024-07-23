@@ -1,0 +1,15 @@
+.default-content-container{
+    background-color: #3F3F3F;
+}
+
+.title-container{
+    border-bottom-width: 1px;
+    border-color: black;
+    border-radius: 3px;
+
+    background-color: #2D2D2D;
+}
+
+.title-label{
+    padding: 5px;
+}

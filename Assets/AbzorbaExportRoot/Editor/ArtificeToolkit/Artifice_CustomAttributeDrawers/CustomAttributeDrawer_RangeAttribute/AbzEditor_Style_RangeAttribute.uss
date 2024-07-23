@@ -1,0 +1,17 @@
+.main-container{
+    flex-direction: row;
+}
+
+.label{
+    -unity-text-align: middle-left;
+    width: 25%;
+    flex-grow: 1;
+}
+.slider{
+    width: 50%;
+    flex-grow: 1;
+}
+.input-field{
+    width: 25%;
+    flex-grow: 1;
+}

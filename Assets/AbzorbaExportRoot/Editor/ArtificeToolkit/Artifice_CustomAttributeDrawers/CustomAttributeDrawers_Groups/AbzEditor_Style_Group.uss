@@ -1,0 +1,18 @@
+.group-container{
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    
+    margin: 2px;
+
+    border-width: 1px;
+    border-color: black;
+    border-radius: 3px;
+}
+
+.content-container{
+    width: 100%;
+    padding: 3px;
+
+    justify-content: center;
+}

@@ -1,0 +1,153 @@
+.artifice-list{
+    margin: 3px;
+    
+    background-color: #333333;
+    border-width: 1px;
+    border-color: black;
+    
+    flex-grow: 0;
+    
+    overflow: hidden;
+}
+
+.list-header{
+    flex-direction: row;
+    align-items: center;
+
+    padding: 2px;
+    margin-bottom: 2px;
+
+    border-bottom-width: 1px;
+    border-color: black;
+    
+    width: 100%;
+}
+
+.drag-hover{    
+    background-color: #232323;
+}
+
+.arrow-symbol-label{
+    font-size: 10px;
+    color: grey;
+    margin-left: 5px;
+    margin-right: 3px;
+}
+
+.rotate-0{
+    rotate: 0deg;
+    transition: 0.7s;
+}
+.rotate-90{
+    rotate: -90deg;
+    transition: 0.7s;
+}
+
+.list-title-label{
+    flex-grow: 1;
+}
+
+.size-field{
+    flex-direction: row;
+    align-items: center;
+    width: 125px;
+}
+.size-title-label{
+}
+.size-value-field{
+    padding: 1px;
+    
+    flex-shrink: 1;
+    
+    border-width: 1px;
+    border-color: black;
+    border-radius: 2px;
+    
+    min-width: 40px;
+    margin-right: 5px;
+}
+.size-text{
+    -unity-text-align: middle-right;
+}
+.size-field-raycast-blocker{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.add-button{
+    height: 100%;
+    flex-shrink: 1;
+    align-self: flex-end;
+}
+
+.children-container{
+    background-color: #464646;
+}
+
+.element-container{
+    flex-direction: row;
+    padding-top: 1px;
+    padding-bottom: 2px;
+}
+.element-container-even{
+    background-color: #464646;
+}
+.element-container-odd{
+    background-color: #404040;
+}
+
+.element-container .property-container{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.drag-control{
+    color: grey;
+    
+    width: 20px;
+    height: 20px;
+    
+    -unity-text-align: upper-center;
+    
+    scale: 1.5;
+}
+
+.empty-list-label{
+    margin: 5px;
+    margin-left: 18px;
+}
+
+.property-field{
+    margin-left: 10px; /* Add this for drag control */
+    flex-grow: 1;
+}
+
+.delete-button-container{
+    width: 25px;
+}
+.delete-button{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 15px;
+    height: 15px;
+    background-color: rgba(0, 0, 0, 0);
+    margin: 3px;
+    -unity-text-align: middle-center;
+}
+.delete-button:hover{
+    
+}
+
+.element-container:hover{
+    background-color: #333333;
+}
+
+.currently-dragged{
+    background-color: #333333;
+    scale: 1.03 1 1;
+    transition: 0.15s;
+ }

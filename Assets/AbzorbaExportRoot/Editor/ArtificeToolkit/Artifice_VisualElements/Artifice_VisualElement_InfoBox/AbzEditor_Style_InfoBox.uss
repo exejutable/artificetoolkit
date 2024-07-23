@@ -1,0 +1,25 @@
+.info-box-container{
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    white-space: normal;    
+    
+    width: 100%;
+    max-height: 50px;
+    background-color: #404040;
+    
+    border-color: black;
+    border-width: 1px;
+    border-radius: 3px;
+    
+    padding: 7px;
+    margin: 3px;
+}
+
+.info-box-container .image{
+    max-width: 25px;
+    max-height: 25px;
+    margin-right: 6px;
+
+    flex-shrink: 0;
+}
