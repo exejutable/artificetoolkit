@@ -1,0 +1,47 @@
+.validator-container{
+    flex-direction: row;
+    width: 100%;
+}
+
+.property-field{
+    margin: 0;
+    flex-grow: 1;
+}
+
+.validator-container .unity-property-field__label{
+    /*Compensation for magnifying glass in row*/
+    max-width: 34%;
+}
+
+.browse-button{
+    width: 14px;
+    height: 14px;
+ 
+    flex-shrink: 0;
+    margin: auto;
+    margin-left: 10px;
+}
+
+.search-button:hover{
+    background-color: dodgerblue;
+    transition: 0.3s;
+}
+
+.browse-menu-container{
+    background-color: #464646;
+
+    position: absolute;
+    right: 0;
+    
+    height: 600px;
+    width: 150px;
+}
+
+.close-button{
+    width: 15px;
+    height: 15px;
+
+    position: absolute;
+    top:0;
+    right: 0;
+}

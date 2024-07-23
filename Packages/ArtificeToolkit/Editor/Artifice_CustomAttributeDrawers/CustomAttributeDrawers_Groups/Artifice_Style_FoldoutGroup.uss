@@ -1,0 +1,18 @@
+.dropdown-symbol{
+    font-size: 10px;
+}
+
+.foldout-close{
+    padding: 0px;
+    height: 0px;
+    margin-top: 3px;
+}
+
+.rotate-90{
+    rotate: -90deg;
+    transition: 0.7s;
+}
+.rotate-0{
+    rotate: 0deg;
+    transition: 0.7s;
+}

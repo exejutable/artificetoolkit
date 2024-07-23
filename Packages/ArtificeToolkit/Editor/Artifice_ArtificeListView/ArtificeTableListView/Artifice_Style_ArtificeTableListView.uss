@@ -1,0 +1,75 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*Header Related*/
+.header-container{
+    /* Caused by dragger and remove button of list view*/
+    margin-left: 22px;
+    margin-right: 22px;
+    
+    flex-direction: row;
+    justify-content: space-between;
+
+    border-width: 1px;
+    border-color: black;
+    border-radius: 0;
+}
+
+.header-container .column-label-container{
+    flex-grow: 1;
+    padding: 5px;
+    transition: 0.3s;
+}
+
+.column-label-container Label{
+    -unity-text-align: middle-center;
+}
+
+.header-container .drag-handler{
+    position: absolute;
+    background-color: #1a1a1a;
+    
+    width: 4px;
+    height: 100%;
+    
+    transition: 0.3s;
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*Property and fields container*/
+.field-container{
+    width: 100%;
+    transition: 0.3s;
+}
+.property-container{
+    flex-direction: row;
+    width: 100%;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*Sub-Property stuff*/
+.sub-property-field{
+    flex-grow: 1;
+    border-right-width: 1px;
+    border-color: rgba(0, 0, 0, 0.42);
+}
+
+.sub-property-field .unity-property-field__label{
+    display: none;
+}
+.sub-property-field .property-container{
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+.sub-property-field .unity-property-field{
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+.sub-property-field .unity-object-field{
+    flex-grow: 1;
+}
+.sub-property-field .unity-text-field{
+    flex-grow: 1;
+}
+.sub-property-field .unity-text-element--inner-input-field-component{
+    -unity-text-align: upper-left;
+}

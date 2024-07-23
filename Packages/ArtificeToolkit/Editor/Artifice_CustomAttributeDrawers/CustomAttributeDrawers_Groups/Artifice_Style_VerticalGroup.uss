@@ -1,0 +1,35 @@
+.group-container{
+    /* Override reset BoxGroup USS */
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.49);
+    background-color: rgba(0, 0, 0, 0);
+}
+.default-content-container{
+    flex-direction: column;
+}
+.content-container{
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.title-container{
+    display: none;
+}
+
+.group-child{
+    width: 100%;
+    margin: 3px;
+    
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.unity-property-field__label {
+    /* I really cant explain why max-width is neede */
+    max-width: 0px;
+    min-width: 1px;
+    
+    padding-left: 3px;
+    margin-right: -35px;
+}

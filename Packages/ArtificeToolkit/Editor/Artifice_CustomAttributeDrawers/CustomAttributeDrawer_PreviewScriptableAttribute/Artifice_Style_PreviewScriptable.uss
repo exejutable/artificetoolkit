@@ -1,0 +1,39 @@
+.previewScriptable-container .unity-property-field__label{
+    max-width: 145px;
+    min-width: 0;
+}
+
+.previewScriptable-open{
+    transition: 0.5s;
+    background-color: #3f3f3f;
+
+    border-width: 1px;
+    border-color: black;
+}
+.previewScriptable-close{
+    transition: 0.5s;
+    background-color: rgba(56, 56, 56, 0);
+}
+
+.expand-toggle{
+    flex-shrink: 0;
+    margin-left: 5px;
+    border-width: 1px;
+    border-color: black;
+}
+
+.previewScriptable-header-enabled{
+    transition: 0.5s;
+    background-color: #2a2a2a;
+    border-width: 1px;
+    border-color: black;
+    
+    padding: 5px;
+}
+.previewScriptable-header-disabled{
+    transition: 0.5s;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    
+    padding: 0;
+}
