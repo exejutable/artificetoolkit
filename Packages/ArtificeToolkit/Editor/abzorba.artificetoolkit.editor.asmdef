@@ -2,7 +2,8 @@
     "name": "abzorba.artificetoolkit.editor",
     "rootNamespace": "",
     "references": [
-        "GUID:89234c23c57a3b24fb4f43ae81befb91"
+        "GUID:89234c23c57a3b24fb4f43ae81befb91",
+        "GUID:478a2357cc57436488a56e564b08d223"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

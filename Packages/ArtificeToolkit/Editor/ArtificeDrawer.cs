@@ -88,13 +88,21 @@ namespace Editor
         }
 
         /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
-        [MenuItem(ArtificeDrawerOn, priority = 10)]
+        [MenuItem(ArtificeDrawerOn, priority = 11)]
         private static void ToggleArtificeDrawerOn()
         {
             Artifice_Utilities.ArtificeDrawerEnabled = true;
             Debug.Log("<color=lime>[Artifice Inspector]</color> Enabled");
         }
-
+        
+        /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
+        [MenuItem(ArtificeDrawerOff, priority = 11)]
+        private static void ToggleArtificeDrawerOff()
+        {
+            Artifice_Utilities.ArtificeDrawerEnabled = false;
+            Debug.Log($"<color=orange>[Artifice Inspector]</color> Disabled");
+        }
+        
         [MenuItem(ArtificeDrawerOff, true, 0)]
         private static bool ToggleOffCheckmark()
         {
@@ -102,15 +110,7 @@ namespace Editor
             return true;
         }
 
-        /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
-        [MenuItem(ArtificeDrawerOff, priority = 10)]
-        private static void ToggleArtificeDrawerOff()
-        {
-            Artifice_Utilities.ArtificeDrawerEnabled = false;
-            Debug.Log($"<color=orange>[Artifice Inspector]</color> Disabled");
-        }
-
-        [MenuItem(ArtificeDocumentation, priority = 10)]
+        [MenuItem(ArtificeDocumentation)]
         private static void OpenArtificeDocumentationURL()
         {
             Application.OpenURL(ArtificeDocumentationURL);

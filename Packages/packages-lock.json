@@ -4,7 +4,9 @@
       "version": "file:ArtificeToolkit",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0"
+      }
     },
     "com.unity.collab-proxy": {
       "version": "2.4.3",
