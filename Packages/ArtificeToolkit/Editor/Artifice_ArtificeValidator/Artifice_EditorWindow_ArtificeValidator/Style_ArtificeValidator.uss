@@ -17,7 +17,7 @@
     height: 100%;
 }
 
-.header-container AbzEditor_VisualElement_LabeledButton {
+.header-container Artifice_VisualElement_LabeledButton {
     background-color: rgba(0, 0, 0, 0);
 }
 
