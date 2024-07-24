@@ -1,7 +1,7 @@
 .labeled-button{
     /* Remove inherited margin and width */
     margin: 0px;
-    width: -1;
+    width: -1px;
         
     padding: 2px;
     padding-left: 4px;
