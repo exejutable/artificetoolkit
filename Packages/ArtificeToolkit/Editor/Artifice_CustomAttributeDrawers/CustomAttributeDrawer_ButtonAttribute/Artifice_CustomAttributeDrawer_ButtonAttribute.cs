@@ -45,7 +45,7 @@ namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ButtonAtt
                 var parametersList = GetParameterList(property);
                 // Error check number of parameters
                 if (methodInfo.GetParameters().Length != parametersList.Count)
-                    throw new ArgumentException($"[Abz_Button] Parameters count do not match with method {methodInfo.Name}");
+                    throw new ArgumentException($"[Artifice/Button] Parameters count do not match with method {methodInfo.Name}");
                 
                 // Call method with params
                 methodInfo.Invoke(parentTarget, parametersList.ToArray());
@@ -69,7 +69,7 @@ namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ButtonAtt
             {
                 var parameterProperty = property.FindPropertyInSameScope(parameterName);
                 if (parameterProperty == null)
-                    throw new ArgumentException($"[Abz_Button] Cannot find parameter name {parameterName}");
+                    throw new ArgumentException($"[Artifice/Button] Cannot find parameter name {parameterName}");
                 
                 parametersList.Add(parameterProperty.GetTarget<object>());
             }
