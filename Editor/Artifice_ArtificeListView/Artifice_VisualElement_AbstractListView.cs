@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 
 namespace Editor.Artifice_ArtificeListView
 {
-    public abstract class AbstractListView : BindableElement, INotifyValueChanged<SerializedProperty>, IDisposable, IArtificePersistence
+    public abstract class Artifice_VisualElement_AbstractListView : BindableElement, INotifyValueChanged<SerializedProperty>, IDisposable, IArtificePersistence
     {
         /// <summary> Helper nested class to handle the children of this class </summary>
         private class ChildElement
@@ -22,6 +22,7 @@ namespace Editor.Artifice_ArtificeListView
 
             public ChildElement(VisualElement visualElement, SerializedProperty property, int propertyArrayIndex)
             {
+                
                 VisualElement = visualElement;
                 Property = property;
                 PropertyArrayIndex = propertyArrayIndex;
@@ -69,10 +70,10 @@ namespace Editor.Artifice_ArtificeListView
         
         #endregion
         
-        public AbstractListView()
+        public Artifice_VisualElement_AbstractListView()
         {
             // Load stylesheet
-            styleSheets.Add(Artifice_Utilities.GetStyle(typeof(AbstractListView)));
+            styleSheets.Add(Artifice_Utilities.GetStyle(typeof(Artifice_VisualElement_AbstractListView)));
             
             // Apply main container class
             AddToClassList("artifice-list");

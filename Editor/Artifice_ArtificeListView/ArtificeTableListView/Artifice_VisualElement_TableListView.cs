@@ -7,7 +7,7 @@ namespace Editor.Artifice_ArtificeListView.ArtificeTableListView
 {
     /// <summary> This class is used to render arrays and lists in a way the supports CustomAttributes and offers more functionality than Unity's default lists. </summary>
     /// <remarks><see cref="ArtificeDrawer"/></remarks>
-    public class TableListView : AbstractListView
+    public class Artifice_VisualElement_TableListView : Artifice_VisualElement_AbstractListView
     {
         private class FieldColumnData
         {
@@ -47,7 +47,7 @@ namespace Editor.Artifice_ArtificeListView.ArtificeTableListView
         
         #endregion
         
-        public TableListView()
+        public Artifice_VisualElement_TableListView()
         {
             _fieldColumns = new List<FieldColumnData>();
             _dragHandlers = new List<VisualElement>();
