@@ -197,7 +197,7 @@ namespace Editor
                     var isTableList = property.GetAttributes().Any(attribute => attribute.GetType() == typeof(TableListAttribute));
                         
                     // Spawn either ListView or TableView
-                    var listView = isTableList ? (AbstractListView)new TableListView() : new ListView();
+                    var listView = isTableList ? (Artifice_VisualElement_AbstractListView)new Artifice_VisualElement_TableListView() : new ListView();
                     listView.SetSerializedPropertyFilter(_serializedPropertyFilter);
                     listView.SetChildrenInjectedCustomAttributes(childrenCustomAttributes);
                     listView.value = property;
