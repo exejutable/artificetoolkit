@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary>
     /// This attribute allows a "dummy" variable to show in the inspector as a button.

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_VisualElements
+namespace ArtificeToolkit.Editor.VisualElements
 {
     /// <summary> This class can be used as a button with a label centered inside of it </summary>
     public class Artifice_VisualElement_LabeledButton : Button

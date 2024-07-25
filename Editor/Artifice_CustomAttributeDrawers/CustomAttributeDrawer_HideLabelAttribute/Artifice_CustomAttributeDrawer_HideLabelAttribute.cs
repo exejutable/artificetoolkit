@@ -1,8 +1,8 @@
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_HideLabelAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_HideLabelAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(HideLabelAttribute))]
     public class Artifice_CustomAttributeDrawer_HideLabelAttribute : Artifice_CustomAttributeDrawer

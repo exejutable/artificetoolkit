@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     /// <summary> VisualElement that drives the TaGroup logic and style </summary>
     public class Artifice_VisualElement_TabGroup : Artifice_VisualElement_Group
@@ -86,12 +86,12 @@ namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
         
         public override void SavePersistedData()
         {
-            Artifice_SCR_ArtificePersistedData.instance.SaveData(ViewPersistenceKey, "selectedTabKey", _selectedTabKey);
+            Artifice_SCR_PersistedData.instance.SaveData(ViewPersistenceKey, "selectedTabKey", _selectedTabKey);
         }
 
         public override void LoadPersistedData()
         {
-            _selectedTabKey = Artifice_SCR_ArtificePersistedData.instance.LoadData(ViewPersistenceKey, "selectedTabKey");
+            _selectedTabKey = Artifice_SCR_PersistedData.instance.LoadData(ViewPersistenceKey, "selectedTabKey");
 
             if (_selectedTabKey == null)
             {

@@ -1,8 +1,8 @@
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_LabelWidthAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_LabelWidthAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(LabelWidthAttribute))]
     public class Artifice_CustomAttributeDrawer_LabelWidthAttribute : Artifice_CustomAttributeDrawer

@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Editor.Artifice_CustomAttributeDrawers;
-using Editor.Artifice_StylesHolder;
+using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers;
+using ArtificeToolkit.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor
+namespace ArtificeToolkit.Editor
 {
     /// <summary>Provides utilities to other Editor scripts.</summary>
     /// <example>Get the style for a specific <see cref="VisualElement"/>.</example>

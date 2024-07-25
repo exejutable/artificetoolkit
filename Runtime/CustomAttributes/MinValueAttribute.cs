@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> Bounds the property's minimum value to a given value </summary>
     public class MinValueAttribute : CustomAttribute

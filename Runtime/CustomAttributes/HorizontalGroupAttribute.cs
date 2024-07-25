@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> As <see cref="BoxGroupAttribute"/>, but uses horizontal alignment. </summary>
     /// <remarks> Current implementation does not cope well with input fields. </remarks>

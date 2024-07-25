@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> Appends to property a string with the unit name </summary>
     public class MeasureUnitAttribute : CustomAttribute

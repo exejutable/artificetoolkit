@@ -1,10 +1,10 @@
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_PreviewFieldAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_PreviewFieldAttribute
 {
     /// <summary> Custom drawer for <see cref="PreviewSpriteAttribute"/> attribute. </summary>
     [Artifice_CustomAttributeDrawer(typeof(PreviewSpriteAttribute))]

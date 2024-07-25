@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> Shows in the inspector an info box the parameterized message </summary>
     public class InfoBoxAttribute : CustomAttribute

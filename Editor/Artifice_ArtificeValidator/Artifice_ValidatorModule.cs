@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Editor.Artifice_ArtificeValidator.Artifice_EditorWindow_ArtificeValidator;
-using Editor.Artifice_ArtificeValidator.EditorWindow_ArtificeValidator;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Editor.Artifice_ArtificeValidator
+namespace ArtificeToolkit.Editor
 {
     using ValidatorLog = Artifice_EditorWindow_Validator.ValidatorLog;
     

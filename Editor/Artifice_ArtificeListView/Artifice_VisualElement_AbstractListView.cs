@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CustomAttributes;
-using Editor.Artifice_UIBuilder;
-using Editor.Artifice_VisualElements;
+using ArtificeToolkit.Attributes;
+using ArtificeToolkit.Editor;
+using ArtificeToolkit.Editor.VisualElements;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_ArtificeListView
+namespace ArtificeToolkit.Editor
 {
-    public abstract class Artifice_VisualElement_AbstractListView : BindableElement, INotifyValueChanged<SerializedProperty>, IDisposable, IArtificePersistence
+    public abstract class Artifice_VisualElement_AbstractListView : BindableElement, INotifyValueChanged<SerializedProperty>, IDisposable, Artifice_IPersistence
     {
         /// <summary> Helper nested class to handle the children of this class </summary>
         private class ChildElement

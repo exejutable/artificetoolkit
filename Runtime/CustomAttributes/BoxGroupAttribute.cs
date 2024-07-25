@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> Wraps the element inside a titled box. It can also be used with nesting. </summary>
     /// <example> [BoxGroupAttribute("Outer Box/Interior Box")]</example>

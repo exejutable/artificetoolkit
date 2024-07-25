@@ -1,8 +1,8 @@
 using System;
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     [Artifice_CustomAttributeDrawer(typeof(TabGroupAttribute))]
     public class Artifice_CustomAttributeDrawer_TabGroupAttribute : Artifice_CustomAttributeDrawer_GroupAttribute

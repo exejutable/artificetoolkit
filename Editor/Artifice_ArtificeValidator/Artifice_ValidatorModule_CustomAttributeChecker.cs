@@ -2,14 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CustomAttributes;
-using Editor.Artifice_ArtificeValidator.Artifice_EditorWindow_ArtificeValidator;
-using Editor.Artifice_ArtificeValidator.EditorWindow_ArtificeValidator;
-using Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators;
+using ArtificeToolkit.Attributes;
+using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.Artifice_ArtificeValidator
+namespace ArtificeToolkit.Editor
 {
     using ValidatorLog = Artifice_EditorWindow_Validator.ValidatorLog;
 

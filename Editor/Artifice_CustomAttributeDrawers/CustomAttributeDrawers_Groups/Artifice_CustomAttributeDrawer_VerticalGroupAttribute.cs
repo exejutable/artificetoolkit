@@ -1,7 +1,7 @@
 using System;
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     /// <summary> Custom drawer for <see cref="VerticalGroupAttribute"/> </summary>
     [Artifice_CustomAttributeDrawer(typeof(VerticalGroupAttribute))]

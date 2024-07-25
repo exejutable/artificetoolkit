@@ -1,13 +1,13 @@
 using System;
-using Editor.Artifice_SerializedDictionary;
+using ArtificeToolkit.Editor.Artifice_SerializedDictionary;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
+namespace ArtificeToolkit.Editor
 {
     [Serializable]
     [FilePath("Artifice/PersistantData.save", FilePathAttribute.Location.PreferencesFolder)]
-    public class Artifice_SCR_ArtificePersistedData : ScriptableSingleton<Artifice_SCR_ArtificePersistedData>
+    public class Artifice_SCR_PersistedData : ScriptableSingleton<Artifice_SCR_PersistedData>
     {
         [SerializeField]
         private SerializedDictionary<string, SerializedDictionary<string, string>> persistedData = new();

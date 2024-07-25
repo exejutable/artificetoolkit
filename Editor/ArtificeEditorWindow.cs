@@ -2,7 +2,7 @@ using UnityEditor;
 
 // ReSharper disable InconsistentNaming
 
-namespace Editor
+namespace ArtificeToolkit.Editor
 {
     public class ArtificeEditorWindow : EditorWindow
     {

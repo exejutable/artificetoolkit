@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CustomAttributes;
-using Editor.Artifice_VisualElements;
+using ArtificeToolkit.Attributes;
+using ArtificeToolkit.Editor.VisualElements;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ButtonAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ButtonAttribute
 {
     [Serializable]
     [Artifice_CustomAttributeDrawer(typeof(ButtonAttribute))]

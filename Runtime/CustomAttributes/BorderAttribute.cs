@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> Wraps property in a colored border. </summary>
     public class BorderAttribute : CustomAttribute

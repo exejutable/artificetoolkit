@@ -2,23 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CustomAttributes;
-using Editor.Artifice_ArtificeListView;
-using Editor.Artifice_ArtificeListView.ArtificeTableListView;
-using Editor.Artifice_CustomAttributeDrawers;
+using ArtificeToolkit.Attributes;
+using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ListView = Editor.Artifice_ArtificeListView.ListView;
-using SpaceAttribute = CustomAttributes.SpaceAttribute;
+using SpaceAttribute = ArtificeToolkit.Attributes.SpaceAttribute;
 
 // ReSharper disable GCSuppressFinalizeForTypeWithoutDestructor
 // ReSharper disable CanSimplifyDictionaryLookupWithTryGetValue
 // ReSharper disable MemberCanBeMadeStatic.Local
 // ReSharper disable RedundantIfElseBlock
 
-namespace Editor
+namespace ArtificeToolkit.Editor
 {
     public sealed class ArtificeDrawer : IDisposable
     {
@@ -197,7 +194,7 @@ namespace Editor
                     var isTableList = property.GetAttributes().Any(attribute => attribute.GetType() == typeof(TableListAttribute));
                         
                     // Spawn either ListView or TableView
-                    var listView = isTableList ? (Artifice_VisualElement_AbstractListView)new Artifice_VisualElement_TableListView() : new ListView();
+                    var listView = isTableList ? (Artifice_VisualElement_AbstractListView)new Artifice_VisualElement_TableListView() : new Artifice_VisualElement_ListView();
                     listView.SetSerializedPropertyFilter(_serializedPropertyFilter);
                     listView.SetChildrenInjectedCustomAttributes(childrenCustomAttributes);
                     listView.value = property;

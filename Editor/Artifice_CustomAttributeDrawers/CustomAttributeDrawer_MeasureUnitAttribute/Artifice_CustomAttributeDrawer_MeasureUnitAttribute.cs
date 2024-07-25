@@ -1,8 +1,8 @@
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_MeasureUnitAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_MeasureUnitAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(MeasureUnitAttribute))]
     public class Artifice_CustomAttributeDrawer_MeasureUnitAttribute : Artifice_CustomAttributeDrawer 

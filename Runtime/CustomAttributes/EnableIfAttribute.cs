@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> Allows a property to dynamically draw/or not draw it self in the editor. </summary>
     public class EnableIfAttribute : CustomAttribute

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine;
 
 // ReSharper disable InvertIf
 
-namespace Editor
+namespace ArtificeToolkit.Editor
 {
     public static class Artifice_SerializedPropertyExtensions
     {

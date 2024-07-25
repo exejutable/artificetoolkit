@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_VisualElements
+namespace ArtificeToolkit.Editor.VisualElements
 {
     public class Artifice_VisualElement_ToggleButton : VisualElement
     {

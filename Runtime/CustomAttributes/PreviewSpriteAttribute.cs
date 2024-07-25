@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> Allows a <see cref="Sprite"/> or <see cref="Texture2D"/> to be shown as an image rather than a text-based object field. </summary>
     public class PreviewSpriteAttribute : CustomAttribute

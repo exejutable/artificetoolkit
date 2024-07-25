@@ -1,11 +1,11 @@
 using System;
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_MaxValueAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_MaxValueAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(MaxValueAttribute))]
     public class Artifice_CustomAttributeDrawer_MaxValueAttribute : Artifice_CustomAttributeDrawer
