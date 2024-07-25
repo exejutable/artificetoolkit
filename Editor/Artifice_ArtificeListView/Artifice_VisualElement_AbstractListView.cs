@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 
 namespace Editor.Artifice_ArtificeListView
 {
-    public abstract class Artifice_VisualElement_AbstractListView : BindableElement, INotifyValueChanged<SerializedProperty>, IDisposable, IArtificePersistence
+    public abstract class Artifice_VisualElement_AbstractListView : BindableElement, INotifyValueChanged<SerializedProperty>, IDisposable, Artifice_IPersistence
     {
         /// <summary> Helper nested class to handle the children of this class </summary>
         private class ChildElement

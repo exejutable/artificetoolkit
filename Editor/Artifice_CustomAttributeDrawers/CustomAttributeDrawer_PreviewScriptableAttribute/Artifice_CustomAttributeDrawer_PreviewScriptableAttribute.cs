@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_PreviewScriptableAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(PreviewScriptableAttribute))]
-    public class Artifice_CustomAttributeDrawer_PreviewScriptableAttribute : Artifice_CustomAttributeDrawer, IArtificePersistence
+    public class Artifice_CustomAttributeDrawer_PreviewScriptableAttribute : Artifice_CustomAttributeDrawer, Artifice_IPersistence
     {
         private VisualElement _wrapper;
         private VisualElement _header;
@@ -150,12 +150,12 @@ namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_PreviewSc
         public void SavePersistedData()
         {
             var stateString = _state ? "True" : "False";
-            Artifice_SCR_ArtificePersistedData.instance.SaveData(ViewPersistenceKey, "isOpen", stateString);
+            Artifice_SCR_PersistedData.instance.SaveData(ViewPersistenceKey, "isOpen", stateString);
         }
 
         public void LoadPersistedData()
         {
-            var value = Artifice_SCR_ArtificePersistedData.instance.LoadData(ViewPersistenceKey, "isOpen");
+            var value = Artifice_SCR_PersistedData.instance.LoadData(ViewPersistenceKey, "isOpen");
             _state = value == "True";
             _toggle.SetState(_state);
             UpdateExpandedView(_state);

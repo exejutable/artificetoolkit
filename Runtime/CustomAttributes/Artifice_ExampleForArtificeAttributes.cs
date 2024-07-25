@@ -72,4 +72,3 @@ namespace CustomAttributes
         public List<Character> characters;
     }
 }
-    

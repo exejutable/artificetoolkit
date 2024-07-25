@@ -5,7 +5,7 @@ namespace Editor.Artifice_ArtificeListView
 {
     /// <summary> This class is used to render arrays and lists in a way the supports CustomAttributes and offers more functionality than Unity's default lists. </summary>
     /// <remarks><see cref="ArtificeDrawer"/></remarks>
-    public class ListView : Artifice_VisualElement_AbstractListView
+    public class Artifice_VisualElement_ListView : Artifice_VisualElement_AbstractListView
     {
         #region FIELDS
         

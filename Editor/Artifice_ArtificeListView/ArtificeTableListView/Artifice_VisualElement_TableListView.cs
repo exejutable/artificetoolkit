@@ -210,14 +210,14 @@ namespace Editor.Artifice_ArtificeListView.ArtificeTableListView
         {
             // Set foreach field, the width
             foreach (var fieldColumn in _fieldColumns)
-                Artifice_SCR_ArtificePersistedData.instance.SaveData(ViewPersistenceKey, fieldColumn.Name, fieldColumn.WidthPercent.ToString());
+                Artifice_SCR_PersistedData.instance.SaveData(ViewPersistenceKey, fieldColumn.Name, fieldColumn.WidthPercent.ToString());
         }
 
         public override void LoadPersistedData()
         {
             foreach (var fieldColumn in _fieldColumns)
             {
-                var savedWidth = Artifice_SCR_ArtificePersistedData.instance.LoadData(ViewPersistenceKey, fieldColumn.Name);
+                var savedWidth = Artifice_SCR_PersistedData.instance.LoadData(ViewPersistenceKey, fieldColumn.Name);
                 if(float.TryParse(savedWidth, out var width))
                 {
                     fieldColumn.WidthPercent = width; 

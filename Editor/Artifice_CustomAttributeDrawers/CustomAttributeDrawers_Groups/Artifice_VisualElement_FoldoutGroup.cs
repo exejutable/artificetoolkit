@@ -68,13 +68,13 @@ namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
         
         public override void SavePersistedData()
         {
-            Artifice_SCR_ArtificePersistedData.instance.SaveData(ViewPersistenceKey, "isExpanded", _isExpanded ? "true" : "false");
+            Artifice_SCR_PersistedData.instance.SaveData(ViewPersistenceKey, "isExpanded", _isExpanded ? "true" : "false");
         }
 
         public override void LoadPersistedData()
         {
             // Load data
-            var value = Artifice_SCR_ArtificePersistedData.instance.LoadData(ViewPersistenceKey, "isExpanded");
+            var value = Artifice_SCR_PersistedData.instance.LoadData(ViewPersistenceKey, "isExpanded");
             if (value == null)
                 return;
             

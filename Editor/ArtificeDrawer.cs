@@ -10,7 +10,6 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ListView = Editor.Artifice_ArtificeListView.ListView;
 using SpaceAttribute = CustomAttributes.SpaceAttribute;
 
 // ReSharper disable GCSuppressFinalizeForTypeWithoutDestructor
@@ -197,7 +196,7 @@ namespace Editor
                     var isTableList = property.GetAttributes().Any(attribute => attribute.GetType() == typeof(TableListAttribute));
                         
                     // Spawn either ListView or TableView
-                    var listView = isTableList ? (Artifice_VisualElement_AbstractListView)new Artifice_VisualElement_TableListView() : new ListView();
+                    var listView = isTableList ? (Artifice_VisualElement_AbstractListView)new Artifice_VisualElement_TableListView() : new Artifice_VisualElement_ListView();
                     listView.SetSerializedPropertyFilter(_serializedPropertyFilter);
                     listView.SetChildrenInjectedCustomAttributes(childrenCustomAttributes);
                     listView.value = property;
