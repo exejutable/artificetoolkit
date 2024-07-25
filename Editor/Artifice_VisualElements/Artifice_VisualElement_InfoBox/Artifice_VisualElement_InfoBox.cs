@@ -1,8 +1,8 @@
-using Editor.Artifice_CommonResources;
+using ArtificeToolkit.Editor.Resources;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_VisualElements.Artifice_VisualElement_InfoBox
+namespace ArtificeToolkit.Editor.VisualElements
 {
     public class Artifice_VisualElement_InfoBox : VisualElement
     {

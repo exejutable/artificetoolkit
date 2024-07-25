@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> Controls the width of Label Fields </summary>
     public class LabelWidthAttribute : CustomAttribute

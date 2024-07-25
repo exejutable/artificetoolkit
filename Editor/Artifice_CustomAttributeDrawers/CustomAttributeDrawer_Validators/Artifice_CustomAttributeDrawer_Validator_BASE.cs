@@ -1,11 +1,11 @@
-using Editor.Artifice_CommonResources;
-using Editor.Artifice_VisualElements.Artifice_VisualElement_InfoBox;
+using ArtificeToolkit.Editor.Resources;
+using ArtificeToolkit.Editor.VisualElements;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
 {
     public abstract class Artifice_CustomAttributeDrawer_Validator_BASE : Artifice_CustomAttributeDrawer
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary>Customizes how a field is rendered in the inspector.</summary>
     [Conditional("UNITY_EDITOR")]

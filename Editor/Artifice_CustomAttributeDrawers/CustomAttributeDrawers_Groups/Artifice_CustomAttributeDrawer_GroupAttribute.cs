@@ -1,9 +1,9 @@
 using System;
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     [Artifice_CustomAttributeDrawer(typeof(GroupAttribute))]
     public abstract class Artifice_CustomAttributeDrawer_GroupAttribute : Artifice_CustomAttributeDrawer

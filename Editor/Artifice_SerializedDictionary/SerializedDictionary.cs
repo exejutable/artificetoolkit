@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Editor.Artifice_SerializedDictionary
+namespace ArtificeToolkit.Editor.Artifice_SerializedDictionary
 {
     [Serializable]
     public class SerializedDictionary<TK, TV> : IDictionary<TK, TV>, ISerializationCallbackReceiver

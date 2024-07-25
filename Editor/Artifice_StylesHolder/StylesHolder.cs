@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_StylesHolder
+namespace ArtificeToolkit.Editor
 {
     /* NESTED CLASS */
     /// <summary> Holds info, regarding stylesheets/></summary>

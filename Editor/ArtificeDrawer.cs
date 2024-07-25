@@ -2,22 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CustomAttributes;
-using Editor.Artifice_ArtificeListView;
-using Editor.Artifice_ArtificeListView.ArtificeTableListView;
-using Editor.Artifice_CustomAttributeDrawers;
+using ArtificeToolkit.Attributes;
+using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using SpaceAttribute = CustomAttributes.SpaceAttribute;
+using SpaceAttribute = ArtificeToolkit.Attributes.SpaceAttribute;
 
 // ReSharper disable GCSuppressFinalizeForTypeWithoutDestructor
 // ReSharper disable CanSimplifyDictionaryLookupWithTryGetValue
 // ReSharper disable MemberCanBeMadeStatic.Local
 // ReSharper disable RedundantIfElseBlock
 
-namespace Editor
+namespace ArtificeToolkit.Editor
 {
     public sealed class ArtificeDrawer : IDisposable
     {

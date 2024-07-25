@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     /// <summary> Inherits from <see cref="Artifice_VisualElement_BoxGroup"/> but offers foldout capabilities </summary>

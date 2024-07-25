@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Editor.Artifice_CommonResources;
+using ArtificeToolkit.Editor.Resources;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
 {
     public class Artifice_EditorWindow_GameObjectBrowser : EditorWindow
     {

@@ -1,11 +1,11 @@
 using System.Linq;
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_EnableIfAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_EnableIfAttribute
 {
     /// <summary> Custom VisualAttribute drawer for <see cref="EnableIfAttribute"/> </summary>
     [Artifice_CustomAttributeDrawer(typeof(EnableIfAttribute))]

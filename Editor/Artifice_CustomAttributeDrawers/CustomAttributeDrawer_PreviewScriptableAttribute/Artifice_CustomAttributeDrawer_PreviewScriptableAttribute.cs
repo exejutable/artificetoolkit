@@ -1,13 +1,12 @@
-using CustomAttributes;
-using Editor.Artifice_CommonResources;
-using Editor.Artifice_VisualElements;
-using Editor.Artifice_VisualElements.Artifice_VisualElement_InfoBox;
+using ArtificeToolkit.Attributes;
+using ArtificeToolkit.Editor.Resources;
+using ArtificeToolkit.Editor.VisualElements;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_PreviewScriptableAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_PreviewScriptableAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(PreviewScriptableAttribute))]
     public class Artifice_CustomAttributeDrawer_PreviewScriptableAttribute : Artifice_CustomAttributeDrawer, Artifice_IPersistence

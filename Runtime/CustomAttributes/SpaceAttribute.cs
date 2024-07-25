@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     /// <summary> Adds space in the given direction. </summary>
     public class SpaceAttribute : CustomAttribute

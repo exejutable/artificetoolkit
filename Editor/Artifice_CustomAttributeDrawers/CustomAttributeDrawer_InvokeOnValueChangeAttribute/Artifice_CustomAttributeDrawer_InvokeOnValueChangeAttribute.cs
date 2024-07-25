@@ -1,9 +1,9 @@
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_InvokeOnValueChangeAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_InvokeOnValueChangeAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(InvokeOnValueChangeAttribute))]
     public class Artifice_CustomAttributeDrawer_InvokeOnValueChangeAttribute : Artifice_CustomAttributeDrawer

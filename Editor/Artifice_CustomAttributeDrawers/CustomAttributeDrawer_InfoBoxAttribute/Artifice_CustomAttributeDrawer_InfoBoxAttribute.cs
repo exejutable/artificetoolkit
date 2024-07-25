@@ -1,12 +1,12 @@
 using System;
-using CustomAttributes;
-using Editor.Artifice_CommonResources;
-using Editor.Artifice_VisualElements.Artifice_VisualElement_InfoBox;
+using ArtificeToolkit.Attributes;
+using ArtificeToolkit.Editor.Resources;
+using ArtificeToolkit.Editor.VisualElements;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_InfoBoxAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_InfoBoxAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(InfoBoxAttribute))]
     public class Artifice_CustomAttributeDrawer_InfoBoxAttribute : Artifice_CustomAttributeDrawer

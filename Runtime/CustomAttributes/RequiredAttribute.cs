@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     public class RequiredAttribute : ValidatorAttribute
     {

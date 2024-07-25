@@ -1,6 +1,6 @@
 using System;
 
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     [AttributeUsage(AttributeTargets.Field)]
     public class TableListAttribute : Attribute

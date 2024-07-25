@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 
-namespace Editor.Artifice_ArtificeListView.ArtificeTableListView
+namespace ArtificeToolkit.Editor
 {
     /// <summary> This class is used to render arrays and lists in a way the supports CustomAttributes and offers more functionality than Unity's default lists. </summary>
     /// <remarks><see cref="ArtificeDrawer"/></remarks>

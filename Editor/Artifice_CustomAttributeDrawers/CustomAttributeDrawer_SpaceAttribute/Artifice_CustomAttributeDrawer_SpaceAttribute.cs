@@ -1,8 +1,8 @@
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_SpaceAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_SpaceAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(SpaceAttribute))]
     public class Artifice_CustomAttributeDrawer_SpaceAttribute : Artifice_CustomAttributeDrawer

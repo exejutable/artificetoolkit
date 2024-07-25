@@ -3,9 +3,9 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using RangeAttribute = CustomAttributes.RangeAttribute;
+using RangeAttribute = ArtificeToolkit.Attributes.RangeAttribute;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_RangeAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_RangeAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(RangeAttribute))]
     public class Artifice_CustomAttributeDrawer_RangeAttribute : Artifice_CustomAttributeDrawer

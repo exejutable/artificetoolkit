@@ -1,9 +1,9 @@
 using System;
-using Editor.Artifice_SerializedDictionary;
+using ArtificeToolkit.Editor.Artifice_SerializedDictionary;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
+namespace ArtificeToolkit.Editor
 {
     [Serializable]
     [FilePath("Artifice/PersistantData.save", FilePathAttribute.Location.PreferencesFolder)]

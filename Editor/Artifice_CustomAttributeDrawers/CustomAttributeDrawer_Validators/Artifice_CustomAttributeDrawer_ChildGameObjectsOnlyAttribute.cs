@@ -1,11 +1,11 @@
 using System;
-using CustomAttributes;
-using Editor.Artifice_CommonResources;
+using ArtificeToolkit.Attributes;
+using ArtificeToolkit.Editor.Resources;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
 {
     [Artifice_CustomAttributeDrawer(typeof(ChildGameObjectsOnlyAttribute))]
     public class Artifice_CustomAttributeDrawer_ChildGameObjectsOnlyAttribute : Artifice_CustomAttributeDrawer_Validator_BASE

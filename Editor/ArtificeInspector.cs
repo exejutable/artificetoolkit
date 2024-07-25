@@ -1,4 +1,4 @@
-using Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups;
+using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 // ReSharper disable InvertIf
 // ReSharper disable MemberCanBeMadeStatic.Local
 
-namespace Editor
+namespace ArtificeToolkit.Editor
 {
     /// <summary> Propagates rendering to the <see cref="ArtificeDrawer"/></summary>
     [CustomEditor(typeof(Object), true), CanEditMultipleObjects]

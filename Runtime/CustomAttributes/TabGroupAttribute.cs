@@ -1,4 +1,4 @@
-namespace CustomAttributes
+namespace ArtificeToolkit.Attributes
 {
     public class TabGroupAttribute : GroupAttribute
     {

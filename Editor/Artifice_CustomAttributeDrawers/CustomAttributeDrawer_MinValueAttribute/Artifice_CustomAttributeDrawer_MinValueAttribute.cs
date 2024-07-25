@@ -1,11 +1,11 @@
 using System;
-using CustomAttributes;
+using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_MinValueAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_MinValueAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(MinValueAttribute))]
     public class Artifice_CustomAttributeDrawer_MinValueAttribute : Artifice_CustomAttributeDrawer

@@ -1,4 +1,4 @@
-namespace Editor
+namespace ArtificeToolkit.Editor
 {
     public interface Artifice_IPersistence
     {
