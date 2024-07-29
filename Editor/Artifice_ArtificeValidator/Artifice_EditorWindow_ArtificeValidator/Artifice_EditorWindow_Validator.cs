@@ -6,6 +6,7 @@ using ArtificeToolkit.Editor.Resources;
 using ArtificeToolkit.Editor.VisualElements;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -20,8 +21,8 @@ namespace ArtificeToolkit.Editor
 {
     public class Artifice_EditorWindow_Validator : EditorWindow, IHasCustomMenu
     {   
-        #region Menu Item Constants
-
+        #region Constants
+        
         private const string MenuItemPath = "Artifice Drawer/Validator %&v";
 
         #endregion
@@ -292,10 +293,8 @@ namespace ArtificeToolkit.Editor
         // Performance Bounds
         private bool _isRefreshing = false;
 
-        // Composite disposable for UI reset
-        // private CompositeDisposable _compositeDisposable;
-
         // Used for editor prefs
+        public const string PrefabStageKey = "PrefabStage";
         public const string ConfigPathKey = "ArtificeValidator/SettingsPath";
         private const string ConfigFolderPath = "Assets/Editor/ArtificeToolkit";
         
@@ -469,7 +468,14 @@ namespace ArtificeToolkit.Editor
             _filteredLogs.Clear();
             foreach (var log in _logs)
             {
-                if(_filters.All(filter => filter.Invoke(log)))
+                // If a prefab stage is open, use prefab stage filter.
+                if (PrefabStageUtility.GetCurrentPrefabStage() != null)
+                {
+                    if(OnPrefabStageFilter(log))
+                        _filteredLogs.Add(log);
+                }
+                // Else, use all normal filters.
+                else if(_filters.All(filter => filter.Invoke(log)))
                     _filteredLogs.Add(log);
             }
             _logsListView?.RefreshItems();
@@ -829,6 +835,13 @@ namespace ArtificeToolkit.Editor
             return false;
         }
             
+        private bool OnPrefabStageFilter(ValidatorLog log)
+        {
+            return log.originLocationName == PrefabStageKey &&
+                OnSelectedValidatorTypesFilter(log) &&
+                OnLogTypeTogglesFilter(log);
+        }
+        
         #endregion
         
         #region Custom Menu Implementation

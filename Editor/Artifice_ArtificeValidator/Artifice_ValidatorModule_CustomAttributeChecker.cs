@@ -5,6 +5,7 @@ using System.Linq;
 using ArtificeToolkit.Attributes;
 using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace ArtificeToolkit.Editor
@@ -47,6 +48,8 @@ namespace ArtificeToolkit.Editor
             // Create an iteration stack to run through all serialized properties (even nested ones)
             var queue = new Queue<SerializedProperty>();
             foreach (var serializedProperty in FindPropertiesInTrackedScenes())
+                queue.Enqueue(serializedProperty);
+            foreach (var serializedProperty in FindPropertiesInPrefabStage())
                 queue.Enqueue(serializedProperty);
             foreach (var serializedProperty in FindPropertiesInTrackedAssets())
                 queue.Enqueue(serializedProperty);
@@ -128,7 +131,15 @@ namespace ArtificeToolkit.Editor
                 if (target == null)
                     continue;
 
+                // Determine origin location name
+                var originLocationName = "";
                 var assetPath = AssetDatabase.GetAssetPath(target);
+                if (string.IsNullOrEmpty(assetPath) == false)
+                    originLocationName = assetPath;
+                else if(PrefabStageUtility.GetCurrentPrefabStage() != null && PrefabStageUtility.GetCurrentPrefabStage().IsPartOfPrefabContents(target.gameObject))
+                    originLocationName = Artifice_EditorWindow_Validator.PrefabStageKey;
+                else
+                    originLocationName = target.gameObject.scene.name;
 
                 // Create log
                 var log = new ValidatorLog(
@@ -137,7 +148,7 @@ namespace ArtificeToolkit.Editor
                     drawer.LogType,
                     typeof(Artifice_ValidatorModule_CustomAttributeChecker),
                     property.serializedObject.targetObject,
-                    string.IsNullOrEmpty(assetPath) ? target.gameObject.scene.name : assetPath
+                    originLocationName
                 );
 
                 // If not valid, add it to list
