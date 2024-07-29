@@ -54,9 +54,10 @@ namespace ArtificeToolkit.Editor.Resources
             MaximizeIcon = FindAndLoadSprite("maximize");
         }
 
+        /// <summary>Searches asset database with artifice_ prefix and t:Sprite parameters.</summary>
         private Sprite FindAndLoadSprite(string spriteName)
         {
-            var guid = AssetDatabase.FindAssets($"{spriteName} t:Sprite").FirstOrDefault();
+            var guid = AssetDatabase.FindAssets($"artifice_{spriteName} t:Sprite").FirstOrDefault();
             var path = AssetDatabase.GUIDToAssetPath(guid);
             return AssetDatabase.LoadAssetAtPath<Sprite>(path); 
         }
