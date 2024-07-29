@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -47,10 +48,13 @@ namespace ArtificeToolkit.Editor
             const string configKeyPath = Artifice_EditorWindow_Validator.ConfigPathKey;
             return AssetDatabase.LoadAssetAtPath<Artifice_SCR_ValidatorConfig>(EditorPrefs.GetString(configKeyPath));
         } 
+        
+        /// <summary>Returns a list of all serialized properties found in open and config-selected scenes.</summary>
         protected List<SerializedProperty> FindPropertiesInTrackedScenes()
         {
             var list = new List<SerializedProperty>();
 
+            // For open, tracked scenes.
             foreach (var pair in GetConfig().scenesMap)
             {
                 var sceneName = pair.Key;
@@ -61,9 +65,31 @@ namespace ArtificeToolkit.Editor
                     foreach (var monoBehaviour in Object.FindObjectsOfType<MonoBehaviour>(true))
                         list.Add(new SerializedObject(monoBehaviour).GetIterator());
             }
-                
+            
             return list;
         }
+
+        /// <summary>Returns a list of all serialized properties found in prefab stage.</summary>
+        protected List<SerializedProperty> FindPropertiesInPrefabStage()
+        {
+            var list = new List<SerializedProperty>();
+
+            // For prefab stage
+            var prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+            if (prefabStage != null)
+            {
+                foreach (var rootGameObject in prefabStage.prefabContentsRoot.GetComponentsInChildren<MonoBehaviour>(true))
+                {
+                    var serializedObject = new SerializedObject(rootGameObject);
+                    var iterator = serializedObject.GetIterator();
+                    list.Add(iterator);
+                }
+            }
+            
+            return list;
+        }
+        
+        /// <summary>Returns a list of all serialized properties found in tracked assets.</summary>
         protected List<SerializedProperty> FindPropertiesInTrackedAssets()
         {
             var list = new List<SerializedProperty>();
