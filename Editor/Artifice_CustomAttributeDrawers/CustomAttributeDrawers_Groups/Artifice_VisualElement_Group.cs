@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     /// <summary> Base class for all Group visual elements. Handles content container logic for the subclasses </summary>
-    public abstract class Artifice_VisualElement_Group : VisualElement, Artifice_IPersistence
+    public abstract class Artifice_VisualElement_Group : VisualElement, IArtifice_Persistence
     {
         #region FIELDS
         

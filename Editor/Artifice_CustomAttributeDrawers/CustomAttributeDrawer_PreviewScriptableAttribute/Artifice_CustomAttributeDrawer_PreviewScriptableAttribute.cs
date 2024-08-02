@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_PreviewScriptableAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(PreviewScriptableAttribute))]
-    public class Artifice_CustomAttributeDrawer_PreviewScriptableAttribute : Artifice_CustomAttributeDrawer, Artifice_IPersistence
+    public class Artifice_CustomAttributeDrawer_PreviewScriptableAttribute : Artifice_CustomAttributeDrawer, IArtifice_Persistence
     {
         private VisualElement _wrapper;
         private VisualElement _header;
