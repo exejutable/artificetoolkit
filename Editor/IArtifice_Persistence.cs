@@ -1,6 +1,6 @@
 namespace ArtificeToolkit.Editor
 {
-    public interface Artifice_IPersistence
+    public interface IArtifice_Persistence
     {
         public string ViewPersistenceKey { get; set; }
 
