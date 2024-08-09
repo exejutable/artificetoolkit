@@ -19,15 +19,6 @@ namespace ArtificeToolkit.Editor
 {
     public sealed class ArtificeDrawer : IDisposable
     {
-        #region Menu Item Constants
-
-        private const string ArtificeDrawerOn = "Artifice Drawer/" + "\u2712 Toggle ArtificeDrawer/On";
-        private const string ArtificeDrawerOff = "Artifice Drawer/" +"\u2712 Toggle ArtificeDrawer/Off";
-        private const string ArtificeDocumentation = "Artifice Drawer/" +"\ud83d\udcd6 Documentation...";
-        private const string ArtificeDocumentationURL = "https://docs.google.com/document/d/1eZkRUcecHCIbccDg15Pwly1QimX_DsiZ4inF5tP_JZE/edit#heading=h.47aofgu58aiq";
-
-        #endregion
-        
         #region FIELDS
 
         private readonly Stack<IDisposable> _disposableStack = new();
@@ -74,47 +65,7 @@ namespace ArtificeToolkit.Editor
                 "Serialized Data Mode Controller",
             };
         }
-
-        #region MenuItems
-
-        [MenuItem(ArtificeDrawerOn, true, 0)]
-        private static bool ToggleOnCheckmark()
-        {
-            Menu.SetChecked(ArtificeDrawerOn, Artifice_Utilities.ArtificeDrawerEnabled);
-            return true;
-        }
-
-        /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
-        [MenuItem(ArtificeDrawerOn, priority = 11)]
-        private static void ToggleArtificeDrawerOn()
-        {
-            Artifice_Utilities.ArtificeDrawerEnabled = true;
-            Debug.Log("<color=lime>[Artifice Inspector]</color> Enabled");
-        }
         
-        /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
-        [MenuItem(ArtificeDrawerOff, priority = 11)]
-        private static void ToggleArtificeDrawerOff()
-        {
-            Artifice_Utilities.ArtificeDrawerEnabled = false;
-            Debug.Log($"<color=orange>[Artifice Inspector]</color> Disabled");
-        }
-        
-        [MenuItem(ArtificeDrawerOff, true, 0)]
-        private static bool ToggleOffCheckmark()
-        {
-            Menu.SetChecked(ArtificeDrawerOff, !Artifice_Utilities.ArtificeDrawerEnabled);
-            return true;
-        }
-
-        [MenuItem(ArtificeDocumentation)]
-        private static void OpenArtificeDocumentationURL()
-        {
-            Application.OpenURL(ArtificeDocumentationURL);
-        }
-
-        #endregion
-
         /// <summary> Returns the ArtificeInspector of a SerializedObject. </summary>
         public VisualElement CreateInspectorGUI(SerializedObject serializedObject)
         {
@@ -334,7 +285,7 @@ namespace ArtificeToolkit.Editor
 
             indicator.RegisterCallback<ClickEvent>(evt =>
             {
-                Artifice_Utilities.ArtificeDrawerEnabled = !Artifice_Utilities.ArtificeDrawerEnabled;
+                Artifice_Utilities.ToggleArtificeDrawer(!Artifice_Utilities.ArtificeDrawerEnabled);
                 indicator.RemoveFromClassList(!Artifice_Utilities.ArtificeDrawerEnabled ? "indicator-enabled" : "indicator-disabled");
                 indicator.AddToClassList(Artifice_Utilities.ArtificeDrawerEnabled ? "indicator-enabled" : "indicator-disabled");
             });
