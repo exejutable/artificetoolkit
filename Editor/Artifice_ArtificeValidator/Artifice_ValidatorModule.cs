@@ -16,7 +16,10 @@ namespace ArtificeToolkit.Editor
 
         /// <summary>Display name of module</summary>
         public virtual string DisplayName { get; protected set; } = "Undefined";
-        
+
+        /// <summary>If true, its displayed on the filters list. Otherwise its hidden, but always runs.</summary>
+        public virtual bool DisplayOnFilters { get; protected set; } = true;
+
         /// <summary>When set to true, module will only run with dedicated button call</summary>
         public virtual bool OnDemandOnlyModule { get; protected set; } = false;
         

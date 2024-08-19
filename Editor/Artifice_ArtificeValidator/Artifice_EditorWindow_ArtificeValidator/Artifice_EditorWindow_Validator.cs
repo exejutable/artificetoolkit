@@ -739,32 +739,39 @@ namespace ArtificeToolkit.Editor
             
             // Add list view
             var validatorModules = _validatorModules;
+            
             var listView = new ListView(
                 validatorModules,
                 26,
                 () => new ToggleListItem(),
                 (elem, i) =>
                 {
-                    var validatorType = validatorModules[i].GetType().Name;
+                    var validatorTypeName = validatorModules[i].GetType().Name;
+
+                    // Change display mode based on display on filters.
+                    if (validatorModules[i].DisplayOnFilters)
+                        elem.style.display = DisplayStyle.Flex;
+                    else
+                        elem.style.display = DisplayStyle.None;
                     
                     var itemElem = (ToggleListItem)elem;
                     itemElem.Set(
-                        _config.validatorTypesMap[validatorType],
+                        _config.validatorTypesMap[validatorTypeName],
                         Artifice_SCR_CommonResourcesHolder.instance.ScriptIcon,
                         validatorModules[i].DisplayName
                     );
                     
                     itemElem.Toggle.RegisterValueChangedCallback(evt =>
                     {
-                        _config.validatorTypesMap[validatorType] = evt.newValue;
+                        _config.validatorTypesMap[validatorTypeName] = evt.newValue;
                         RefreshFilteredLogs();
                     });
                     
                     // Subscribe to increase count
                     OnLogCounterRefreshedEvent.AddListener(() =>
                     {
-                        if (_logCounters.validatorTypesMap.ContainsKey(validatorType))
-                            itemElem.CountLabel.text = _logCounters.validatorTypesMap[validatorType].ToString();
+                        if (_logCounters.validatorTypesMap.ContainsKey(validatorTypeName))
+                            itemElem.CountLabel.text = _logCounters.validatorTypesMap[validatorTypeName].ToString();
                         else
                             itemElem.CountLabel.text = "0";
                     });
