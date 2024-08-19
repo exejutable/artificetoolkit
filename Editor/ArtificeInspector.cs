@@ -1,7 +1,7 @@
-using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups;
+using System;
 using UnityEditor;
-using UnityEngine;
 using UnityEngine.UIElements;
+using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups;
 
 // ReSharper disable InvertIf
 // ReSharper disable MemberCanBeMadeStatic.Local
@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 namespace ArtificeToolkit.Editor
 {
     /// <summary> Propagates rendering to the <see cref="ArtificeDrawer"/></summary>
-    [CustomEditor(typeof(Object), true), CanEditMultipleObjects]
+// [CustomEditor(typeof(Object), true), CanEditMultipleObjects]
     public class ArtificeInspector : UnityEditor.Editor
     {
         #region FIELDS
