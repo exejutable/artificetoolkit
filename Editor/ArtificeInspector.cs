@@ -1,6 +1,4 @@
 using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups;
-using UnityEditor;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 // ReSharper disable InvertIf
