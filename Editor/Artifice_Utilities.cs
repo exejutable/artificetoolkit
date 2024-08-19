@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers;
-using ArtificeToolkit.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -56,6 +58,99 @@ namespace ArtificeToolkit.Editor
             
             _soStylesHolder = AssetDatabase.LoadAssetAtPath<StylesHolder>(AssetDatabase.GUIDToAssetPath(styleHolderPaths[0]));
             InitializeDrawerMap();
+        }
+
+        #endregion
+        
+        #region MenuItems
+
+        private const string ArtificeDrawerOn = "Artifice Drawer/" + "\u2712 Toggle ArtificeDrawer/On";
+        private const string ArtificeDrawerOff = "Artifice Drawer/" +"\u2712 Toggle ArtificeDrawer/Off";
+        private const string ArtificeDocumentation = "Artifice Drawer/" +"\ud83d\udcd6 Documentation...";
+        private const string ArtificeDocumentationURL = "https://docs.google.com/document/d/1eZkRUcecHCIbccDg15Pwly1QimX_DsiZ4inF5tP_JZE/edit#heading=h.47aofgu58aiq";
+        
+        [MenuItem(ArtificeDrawerOn, true, 0)]
+        private static bool ToggleOnCheckmark()
+        {
+            Menu.SetChecked(ArtificeDrawerOn, ArtificeDrawerEnabled);
+            return true;
+        }
+
+        /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
+        [MenuItem(ArtificeDrawerOn, priority = 11)]
+        private static void ToggleArtificeDrawerOn()
+        {
+            ToggleArtificeDrawer(true);
+            Debug.Log("<color=lime>[Artifice Inspector]</color> Enabled");
+        }
+        
+        /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
+        [MenuItem(ArtificeDrawerOff, priority = 11)]
+        private static void ToggleArtificeDrawerOff()
+        {
+            ToggleArtificeDrawer(false);
+            Debug.Log($"<color=orange>[Artifice Inspector]</color> Disabled");
+        }
+        
+        [MenuItem(ArtificeDrawerOff, true, 0)]
+        private static bool ToggleOffCheckmark()
+        {
+            Menu.SetChecked(ArtificeDrawerOff, !ArtificeDrawerEnabled);
+            return true;
+        }
+        
+        [MenuItem(ArtificeDocumentation)]
+        private static void OpenArtificeDocumentationURL()
+        {
+            Application.OpenURL(ArtificeDocumentationURL);
+        }
+        
+        public static void ToggleArtificeDrawer(bool toggle)
+        {
+            var guid = AssetDatabase.FindAssets("ArtificeInspector").FirstOrDefault();
+            if (guid == null)
+            {
+                Debug.Log("ArtificeToolkit: Cannot find ArtificeInspector script. This makes it unable to turn on/off the ArtificeToolkit.");
+                return;
+            }
+            
+            var filePath = AssetDatabase.GUIDToAssetPath(guid);
+            if (File.Exists(filePath))
+            {
+                bool hasChangedFile = false;
+                var lines = File.ReadAllLines(filePath);
+
+                // Set Regex pattern
+                var customEditorAttributePattern = @"^\s*(//\s*)?\[CustomEditor\(typeof\(Object\), true\), CanEditMultipleObjects\]\s*$";
+                for (var i = 0; i < lines.Length; i++)
+                {
+                    if (!Regex.IsMatch(lines[i], customEditorAttributePattern)) 
+                        continue;
+                    
+                    // Check if the line is already commented
+                    if (toggle && lines[i].TrimStart().Contains("//"))
+                    {
+                        // Uncomment the line
+                        lines[i] = lines[i].Substring(2);
+                        hasChangedFile = true;
+                    }
+                    else if(!toggle && !lines[i].TrimStart().StartsWith("//"))
+                    {
+                        // Comment out the line
+                        lines[i] = "//" + lines[i];
+                        hasChangedFile = true;
+                    }
+                    
+                    break;
+                }
+                
+                if (hasChangedFile)
+                {
+                    ArtificeDrawerEnabled = toggle;
+                    File.WriteAllLines(filePath, lines);
+                    AssetDatabase.Refresh();
+                }
+            }
         }
 
         #endregion

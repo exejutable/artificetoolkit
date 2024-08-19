@@ -1,6 +1,6 @@
 {
   "name": "com.abzorba.artificetoolkit",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "displayName": "Artifice Toolkit",
   "description": "The Artifice Toolkit has at its core the Artifice Drawer, a tool that allows you to easily customize the inspector of any MonoBehaviour script with ease.",
   "unity": "2022.3",
