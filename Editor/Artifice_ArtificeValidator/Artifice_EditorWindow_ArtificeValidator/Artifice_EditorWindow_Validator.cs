@@ -531,7 +531,12 @@ namespace ArtificeToolkit.Editor
             container.Add(runScan);
             
             // Autorun toggle
-            var autorunButton = new Artifice_VisualElement_ToggleButton("Autorun", Artifice_SCR_CommonResourcesHolder.instance.PlayIcon, _config.autorun);
+            var autorunButton = new Artifice_VisualElement_ToggleButton(
+                "Autorun",
+                Artifice_SCR_CommonResourcesHolder.instance.PauseIcon,
+                Artifice_SCR_CommonResourcesHolder.instance.PlayIcon,
+                _config.autorun
+            );
             autorunButton.OnButtonPressed += value => _config.autorun = value;
             container.Add(autorunButton);
             
@@ -599,7 +604,7 @@ namespace ArtificeToolkit.Editor
                 (elem, i) =>
                 {
                     var itemElem = (ToggleListItem)elem;
-                    itemElem.Set(
+                    itemElem.Set(   
                         _config.scenesMap[scenes[i]],
                         Artifice_SCR_CommonResourcesHolder.instance.UnityIcon,
                         scenes[i]
