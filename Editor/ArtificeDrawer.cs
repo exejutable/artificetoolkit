@@ -17,6 +17,7 @@ using SpaceAttribute = ArtificeToolkit.Attributes.SpaceAttribute;
 
 namespace ArtificeToolkit.Editor
 {
+    [InitializeOnLoad]
     public sealed class ArtificeDrawer : IDisposable
     {
         #region FIELDS
@@ -43,6 +44,10 @@ namespace ArtificeToolkit.Editor
         /// <summary> Static constructor initializes ArrayAppliedCustomAttributes variable since its reused for all artifice drawer instances. </summary>
         static ArtificeDrawer()
         {
+            // Refresh toggle of artifice drawer to secure consistency throughout package updates.
+            Artifice_Utilities.ToggleArtificeDrawer(Artifice_Utilities.ArtificeDrawerEnabled);
+            
+            // Initialize array applied custom attributes
             ArrayAppliedCustomAttributes = new HashSet<Type>
             {
                 typeof(BoxGroupAttribute),
