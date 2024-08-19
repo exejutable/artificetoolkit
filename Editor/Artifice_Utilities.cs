@@ -117,6 +117,7 @@ namespace ArtificeToolkit.Editor
             var filePath = AssetDatabase.GUIDToAssetPath(guid);
             if (File.Exists(filePath))
             {
+                bool hasChangedFile = false;
                 var lines = File.ReadAllLines(filePath);
 
                 // Set Regex pattern
@@ -131,20 +132,24 @@ namespace ArtificeToolkit.Editor
                     {
                         // Uncomment the line
                         lines[i] = lines[i].Substring(2);
+                        hasChangedFile = true;
                     }
                     else if(!toggle && !lines[i].TrimStart().StartsWith("//"))
                     {
                         // Comment out the line
                         lines[i] = "//" + lines[i];
+                        hasChangedFile = true;
                     }
                     
                     break;
                 }
-
-                ArtificeDrawerEnabled = toggle;
                 
-                File.WriteAllLines(filePath, lines);
-                AssetDatabase.Refresh();
+                if (hasChangedFile)
+                {
+                    ArtificeDrawerEnabled = toggle;
+                    File.WriteAllLines(filePath, lines);
+                    AssetDatabase.Refresh();
+                }
             }
         }
 
