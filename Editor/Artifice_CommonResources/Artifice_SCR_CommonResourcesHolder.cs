@@ -23,6 +23,7 @@ namespace ArtificeToolkit.Editor.Resources
         public Sprite GearIcon { get; private set; }
         
         public Sprite PlayIcon { get; private set; }
+        public Sprite PauseIcon { get; private set; }
         public Sprite RefreshIcon { get; private set; }
         
         
@@ -48,6 +49,7 @@ namespace ArtificeToolkit.Editor.Resources
             
             GearIcon = FindAndLoadSprite("gear");
             PlayIcon = FindAndLoadSprite("play");
+            PauseIcon = FindAndLoadSprite("pause");
             RefreshIcon = FindAndLoadSprite("refresh");
             
             StarIcon = FindAndLoadSprite("star");
