@@ -20,8 +20,9 @@ The Artifice Toolkit offers two powerful tools:
 2. Artifice Validator: Attach validator attributes to your serialized properties to always make sure certain rules are being followed. Don's waste time on absent minded mistakes ever again.
 
 ## How to install into your Unity project?
-Simply add it as a Unity Package through git repository link.
+Simply add it as a Unity Package through git repository link. Curretly this can only be done through a special link since the project is private. After open-sourcing it, it will be done through the git clone link.
 
+![](https://i.imgur.com/ejL33Or.png)
 
 <!-- CUSTOM ATTRIBUTE CATEGORIES AND LINKS -->
 # Custom Attributes
@@ -87,13 +88,11 @@ private int first;
 [SerializeField, BoxGroup("GroupA")]
 private int second;
 
-[SerializeField, FoldoutGroup("GroupA/GroupB")]
+[SerializeField, BoxGroup("GroupA/GroupB")]
 private int third;
+```  
+![box-group-example](https://i.imgur.com/02LxpO6.jpg)
 
-[SerializeField, FoldoutGroup("GroupA/GroupB/GroupC")]
-private int forth;
-``` 
-IMAGE
 
 ### Foldout Group
 The FoldoutGroup extends the BoxGroup by allowing the user to collapse the group if he does not care about it. This information is also persistent per serialized object.
@@ -111,7 +110,7 @@ private int third;
 [SerializeField, FoldoutGroup("GroupA/GroupB/GroupC")]
 private int forth;
 ```
-IMAGE
+![foldout-group-example](https://i.imgur.com/AQP7ON2.jpg)
 
 ### Tab Group
 The TabGroup allows you to create tabs inside of the Unity inspector. The syntax is more comlex than Box and Foldout groups but it is well worth it.
@@ -129,7 +128,7 @@ private int third;
 [SerializeField, TabGroup("Example", "SectionB")]
 private int forth;
 ```
-IMAGE
+![tab-group-example](https://i.imgur.com/pSx1xmk.jpg)
 
 ### Horizontal Group
 The HorizontalGroup attribute allows you to align multiple properties into a single line, instead of splitting them as it is done by default. Note, that the Horizontal and Vertical groups do not show their titles and are solely used for structuring.
@@ -141,7 +140,7 @@ private List<int> leftColumn;
 [SerializeField, HorizontalGroup("horizontal1")]
 private List<int> rightColumn;
 ```
-IMAGE
+![horizontal-group-example](https://i.imgur.com/VWq8iQU.png)
 
 ### Vertical Group
 The Vertical Group is only useful inside of a horizontal group, to dictate a vertical column of properties inside of it.
@@ -156,22 +155,54 @@ private int leftColumnInteger;
 [SerializeField, HorizontalGroup("horizontal1")]
 private List<int> rightColumn;
 ```
-IMAGE
+![vertical-group-example](https://i.imgur.com/ESVKIgs.jpg)
 
 ---
 
 <!-- VALIDATION ATTRIBUTES -->
 ### Required
+The Required field prompts the inspector with an error indicator if the property has not been set. This is GREATLY important in Unity, where it is common to initialize fields and dependencies through [SerializedField] properties. This is makes the Required field the most important and most commonly used validation attribute.
+
+```c#
+[SerializeField, Required] 
+private Transform requiredFieldExample;
+```
+
+![required-example](https://i.imgur.com/gi7w0Ga.png)
+
+IMAGE
 
 ### AssetOnly
+AssetOnly validates that the value of the serialized property is an asset. This is helpful when you have a field for prefabs that will be later on instantiated. It is common to drag a GameObject from the scene, instead of the assets.
+
+```c#
+[SerializeField, Required, AssetOnly] 
+private Transform requiredAssetOnlyExample;
+```
+
+![assetonly-example](https://i.imgur.com/5USbcuH.png)
 
 ### SceneObjectOnly
+Works exactly like the [AssetOnly](#assetonly) attribute but in-reverse. This validates that the serialized property value is of an instantiated gameobject in any loaded scene.
+
+```c#
+[SerializeField, Required, SceneObjectOnly] 
+private Transform requiredSceneOnlyExample;
+```
+
+![sceneobjectonly-example](https://i.imgur.com/PrHKP3a.png)
 
 ### ChildGameObjectOnly
+In Unity, it is also common to have scripts which require references from the children of the GameObject. Use the ChildGameObjectOnly attribute to assert this behaviour. 
 
-### MinValue
+In addition, when this attribute is used, the inspector is further enchanced allowing for optimized search of the hierarchy, previewing only the valid GameObject/Scripts based on the type of the serialized property..
 
-### MaxValue
+```c#
+[SerializeField, Required, ChildGameObjectOnly] 
+private Transform requiredChildOnlyExample;
+```
+
+![sceneobjectonly-example](https://i.imgur.com/aGUDBxA.png)
 
 ---
 
@@ -200,6 +231,21 @@ IMAGE
 ### ConditionalInfoBox
 
 ### MeasureUnit
+
+### MinValue
+MinValue asserts a minimum int or float value used 
+
+```c#
+[SerializeField, MinValue(0)] 
+private int minValueExample;
+```
+
+### MaxValue
+
+```c#
+[SerializeField, MaxValue(50)] 
+private int maxValueExample;
+```
 
 ---
 
