@@ -221,7 +221,8 @@ private int age;
 private string city;
 ```
 
-IMAGE
+![title-example](https://i.imgur.com/n820VVP.png)
+
 
 ### EnumToggle
 EnumToggle converts the convential for of enum rendering to a multi-button preview. The [Flags] attribute is also supported. Note, that this is useful mostly in enums with a small number of different values.
