@@ -293,31 +293,33 @@ private List<SCR_Character> mainCharacter;
 
 <!-- Miscellaneous -->
 ### Space
+The Space attribute can receive up to four parameters reflecting the margin in pixels you want your element to have from top, bottom, left, right directions.
 
 ### Range
+The Range attribute works on integers and floats and allows you to control them through a sliding bar. For this, a min and max value are required.
 
 ### HideLabel
+The HideLabel attribute as the name suggests, finds and dynamically hides the label of the label.
 
 ### InfoBox
+The InfoBox allows you to add informational or warning prompts to a property. This could be useful for example to document or explain some rules regarding a specific value.
+
+IMAGE
 
 ### ConditionalInfoBox
+The ConditionalInfoBox allows you to optionally show an InfoBox when some condition is met, in a similar fashion as [EnableIf](#enableif).
 
 ### MeasureUnit
+MeasureUnit appends any string passed to it at the right of a property. This can be commonly used to indicate whether a time value is measured in seconds or milliseconds! It can even be used as a self documented part of the code it self.
 
 ### MinValue
-MinValue asserts a minimum int or float value used 
+MinValue asserts a minimum int or float value to the serialized property. 
 
-```c#
-[SerializeField, MinValue(0)] 
-private int minValueExample;
-```
+Note: Currently this only works while the inspector is open. There is nothing stoping the value of going below the minimum value if the insepctor is closed.
 
 ### MaxValue
+As [MinValue](#minvalue) but for a maximum value.
 
-```c#
-[SerializeField, MaxValue(50)] 
-private int maxValueExample;
-```
 
 ---
 
@@ -325,8 +327,8 @@ private int maxValueExample;
 ## Non-Polished Attributes (WIP)
 ### TableList
 
-### 
 
 
 <!-- ARTIFICE VALIDATOR -->
 # Artifice Validator
+WIP
