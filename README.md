@@ -256,11 +256,38 @@ private ParticleSystem _prefabOnDeathParticles;
 ![enableif-example-on](https://i.imgur.com/pVnQjUB.png)
 
 
-### PreviewScriptable
-
-
 ### PreviewSprite
+PreviewSprite works only on the Sprite and Texture2D serialized properties. It renders an enlarged image of the selected value.
 
+```c#
+[SerializeField, PreviewSprite] 
+private Sprite characterPortrait;
+```
+
+![previewsprite-example](https://i.imgur.com/fUDdNQK.png)
+
+### PreviewScriptable
+This is one of the most magical attributes in the Artifice Toolkit. It allows you to dynamically instantiate a scriptable object inspector inside of another inspector. This can even work in a nested manner, previewing scriptable objects inside of other scriptable objects etc.
+
+```c#
+[CreateAssetMenu(menuName = "ScriptableObject/Character")]
+public class SCR_Character : ScriptableObject
+{
+    [PreviewSprite, HorizontalGroup("row"), HideLabel]
+    public Texture2D icon;
+
+    [Title("First Name"), HorizontalGroup("row"), VerticalGroup("col"), HideLabel]
+    public string firstName;
+        
+    [Title("Last Name"), HorizontalGroup("row"), VerticalGroup("col"), HideLabel]
+    public string lastName;
+}
+
+[SerializeField, PreviewScriptable]
+private List<SCR_Character> mainCharacter;
+```
+
+![preview-scriptable-example](https://i.imgur.com/36yCplV.gif)
 
 ---
 
