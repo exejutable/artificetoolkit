@@ -108,7 +108,7 @@ private int second;
 private int third;
 
 [SerializeField, FoldoutGroup("GroupA/GroupB/GroupC")]
-private int forth;
+private int fourth;
 ```
 ![foldout-group-example](https://i.imgur.com/AQP7ON2.jpg)
 
@@ -126,7 +126,7 @@ private int second;
 private int third;
 
 [SerializeField, TabGroup("Example", "SectionB")]
-private int forth;
+private int fourth;
 ```
 ![tab-group-example](https://i.imgur.com/pSx1xmk.jpg)
 
@@ -208,14 +208,58 @@ private Transform requiredChildOnlyExample;
 
 <!-- EASY AND ESSENTIALS -->
 ### Title
+The Title attribute allows you to highlight a specific part or property of your inspector. It can also be used in combination with the [HideLabel](#hidelabel) to create a new visual representation of fields as shown below.
+
+```c#
+[SerializeField, Title("Name")]
+private string name;
+
+[SerializeField, Title("Age"), HideLabel, Range(0, 100)]
+private int age;
+
+[SerializeField, Title("City"), HideLabel]
+private string city;
+```
+
+IMAGE
 
 ### EnumToggle
+EnumToggle converts the convential for of enum rendering to a multi-button preview. The [Flags] attribute is also supported. Note, that this is useful mostly in enums with a small number of different values.
+
+```c#
+public enum Directions
+{
+    Up, Down, Left, Right
+}
+
+[SerializeField, EnumToggle] 
+private Directions direction;
+```
+
+![enumtoggle-example](https://i.imgur.com/4MxMSk7.png)
+
 
 ### EnableIf
+This attributes allows you to set an equallity condition using another field in the same scope to dictate where the target property will be shown or not. This is a really usefull attribute to optionally show properties that depend upon a bool check or enum check. 
+
+```c#
+[SerializeField, FoldoutGroup("On Death", GroupColor.Red)]
+private bool shouldSpawnParticlesOnDestroy;
+
+[SerializeField, FoldoutGroup("On Death", GroupColor.Red)]
+[EnableIf(nameof(shouldSpawnParticlesOnDestroy), true)]
+private ParticleSystem _prefabOnDeathParticles;
+```
+
+![enableif-example-off](https://i.imgur.com/uHZSXzr.png)
+![enableif-example-on](https://i.imgur.com/pVnQjUB.png)
+
 
 ### PreviewScriptable
 
+
 ### PreviewSprite
+
 
 ---
 
