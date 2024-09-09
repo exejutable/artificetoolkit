@@ -92,7 +92,7 @@ These attributes can and should be used frequaently. They will at a bare minimum
 
 <!-- GROUP ATTRIBUTES -->
 ### BoxGroup
-The simplest form of a Group attribute is the BoxGroup. Every serialized property of the script will be packaged inside of a group with the given title.
+The simplest form of a Group attribute is the BoxGroup. Every serialized property of the script will be rendered inside of a container with the given title.
 
 ```c#
 [SerializeField, BoxGroup("GroupA")]
@@ -108,7 +108,7 @@ private int third;
 
 
 ### Foldout Group
-The FoldoutGroup extends the BoxGroup by allowing the user to collapse the group if he does not care about it. This information is also persistent per serialized object.
+The FoldoutGroup extends the BoxGroup by allowing the user to collapse the container if he wants to. This information is also persistent per serialized object.
 
 ```c#
 [SerializeField, BoxGroup("GroupA")]
