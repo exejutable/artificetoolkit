@@ -64,20 +64,20 @@ namespace ArtificeToolkit.Editor
         
         #region MenuItems
 
-        private const string ArtificeDrawerOn = "Artifice Drawer/" + "\u2712 Toggle ArtificeDrawer/On";
-        private const string ArtificeDrawerOff = "Artifice Drawer/" +"\u2712 Toggle ArtificeDrawer/Off";
-        private const string ArtificeDocumentation = "Artifice Drawer/" +"\ud83d\udcd6 Documentation...";
+        private const string ArtificeInspectorOn = "Artifice Toolkit/" + "\u2712 Toggle ArtificeInspector/On";
+        private const string ArtificeInspectorOff = "Artifice Toolkit/" +"\u2712 Toggle ArtificeInspector/Off";
+        private const string ArtificeDocumentation = "Artifice Toolkit/" +"\ud83d\udcd6 Documentation...";
         private const string ArtificeDocumentationURL = "https://docs.google.com/document/d/1eZkRUcecHCIbccDg15Pwly1QimX_DsiZ4inF5tP_JZE/edit#heading=h.47aofgu58aiq";
         
-        [MenuItem(ArtificeDrawerOn, true, 0)]
+        [MenuItem(ArtificeInspectorOn, true, 0)]
         private static bool ToggleOnCheckmark()
         {
-            Menu.SetChecked(ArtificeDrawerOn, ArtificeDrawerEnabled);
+            Menu.SetChecked(ArtificeInspectorOn, ArtificeDrawerEnabled);
             return true;
         }
 
         /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
-        [MenuItem(ArtificeDrawerOn, priority = 11)]
+        [MenuItem(ArtificeInspectorOn, priority = 11)]
         private static void ToggleArtificeDrawerOn()
         {
             ToggleArtificeDrawer(true);
@@ -85,17 +85,17 @@ namespace ArtificeToolkit.Editor
         }
         
         /// <summary> Creates a MenuItem to enable and disable the Artifice system. </summary>
-        [MenuItem(ArtificeDrawerOff, priority = 11)]
+        [MenuItem(ArtificeInspectorOff, priority = 11)]
         private static void ToggleArtificeDrawerOff()
         {
             ToggleArtificeDrawer(false);
             Debug.Log($"<color=orange>[Artifice Inspector]</color> Disabled");
         }
         
-        [MenuItem(ArtificeDrawerOff, true, 0)]
+        [MenuItem(ArtificeInspectorOff, true, 0)]
         private static bool ToggleOffCheckmark()
         {
-            Menu.SetChecked(ArtificeDrawerOff, !ArtificeDrawerEnabled);
+            Menu.SetChecked(ArtificeInspectorOff, !ArtificeDrawerEnabled);
             return true;
         }
         
@@ -117,7 +117,7 @@ namespace ArtificeToolkit.Editor
             var filePath = AssetDatabase.GUIDToAssetPath(guid);
             if (File.Exists(filePath))
             {
-                bool hasChangedFile = false;
+                var hasChangedFile = false;
                 var lines = File.ReadAllLines(filePath);
 
                 // Set Regex pattern
@@ -146,6 +146,10 @@ namespace ArtificeToolkit.Editor
                 
                 if (hasChangedFile)
                 {
+                    // Empty selection, since it will have to be refocused anyway.
+                    Selection.objects = null;
+                    
+                    // Change toggle and write/refresh.
                     ArtificeDrawerEnabled = toggle;
                     File.WriteAllLines(filePath, lines);
                     AssetDatabase.Refresh();
