@@ -21,10 +21,12 @@ The Artifice Toolkit offers two powerful tools:
 
 1. [Artifice Inspector](#artifice-inspector-and-custom-attributes): Alter the appearance of your editor's inspector with simple C# custom attributes. This is editor scripting without the editor scripting knowledge being required!
 
-2. [Artifice Validator](#artifice-validator): Attach validator attributes to your serialized properties to always make sure certain rules are being followed. Don's waste time on absent minded mistakes ever again.
+2. [Artifice Validator](#artifice-validator): Attach validator attributes to your serialized properties to always make sure certain rules are being followed. Do not waste time on absent minded mistakes ever again.
+
+3. [Artifice Drawer](#artifice-drawer): The ArtificeDrawer is what renders everything in the ArtificeToolkit. Invoke the drawer in your Editor Scripts with a SerializedObject or SerializedProperty and you will receive the rendered result of it. This essentially makes the ArtificeDrawer a first-class citizen inspector.
 
 ## How to install into your Unity project?
-Simply add it as a Unity Package through git repository link. Curretly this can only be done through a special link since the project is private. After open-sourcing it, it will be done through the git clone link.
+You can add the ArtificeToolkit as any other Unity Package. Since this is an alpha testing phase, it can only be added as a local package through Windows -> Package Manager. Then press the "plus" icon and choose "Add Package from disk...". The select the package.json file and the ArtificeToolkit will be linked to your project.
 
 <p align="center">
   <img src="./Documentation/artifice_addpackage.png" />
@@ -34,7 +36,7 @@ Simply add it as a Unity Package through git repository link. Curretly this can 
 # Artifice Inspector and Custom Attributes
 By using custom attributes in your MonoBehviour scripts you can quickly alter the inspector's appearance. In this section, you will find all the attributes which are tested and ready for use.
 
-By default, the Artifice Drawer is disabled. You can always turn it on/off through the dedicated MenuItem of the 
+By default, the Artifice Drawer is disabled. You can always turn it on/off through the dedicated MenuItem "ArtificeToolkit"
 
 <p align="center">
   <img src="./Documentation/artifice_toggle.png" />
@@ -108,7 +110,7 @@ private int third;
 
 
 ### Foldout Group
-The FoldoutGroup extends the BoxGroup by allowing the user to collapse the container if he wants to. This information is also persistent per serialized object.
+The FoldoutGroup extends the BoxGroup by allowing the user to optionally collapse the container.
 
 ```c#
 [SerializeField, BoxGroup("GroupA")]
@@ -126,25 +128,28 @@ private int fourth;
 ![foldout-group-example](./Documentation/artifice_foldoutgroup.jpg)
 
 ### Tab Group
-The TabGroup allows you to create tabs inside of the Unity inspector. The syntax is more comlex than Box and Foldout groups but it is well worth it.
+The TabGroup allows you to create tabs inside of the Unity inspector. The syntax is more comlex than Box and Foldout groups but it is well worth it. The first string dictates the name of the group and the second one dictates the name of the tab. All the properties that belong in the same group and same tab, will be contained together.
 
 ```c#
-[SerializeField, TabGroup("Example", "SectionA")]
+[SerializeField, TabGroup("Example", "Integers")]
 private int first;
 
-[SerializeField, TabGroup("Example", "SectionA")]
+[SerializeField, TabGroup("Example", "Integers")]
 private int second;
 
-[SerializeField, TabGroup("Example", "SectionB")]
-private int third;
+[SerializeField, TabGroup("Example", "Strings")]
+private string third;
 
-[SerializeField, TabGroup("Example", "SectionB")]
-private int fourth;
+[SerializeField, TabGroup("Example", "Strings")]
+private string fourth;
+
+[SerializeField, TabGroup("Example", "Strings")]
+private string fifth;
 ```
-![tab-group-example](./Documentation/artifice_tabgroup.jpg)
+![tab-group-example](./Documentation/artifice_tabgroup.gif)
 
 ### Horizontal Group
-The HorizontalGroup attribute allows you to align multiple properties into a single line, instead of splitting them as it is done by default. Note, that the Horizontal and Vertical groups do not show their titles and are solely used for structuring.
+The HorizontalGroup attribute allows you to align multiple properties into a single line, instead of having every property be rendered in a new line. Note, that the Horizontal and Vertical groups do not show their titles and are solely used for structuring.
 
 ```c#
 [SerializeField, HorizontalGroup("horizontal1")]
@@ -272,6 +277,12 @@ private float onDeathSoundFxVolume;
 
 ![enableif-example](./Documentation/artifice_enableif.gif)
 
+---
+
+**NOTE**: The custom attributes of the Artifice, are processed from last to first. This allows us to perform various tricks since both the EnableIf and the FoldoutGroup, wrap the property in another VisualElement container. By having the EnableIf before the FoldoutGroup, on the LAST instance of the FoldoutGroup, the EnableIf captures the entire FoldoutGroup, although we have only declared it at a single serialized property.
+
+---
+
 ### PreviewSprite
 PreviewSprite works only on the Sprite and Texture2D serialized properties. It renders an enlarged image of the selected value.
 
@@ -345,3 +356,26 @@ The best way to solve bugs, is to avoid creating them. Assertions are one of the
 ![artifice-validator](./Documentation/artifice_validator.png)
 
 The Validator works with attributes which inherit from the ValidatorAttribute class. Such attributes have an additional implementation explaining what they are supposed to be asserting. The most common use case the [Required](#required) attribute, to make sure the property has been assigned with a reference.
+
+
+<!-- ARTIFICE DRAWER -->
+# Artifice Drawer
+The ArtificeDrawer is what renders everything when the Artifice Inspector is enabled. The ArtificeDrawer can receive a SerializedObject or SerializedProperty and returns a VisualElement of the rendered result. It essentially parsed the SerializedObject or SerializedProperty and renders either the default result or the enchanced result of CustomAttributes have been used.
+
+This section will only interest you if you want to learn the underlying secrets of how the ArtificeToolkit works at its core and learn how to extend it with your own CustomAttributes and tools. Knowledge regarding CustomEditors, CustomPropertyDrawers etc will be needed.
+
+## ArtificeDrawer GUI Steps
+When a property directly uses a CustomAttribute, the drawer will access the respective [CustomAttributeDrawer](#custom-attribute-drawer) and call its GUI steps in order
+
+  1. Pre GUI: Appends a VisualElement before the proprety.
+  2. On GUI: Replaces the property with the result of this method. Only applies with IsReplacingProperty is set on true.
+  3. Post GUI: Appends a VisualElement after the property.
+  4. Wrap GUI: Returns a new VisualElement which adds the VisualElements from the previous steps inside of it.
+  5. On Bound Property GUI: Executes code when the OnGUI VisualElement is attached in the inspector.
+
+## Creating new CustomAttributes
+To create a new CustomAttribute, you need to create the following:
+  1. YourCustomAttribute inheriting from CustomAttribute. This should be placed in a runtime folder.
+  2. Artifice_CustomAttributeDrawer_YourAttribute inheriting from the Artifice_CustomAttributeDrawer placed inside an Editor folder. In a similar fashion as CustomPropertyDrawers, you need to mark this class with a [CustomAttributeDrawer(typeof(YourAttribute))] to link them together.
+
+This section will be more documented in the future. For now, you can see examples of custom attributes like TitleAttribute and it's CustomAttributeDrawer_Title.
