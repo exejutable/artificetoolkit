@@ -113,16 +113,16 @@ private int third;
 The FoldoutGroup extends the BoxGroup by allowing the user to optionally collapse the container.
 
 ```c#
-[SerializeField, BoxGroup("GroupA")]
+[SerializeField, BoxGroup("GroupExample/GroupA")]
 private int first;
 
-[SerializeField, BoxGroup("GroupA")]
+[SerializeField, BoxGroup("GroupExample/GroupA")]
 private int second;
 
-[SerializeField, FoldoutGroup("GroupA/GroupB")]
+[SerializeField, FoldoutGroup("GroupExample/GroupB")]
 private int third;
 
-[SerializeField, FoldoutGroup("GroupA/GroupB/GroupC")]
+[SerializeField, FoldoutGroup("GroupExample/GroupB")]
 private int fourth;
 ```
 ![foldout-group-example](./Documentation/artifice_foldoutgroup.jpg)
