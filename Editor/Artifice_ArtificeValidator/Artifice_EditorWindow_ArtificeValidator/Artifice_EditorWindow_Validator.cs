@@ -23,7 +23,7 @@ namespace ArtificeToolkit.Editor
     {   
         #region Constants
         
-        private const string MenuItemPath = "Artifice Drawer/Validator %&v";
+        private const string MenuItemPath = "Artifice Toolkit/Validator %&v";
 
         #endregion
         
