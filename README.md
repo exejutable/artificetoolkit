@@ -189,7 +189,7 @@ private Transform requiredFieldExample;
 ![required-example](./Documentation/artifice_required.png)
 
 ### AssetOnly
-AssetOnly validates that the value of the serialized property is an asset. This is helpful when you have a field for prefabs that will be later on instantiated. It is common to drag a GameObject from the scene, instead of the assets.
+AssetOnly validates that the value of the serialized property is an asset. This is useful when you have a field for a prefab that will be potentially instantiated. It is common to drag a GameObject from the scene, instead of the assets.
 
 ```c#
 [SerializeField, Required, AssetOnly] 
