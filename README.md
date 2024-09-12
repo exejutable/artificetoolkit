@@ -17,7 +17,7 @@ To demonstrate its usage and effectiveness, see the following MonoBehaviour scri
 
 
 ## What is included in the ArtificeToolkit?
-The Artifice Toolkit offers two powerful tools:
+The Artifice Toolkit offers three powerful tools:
 
 1. [Artifice Inspector](#artifice-inspector-and-custom-attributes): Alter the appearance of your editor's inspector with simple C# custom attributes. This is editor scripting without the editor scripting knowledge being required!
 
@@ -31,10 +31,11 @@ You can add the ArtificeToolkit as any other Unity Package. Since this is an alp
 <p align="center">
   <img src="./Documentation/artifice_addpackage.png" />
 </p>
+()
 
 <!-- CUSTOM ATTRIBUTE CATEGORIES AND LINKS -->
 # Artifice Inspector and Custom Attributes
-By using custom attributes in your MonoBehviour scripts you can quickly alter the inspector's appearance. In this section, you will find all the attributes which are tested and ready for use.
+By using custom attributes in your MonoBehaviour scripts you can quickly alter the inspector's appearance. In this section, you will find all the attributes which are tested and ready for use.
 
 By default, the Artifice Drawer is disabled. You can always turn it on/off through the dedicated MenuItem "ArtificeToolkit"
 
@@ -59,7 +60,7 @@ Group Attributes can be used to bring together various properties in a form of a
 - [HorizontalGroup](#horizontal-group)
 - [VerticalGroup](#vertical-group)
 
-Note: BoxGroup and FoldoutGroup can be further enchanced using the GroupColor enum.
+Note: BoxGroup and FoldoutGroup can be further enhanced using the GroupColor enum.
 
 ## Validation Attributes
 Validation Attributes are used to assert certain rules over your properties. This is achieved in the inspector visualy using an error prompt, and through the use of the [ArtificeValidator](#artifice-validator).
@@ -72,7 +73,7 @@ Validation Attributes are used to assert certain rules over your properties. Thi
 - [MaxValue](#maxvalue)
 
 ## Essential and Easy Attributes
-These attributes can and should be used frequaently. They will at a bare minimum simplify and make the inspector more readable. 
+These attributes can and should be used frequently. They will at a bare minimum simplify and make the inspector more readable. 
 
 - [Title](#title)
 - [EnumToggle](#enumtoggle)
@@ -90,7 +91,6 @@ These attributes can and should be used frequaently. They will at a bare minimum
 
 <!-- ALL ATTRIBUTES DETAILED -->
 ## All Attributes
-
 
 <!-- GROUP ATTRIBUTES -->
 ### BoxGroup
@@ -128,7 +128,7 @@ private int fourth;
 ![foldout-group-example](./Documentation/artifice_foldoutgroup.jpg)
 
 ### Tab Group
-The TabGroup allows you to create tabs inside of the Unity inspector. The syntax is more comlex than Box and Foldout groups but it is well worth it. The first string dictates the name of the group and the second one dictates the name of the tab. All the properties that belong in the same group and same tab, will be contained together.
+The TabGroup allows you to create tabs inside of the Unity inspector. The syntax is more complex than Box and Foldout groups but it is well worth it. The first string dictates the name of the group and the second one dictates the name of the tab. All the properties that belong in the same group and same tab, will be contained together.
 
 ```c#
 [SerializeField, TabGroup("Example", "Integers")]
@@ -179,7 +179,7 @@ private List<int> rightColumn;
 
 <!-- VALIDATION ATTRIBUTES -->
 ### Required
-The Required field prompts the inspector with an error indicator if the property has not been set. This is GREATLY important in Unity, where it is common to initialize fields and dependencies through [SerializedField] properties. This is makes the Required field the most important and most commonly used validation attribute.
+The Required field prompts the inspector with an error indicator if the property has not been set. This is GREATLY important in Unity, where it is common to initialize fields and dependencies through [SerializedField] properties. This is what makes the Required field the most important and most commonly used validation attribute.
 
 ```c#
 [SerializeField, Required] 
@@ -187,8 +187,6 @@ private Transform requiredFieldExample;
 ```
 
 ![required-example](./Documentation/artifice_required.png)
-
-IMAGE
 
 ### AssetOnly
 AssetOnly validates that the value of the serialized property is an asset. This is helpful when you have a field for prefabs that will be later on instantiated. It is common to drag a GameObject from the scene, instead of the assets.
@@ -213,7 +211,7 @@ private Transform requiredSceneOnlyExample;
 ### ChildGameObjectOnly
 In Unity, it is also common to have scripts which require references from the children of the GameObject. Use the ChildGameObjectOnly attribute to assert this behaviour. 
 
-In addition, when this attribute is used, the inspector is further enchanced allowing for optimized search of the hierarchy, previewing only the valid GameObject/Scripts based on the type of the serialized property..
+In addition, when this attribute is used, the inspector is further enhanced allowing for optimized search of the hierarchy, previewing only the valid GameObjects/Scripts based on the type of the serialized property..
 
 ```c#
 [SerializeField, Required, ChildGameObjectOnly] 
@@ -243,7 +241,7 @@ private string city;
 
 
 ### EnumToggle
-EnumToggle converts the convential for of enum rendering to a multi-button preview. The [Flags] attribute is also supported. Note, that this is useful mostly in enums with a small number of different values.
+EnumToggle converts the conventional for of enum rendering to a multi-button preview. The [Flags] attribute is also supported. Note, that this is useful mostly in enums with a small number of different values.
 
 ```c#
 public enum Directions
@@ -259,7 +257,7 @@ private Directions direction;
 
 
 ### EnableIf
-This attributes allows you to set an equallity condition using another field in the same scope to dictate where the target property will be shown or not. This is a really usefull attribute to optionally show properties that depend upon a bool check or enum check. 
+This attributes allows you to set an equality condition using another field in the same scope to dictate where the target property will be shown or not. This is a really usefull attribute to optionally show properties that depend upon a bool check or enum check. 
 
 ```c#
 [SerializeField]
@@ -331,8 +329,6 @@ The HideLabel attribute as the name suggests, finds and dynamically hides the la
 ### InfoBox
 The InfoBox allows you to add informational or warning prompts to a property. This could be useful for example to document or explain some rules regarding a specific value.
 
-IMAGE
-
 ### ConditionalInfoBox
 The ConditionalInfoBox allows you to optionally show an InfoBox when some condition is met, in a similar fashion as [EnableIf](#enableif).
 
@@ -342,7 +338,7 @@ MeasureUnit appends any string passed to it at the right of a property. This can
 ### MinValue
 MinValue asserts a minimum int or float value to the serialized property. 
 
-Note: Currently this only works while the inspector is open. There is nothing stoping the value of going below the minimum value if the insepctor is closed.
+Note: Currently this only works while the inspector is open. There is nothing stoping the value of going below the minimum value if the inspector is closed.
 
 ### MaxValue
 As [MinValue](#minvalue) but for a maximum value.
@@ -360,14 +356,14 @@ The Validator works with attributes which inherit from the ValidatorAttribute cl
 
 <!-- ARTIFICE DRAWER -->
 # Artifice Drawer
-The ArtificeDrawer is what renders everything when the Artifice Inspector is enabled. The ArtificeDrawer can receive a SerializedObject or SerializedProperty and returns a VisualElement of the rendered result. It essentially parsed the SerializedObject or SerializedProperty and renders either the default result or the enchanced result of CustomAttributes have been used.
+The ArtificeDrawer is what renders everything when the Artifice Inspector is enabled. The ArtificeDrawer can receive a SerializedObject or SerializedProperty and returns a VisualElement of the rendered result. It essentially parses the SerializedObject or SerializedProperty and renders either the default result or the enhanced result if CustomAttributes have been used on that property.
 
 This section will only interest you if you want to learn the underlying secrets of how the ArtificeToolkit works at its core and learn how to extend it with your own CustomAttributes and tools. Knowledge regarding CustomEditors, CustomPropertyDrawers etc will be needed.
 
 ## ArtificeDrawer GUI Steps
 When a property directly uses a CustomAttribute, the drawer will access the respective [CustomAttributeDrawer](#custom-attribute-drawer) and call its GUI steps in order
 
-  1. Pre GUI: Appends a VisualElement before the proprety.
+  1. Pre GUI: Appends a VisualElement before the property.
   2. On GUI: Replaces the property with the result of this method. Only applies with IsReplacingProperty is set on true.
   3. Post GUI: Appends a VisualElement after the property.
   4. Wrap GUI: Returns a new VisualElement which adds the VisualElements from the previous steps inside of it.
