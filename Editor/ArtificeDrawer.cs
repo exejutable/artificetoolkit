@@ -384,7 +384,7 @@ namespace ArtificeToolkit.Editor
             var alreadySearched = new HashSet<FieldInfo>();
             
             // Inject into the queue all the direct children fields of type.
-            foreach (var field in type.GetFields())
+            foreach (var field in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 queue.Enqueue(field);
 
             while (queue.Count > 0)
