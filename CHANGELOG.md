@@ -3,6 +3,7 @@
 ## 1.1.4
  - Refactor: Changed MenuItem name from ArtificeDrawer to ArtificeToolkit
  - Enhancement: Updated README.md with complete documentation and examples for each tested and used attribute with images and gifs.
+ - Fix: Empty array using custom attributes was not rendering with artifice fixed.
 
 ## 1.1.3
 
