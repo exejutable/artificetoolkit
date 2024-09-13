@@ -1,5 +1,9 @@
 # Change Log:
 
+## 1.1.4
+ - Refactor: Changed MenuItem name from ArtificeDrawer to ArtificeToolkit
+ - Enhancement: Updated README.md with complete documentation and examples for each tested and used attribute with images and gifs.
+
 ## 1.1.3
 
 - Enhancement: Now toggle button visual element can receive different sprites for each of its states. A example of this was implemented in the validator.

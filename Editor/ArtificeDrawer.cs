@@ -310,7 +310,7 @@ namespace ArtificeToolkit.Editor
         /// <summary> Returns true if property directly or indirectly uses any custom attributes </summary>
         private bool ShouldUseArtificeEditorForProperty(SerializedProperty property)
         {
-            return Artifice_Utilities.ArtificeDrawerEnabled && (IsUsingCustomAttributes(property) || DoChildrenUseCustomAttributes(property));
+            return IsUsingCustomAttributes(property) || DoChildrenUseCustomAttributes(property);
         }
         
         /// <summary> Returns true if property directly or indirectly uses any custom attributes </summary>
