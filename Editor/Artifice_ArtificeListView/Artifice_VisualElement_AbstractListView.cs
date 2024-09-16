@@ -105,6 +105,9 @@ namespace ArtificeToolkit.Editor
                     _children.Clear();
                     elem.Clear();
 
+                    // Build Prefab Override Indicator
+                    elem.Add(BuildPrefabOverrideIndicatorUI());
+                    
                     // Build List Header
                     elem.Add(BuildListHeaderUI());
                     
@@ -151,11 +154,31 @@ namespace ArtificeToolkit.Editor
             
             LoadPersistedData();
         }
+
+        private VisualElement BuildPrefabOverrideIndicatorUI()
+        {
+            // Handle dynamic depth for indicator
+            var prefabOverrideIndicator = new VisualElement();
+            prefabOverrideIndicator.AddToClassList("list-header-prefab-override-indicator");
+            prefabOverrideIndicator.style.left = -15 * (Property.depth + 1) - 4; // 15 is the default margin for nested properties. 4 is the total margin of the artifice drawer (?!).
+                    
+            // Change prefab indicator based on whether the value is a prefab override or not.
+            prefabOverrideIndicator.style.display = Property.prefabOverride ? DisplayStyle.Flex : DisplayStyle.None;
+            prefabOverrideIndicator.TrackPropertyValue(Property, trackedProperty =>
+            {
+                // Check for difference in size.
+                prefabOverrideIndicator.style.display = Property.prefabOverride ? DisplayStyle.Flex : DisplayStyle.None;                            
+                if(trackedProperty.arraySize != _children.Count)
+                    BuildListUI();
+            });
+
+            return prefabOverrideIndicator;
+        }
         private VisualElement BuildListHeaderUI()
         {
             var listHeader = new VisualElement();
             listHeader.AddToClassList("list-header");
-
+            
             // Arrow symbol
             var arrowSymbolLabel = new Label("\u25bc");
             arrowSymbolLabel.AddToClassList("arrow-symbol-label");
@@ -226,6 +249,9 @@ namespace ArtificeToolkit.Editor
             // Change isExpanded on click
             listHeader.RegisterCallback<MouseDownEvent>(evt =>
             {
+                if (evt.button != 0)
+                    return;
+                
                 Property.isExpanded = !Property.isExpanded;
                 Property.serializedObject.ApplyModifiedProperties();
                 
@@ -244,13 +270,20 @@ namespace ArtificeToolkit.Editor
                 BuildListUI();
             });
 
+            // Register right-click context menu
+            listHeader.RegisterCallback<ContextualMenuPopulateEvent>(evt =>
+            {
+                evt.menu.AppendAction("Apply to Prefab", action => ApplyToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
+                evt.menu.AppendAction("Revert to Prefab", action => RevertToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
+            });
+            
             // Implement drag-and-drop elements into list
             listHeader.RegisterCallback<DragEnterEvent>(OnDragEnterEvent);
             listHeader.RegisterCallback<DragUpdatedEvent>(OnDragUpdatedEvent);
             listHeader.RegisterCallback<DragPerformEvent>(OnDragPerformEvent);
             listHeader.RegisterCallback<DragLeaveEvent>(OnDragLeaveEvent);
             listHeader.RegisterCallback<DragExitedEvent>(OnDragExitEvent);
-
+            
             return listHeader;
         }
         private VisualElement BuildListElementUI(SerializedProperty property, int index)
@@ -645,6 +678,22 @@ namespace ArtificeToolkit.Editor
                 // After everything has been hashed for the first time
                 UpdateElementLabel();
             }
+        }
+        
+        private void ApplyToPrefab(SerializedProperty property)
+        {
+            // Apply changes to the prefab
+            PrefabUtility.ApplyPropertyOverride(property, PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(property.serializedObject.targetObject), InteractionMode.UserAction);
+            Property.serializedObject.ApplyModifiedProperties();
+            Debug.Log("Applied changes to prefab");
+        }
+
+        private void RevertToPrefab(SerializedProperty property)
+        {
+            // Revert changes to match the prefab
+            PrefabUtility.RevertPropertyOverride(property, InteractionMode.UserAction);
+            Property.serializedObject.Update();
+            Debug.Log("Reverted changes to prefab");
         }
         
         #endregion
