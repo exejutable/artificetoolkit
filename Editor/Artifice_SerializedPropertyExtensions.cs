@@ -312,5 +312,38 @@ namespace ArtificeToolkit.Editor
             int length = property.propertyPath.LastIndexOf(']') - startIndex;
             return int.Parse(property.propertyPath.Substring(startIndex, length));
         }
+        
+        /// <summary> Returns the string value of the underlying serialized property. </summary>
+        public static string GetValueString(this SerializedProperty property)
+        {
+            switch (property.propertyType)
+            {
+                case SerializedPropertyType.Integer:
+                    return property.intValue.ToString();
+                case SerializedPropertyType.Boolean:
+                    return property.boolValue.ToString();
+                case SerializedPropertyType.Float:
+                    return property.floatValue.ToString();
+                case SerializedPropertyType.String:
+                    return property.stringValue;
+                case SerializedPropertyType.ObjectReference:
+                    return property.objectReferenceValue != null ? property.objectReferenceValue.ToString() : "null";
+                case SerializedPropertyType.Enum:
+                    return property.enumDisplayNames[property.enumValueIndex];
+                case SerializedPropertyType.Vector2:
+                    return property.vector2Value.ToString();
+                case SerializedPropertyType.Vector3:
+                    return property.vector3Value.ToString();
+                case SerializedPropertyType.Color:
+                    return property.colorValue.ToString();
+                case SerializedPropertyType.Rect:
+                    return property.rectValue.ToString();
+                case SerializedPropertyType.Bounds:
+                    return property.boundsValue.ToString();
+                default:
+                    return $"Unsupported {property.propertyType.ToString()}";
+            }
+        }
+        
     }
 }

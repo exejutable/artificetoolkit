@@ -1,5 +1,8 @@
 # Change Log:
 
+## 1.1.5
+ - Enhancement: Added ListElementNameAttribute which allows you to set a custom naming extension to your list elements based on sub-property string values.
+
 ## 1.1.4
  - Refactor: Changed MenuItem name from ArtificeDrawer to ArtificeToolkit
  - Enhancement: Updated README.md with complete documentation and examples for each tested and used attribute with images and gifs.
