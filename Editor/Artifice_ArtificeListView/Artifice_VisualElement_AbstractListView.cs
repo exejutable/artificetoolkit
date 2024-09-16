@@ -699,8 +699,6 @@ namespace ArtificeToolkit.Editor
             PrefabUtility.ApplyPropertyOverride(property, PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(property.serializedObject.targetObject), InteractionMode.UserAction);
             Property.serializedObject.ApplyModifiedProperties();
             BuildListUI();
-            
-            Debug.Log("Applied changes to prefab");
         }
 
         private void RevertToPrefab(SerializedProperty property)
@@ -709,8 +707,6 @@ namespace ArtificeToolkit.Editor
             PrefabUtility.RevertPropertyOverride(property, InteractionMode.UserAction);
             Property.serializedObject.Update();
             BuildListUI();
-            
-            Debug.Log("Reverted changes to prefab");
         }
         
         private void CopyProperty()
