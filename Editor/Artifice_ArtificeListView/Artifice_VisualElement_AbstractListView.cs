@@ -55,6 +55,8 @@ namespace ArtificeToolkit.Editor
         
         private readonly UIBuilder _uiBuilder = new UIBuilder();
         private readonly List<ChildElement> _children = new List<ChildElement>();
+
+        private static SerializedProperty _copiedProperty; 
         private bool _disposed = false;
         
         /* Fields used for dragging elements for reposition */
@@ -271,11 +273,22 @@ namespace ArtificeToolkit.Editor
             });
 
             // Register right-click context menu
-            listHeader.RegisterCallback<ContextualMenuPopulateEvent>(evt =>
+            listHeader.AddManipulator(new ContextualMenuManipulator(evt =>
             {
-                evt.menu.AppendAction("Apply to Prefab", action => ApplyToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
-                evt.menu.AppendAction("Revert to Prefab", action => RevertToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
-            });
+                evt.menu.AppendAction("Copy Property Path", action => ApplyToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
+
+                if (Property.prefabOverride)
+                {
+                    evt.menu.AppendSeparator();
+                    evt.menu.AppendAction($"Apply to Prefab '{PrefabUtility.GetCorrespondingObjectFromSource(Property.serializedObject.targetObject).name}'", action => ApplyToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
+                    evt.menu.AppendAction("Revert to Prefab", action => RevertToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
+                }
+                
+                evt.menu.AppendSeparator();
+                evt.menu.AppendAction("Copy", action => CopyProperty(), DropdownMenuAction.AlwaysEnabled);
+                evt.menu.AppendAction("Paste", action => PastePropertyNested(Property, _copiedProperty), 
+                    _copiedProperty != null ? DropdownMenuAction.AlwaysEnabled : DropdownMenuAction.AlwaysDisabled);
+            }));
             
             // Implement drag-and-drop elements into list
             listHeader.RegisterCallback<DragEnterEvent>(OnDragEnterEvent);
@@ -685,6 +698,8 @@ namespace ArtificeToolkit.Editor
             // Apply changes to the prefab
             PrefabUtility.ApplyPropertyOverride(property, PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(property.serializedObject.targetObject), InteractionMode.UserAction);
             Property.serializedObject.ApplyModifiedProperties();
+            BuildListUI();
+            
             Debug.Log("Applied changes to prefab");
         }
 
@@ -693,7 +708,58 @@ namespace ArtificeToolkit.Editor
             // Revert changes to match the prefab
             PrefabUtility.RevertPropertyOverride(property, InteractionMode.UserAction);
             Property.serializedObject.Update();
+            BuildListUI();
+            
             Debug.Log("Reverted changes to prefab");
+        }
+        
+        private void CopyProperty()
+        {
+            // Store the current property as the "copied" property
+            _copiedProperty = Property.Copy();
+        }
+
+        private void PastePropertyNested(SerializedProperty destination, SerializedProperty source)
+        {
+            if (source.isArray)
+            {
+                destination.ClearArray();
+                destination.arraySize = source.arraySize;
+                for (var i = 0; i < destination.arraySize; i++)
+                    PastePropertyNested(destination.GetArrayElementAtIndex(i), source.GetArrayElementAtIndex(i));
+            }
+            else if (source.hasChildren)
+            {
+                // Use SerializedProperty iteration to handle children
+                var sourceChild = source.Copy();
+                var destinationChild = destination.Copy();
+
+                var enterChildren = true;
+
+                while (sourceChild.Next(enterChildren))
+                {
+                    // // Ensure we only copy properties within this object, not siblings
+                    // if (!SerializedProperty.EqualContents(sourceChild, source))
+                    //     break;
+
+                    // Move destination child to match source's path
+                    destinationChild = destination.FindPropertyRelative(sourceChild.name);
+
+                    if (destinationChild != null)
+                    {
+                        PastePropertyNested(destinationChild, sourceChild);
+                    }
+
+                    enterChildren = false; // Only enter children for the first time
+                }            
+            }
+            else
+            {
+                destination.Copy(source);
+            }
+
+            destination.serializedObject.ApplyModifiedProperties();
+            destination.serializedObject.Update();
         }
         
         #endregion

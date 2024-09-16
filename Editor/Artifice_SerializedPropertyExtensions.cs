@@ -344,6 +344,60 @@ namespace ArtificeToolkit.Editor
                     return $"Unsupported {property.propertyType.ToString()}";
             }
         }
-        
+     
+        public static void Copy(this SerializedProperty property, SerializedProperty targetProperty)
+        {
+            if (targetProperty == null || property.propertyType != targetProperty.propertyType)
+            {
+                Debug.LogWarning("Cannot paste: mismatched property types or no copied value.");
+                return;
+            }
+
+            // Paste based on the type of the copied property
+            switch (targetProperty.propertyType)
+            {
+                case SerializedPropertyType.Integer:
+                    property.intValue = targetProperty.intValue;
+                    break;
+                case SerializedPropertyType.Boolean:
+                    property.boolValue = targetProperty.boolValue;
+                    break;
+                case SerializedPropertyType.Float:
+                    property.floatValue = targetProperty.floatValue;
+                    break;
+                case SerializedPropertyType.String:
+                    property.stringValue = targetProperty.stringValue;
+                    break;
+                case SerializedPropertyType.ObjectReference:
+                    property.objectReferenceValue = targetProperty.objectReferenceValue;
+                    break;
+                case SerializedPropertyType.Color:
+                    property.colorValue = targetProperty.colorValue;
+                    break;
+                case SerializedPropertyType.Vector2:
+                    property.vector2Value = targetProperty.vector2Value;
+                    break;
+                case SerializedPropertyType.Vector3:
+                    property.vector3Value = targetProperty.vector3Value;
+                    break;
+                case SerializedPropertyType.Vector4:
+                    property.vector4Value = targetProperty.vector4Value;
+                    break;
+                case SerializedPropertyType.Rect:
+                    property.rectValue = targetProperty.rectValue;
+                    break;
+                case SerializedPropertyType.Bounds:
+                    property.boundsValue = targetProperty.boundsValue;
+                    break;
+                case SerializedPropertyType.Enum:
+                    property.enumValueFlag = targetProperty.enumValueFlag;
+                    break;
+                default:
+                    Debug.LogWarning($"Unsupported property type for paste: {targetProperty.propertyType}");
+                    break;
+            }
+
+            property.serializedObject.ApplyModifiedProperties();
+        }
     }
 }
