@@ -627,14 +627,19 @@ namespace ArtificeToolkit.Editor
                 {
                     var fieldPropertyName = listElementName.FieldName;
                     var fieldProperty = property.FindPropertyRelative(fieldPropertyName);
-                    listElementNameValue = fieldProperty.GetValueString();
-                    
-                    // Subscribe to change event to update value
-                    label.TrackPropertyValue(fieldProperty, trackedProperty =>
+                    if (fieldProperty != null)
                     {
                         listElementNameValue = fieldProperty.GetValueString();
-                        UpdateElementLabel();
-                    });
+                        
+                        // Subscribe to change event to update value
+                        label.TrackPropertyValue(fieldProperty, trackedProperty =>
+                        {
+                            listElementNameValue = fieldProperty.GetValueString();
+                            UpdateElementLabel();
+                        });
+                    }
+                    else
+                        Debug.LogError($"[ArtificeDrawer][ListElementName] Cannot find nested property <b>\"{fieldPropertyName}\"</b> of type <b>\"{Property.type}\"</b>");
                 }
                 
                 // After everything has been hashed for the first time
