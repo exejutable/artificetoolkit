@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using ArtificeToolkit.Attributes;
 using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers;
+using CustomAttributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -61,7 +62,8 @@ namespace ArtificeToolkit.Editor
                 typeof(TitleAttribute), 
                 typeof(HideLabelAttribute),
                 typeof(InfoBoxAttribute), 
-                typeof(ConditionalInfoBoxAttribute) 
+                typeof(ConditionalInfoBoxAttribute),
+                typeof(ListElementNameAttribute)
             };
 
             PropertyIgnoreSet = new HashSet<string>()

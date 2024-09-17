@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
-using ArtificeToolkit.Editor;
 using ArtificeToolkit.Editor.VisualElements;
+using CustomAttributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -49,13 +49,14 @@ namespace ArtificeToolkit.Editor
         
         #region FIELDS
         
+        protected SerializedProperty Property;
         protected List<CustomAttribute> ChildrenInjectedCustomAttributes = new List<CustomAttribute>();
-        
         protected readonly ArtificeDrawer ArtificeDrawer = new();
+        
         private readonly UIBuilder _uiBuilder = new UIBuilder();
         private readonly List<ChildElement> _children = new List<ChildElement>();
-        
-        private SerializedProperty _property;
+
+        private static SerializedProperty _copiedProperty; 
         private bool _disposed = false;
         
         /* Fields used for dragging elements for reposition */
@@ -90,7 +91,7 @@ namespace ArtificeToolkit.Editor
         
         private void BuildListUI()
         {
-            Debug.Assert(_property.isArray, "ArtificeListView only works with Array properties.");
+            Debug.Assert(Property.isArray, "ArtificeListView only works with Array properties.");
             
             _uiBuilder.Create<VisualElement>(
                 "list",
@@ -100,17 +101,20 @@ namespace ArtificeToolkit.Editor
                 },
                 elem =>
                 {
-                    _property.serializedObject.Update();
+                    Property.serializedObject.Update();
                     
                     // Refresh lists
                     _children.Clear();
                     elem.Clear();
 
+                    // Build Prefab Override Indicator
+                    elem.Add(BuildPrefabOverrideIndicatorUI());
+                    
                     // Build List Header
                     elem.Add(BuildListHeaderUI());
                     
                     // PreChildren Build
-                    var prePropertyElem = BuildPrePropertyUI(_property);
+                    var prePropertyElem = BuildPrePropertyUI(Property);
                     elem.Add(prePropertyElem);
                     
                     // Add children
@@ -118,7 +122,7 @@ namespace ArtificeToolkit.Editor
                     var childrenContainer = new VisualElement();
                     childrenContainer.AddToClassList("children-container");
 
-                    var childrenProperties = _property.GetVisibleChildren();
+                    var childrenProperties = Property.GetVisibleChildren();
                     if (childrenProperties.Count == 1) // childProperty for list size will always exist, so Count == 1 means the list is empty
                     {
                         var emptyListLabel = new Label("List is empty.");
@@ -140,38 +144,58 @@ namespace ArtificeToolkit.Editor
                     elem.Add(childrenContainer);
 
                     // Set children container hide state based on isExpanded
-                    if (_property.isExpanded == false)
+                    if (Property.isExpanded == false)
                     {
                         prePropertyElem?.AddToClassList("hide");
                         childrenContainer.AddToClassList("hide");
                     }
                     
-                    _property.serializedObject.ApplyModifiedProperties();
+                    Property.serializedObject.ApplyModifiedProperties();
                 }
             );
             
             LoadPersistedData();
         }
+
+        private VisualElement BuildPrefabOverrideIndicatorUI()
+        {
+            // Handle dynamic depth for indicator
+            var prefabOverrideIndicator = new VisualElement();
+            prefabOverrideIndicator.AddToClassList("list-header-prefab-override-indicator");
+            prefabOverrideIndicator.style.left = -15 * (Property.depth + 1) - 4; // 15 is the default margin for nested properties. 4 is the total margin of the artifice drawer (?!).
+                    
+            // Change prefab indicator based on whether the value is a prefab override or not.
+            prefabOverrideIndicator.style.display = Property.prefabOverride ? DisplayStyle.Flex : DisplayStyle.None;
+            prefabOverrideIndicator.TrackPropertyValue(Property, trackedProperty =>
+            {
+                // Check for difference in size.
+                prefabOverrideIndicator.style.display = Property.prefabOverride ? DisplayStyle.Flex : DisplayStyle.None;                            
+                if(trackedProperty.arraySize != _children.Count)
+                    BuildListUI();
+            });
+
+            return prefabOverrideIndicator;
+        }
         private VisualElement BuildListHeaderUI()
         {
             var listHeader = new VisualElement();
             listHeader.AddToClassList("list-header");
-
+            
             // Arrow symbol
             var arrowSymbolLabel = new Label("\u25bc");
             arrowSymbolLabel.AddToClassList("arrow-symbol-label");
             listHeader.Add(arrowSymbolLabel);
-            if(_property.isExpanded == false)
+            if(Property.isExpanded == false)
                 arrowSymbolLabel.AddToClassList("rotate-90");
             
             // Title of list
-            var listTitleLabel = new Label(_property.displayName);
+            var listTitleLabel = new Label(Property.displayName);
             listTitleLabel.AddToClassList("list-title-label");
             listHeader.Add(listTitleLabel);
             listTitleLabel.tooltip = "Artifice List:\nTreat this as exactly as you would treat Unity's default list. If you find missing functionality that you would like to add, contact the ArtificeDrawer developers.";
             
             // Size field
-            var sizeProperty = _property.FindPropertyRelative("Array.size");
+            var sizeProperty = Property.FindPropertyRelative("Array.size");
             
             var sizeField = new VisualElement();
             sizeField.AddToClassList("size-field");
@@ -198,7 +222,7 @@ namespace ArtificeToolkit.Editor
                 if (evt.keyCode == KeyCode.KeypadEnter && sizeValueField.value != _children.Count)
                 {
                     sizeProperty.intValue = sizeValueField.value;
-                    _property.serializedObject.ApplyModifiedProperties();
+                    Property.serializedObject.ApplyModifiedProperties();
                     BuildListUI();
                 }
             });
@@ -209,16 +233,16 @@ namespace ArtificeToolkit.Editor
                 
                 // Apply changes on focus lose (click out of value)
                 sizeProperty.intValue = sizeValueField.value;
-                _property.serializedObject.ApplyModifiedProperties();
+                Property.serializedObject.ApplyModifiedProperties();
                 BuildListUI();
             });
             
             // Add button for new elements
             var addButton = new Artifice_VisualElement_LabeledButton("+", () =>
             {
-                _property.arraySize++;
-                _property.serializedObject.ApplyModifiedProperties();
-                _property.serializedObject.Update();
+                Property.arraySize++;
+                Property.serializedObject.ApplyModifiedProperties();
+                Property.serializedObject.Update();
                 BuildListUI();
             });
             addButton.AddToClassList("add-button");
@@ -227,11 +251,14 @@ namespace ArtificeToolkit.Editor
             // Change isExpanded on click
             listHeader.RegisterCallback<MouseDownEvent>(evt =>
             {
-                _property.isExpanded = !_property.isExpanded;
-                _property.serializedObject.ApplyModifiedProperties();
+                if (evt.button != 0)
+                    return;
+                
+                Property.isExpanded = !Property.isExpanded;
+                Property.serializedObject.ApplyModifiedProperties();
                 
                 // change USS of arrow
-                if (_property.isExpanded == false)
+                if (Property.isExpanded == false)
                 {
                     arrowSymbolLabel.RemoveFromClassList("rotate-0");
                     arrowSymbolLabel.AddToClassList("rotate-90");
@@ -245,13 +272,44 @@ namespace ArtificeToolkit.Editor
                 BuildListUI();
             });
 
+            // Register right-click context menu
+            listHeader.AddManipulator(new ContextualMenuManipulator(evt =>
+            {
+                // Copy property path
+                evt.menu.AppendAction("Copy Property Path", _ => { GUIUtility.systemCopyBuffer = Property.propertyPath; }, DropdownMenuAction.AlwaysEnabled);
+
+                // Prefab Overrides
+                if (Property.prefabOverride)
+                {
+                    evt.menu.AppendSeparator();
+
+                    // This is enforced by Property.prefabOverride statement
+                    var prefabLevels = GetPrefabVariantLevels((Property.serializedObject.targetObject  as MonoBehaviour)?.gameObject);
+
+                    for (var i = prefabLevels.Count - 1; i >= 0; i--)
+                    {
+                        var prefabLevel = prefabLevels[i];
+                        var label = i > 0 ? $"Apply as Override in Prefab '{prefabLevel.name}'" : $"Apply to Prefab '{prefabLevel.name}'";
+                        evt.menu.AppendAction(label, action => ApplyToPrefab(Property, prefabLevel), DropdownMenuAction.AlwaysEnabled);
+                    }
+                    
+                    evt.menu.AppendAction("Revert to Prefab", action => RevertToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
+                }
+                
+                // Copy / Paste
+                evt.menu.AppendSeparator();
+                evt.menu.AppendAction("Copy", action => CopyProperty(), DropdownMenuAction.AlwaysEnabled);
+                evt.menu.AppendAction("Paste", action => PastePropertyNested(Property, _copiedProperty), 
+                    _copiedProperty != null ? DropdownMenuAction.AlwaysEnabled : DropdownMenuAction.AlwaysDisabled);
+            }));
+            
             // Implement drag-and-drop elements into list
             listHeader.RegisterCallback<DragEnterEvent>(OnDragEnterEvent);
             listHeader.RegisterCallback<DragUpdatedEvent>(OnDragUpdatedEvent);
             listHeader.RegisterCallback<DragPerformEvent>(OnDragPerformEvent);
             listHeader.RegisterCallback<DragLeaveEvent>(OnDragLeaveEvent);
             listHeader.RegisterCallback<DragExitedEvent>(OnDragExitEvent);
-
+            
             return listHeader;
         }
         private VisualElement BuildListElementUI(SerializedProperty property, int index)
@@ -271,32 +329,8 @@ namespace ArtificeToolkit.Editor
 
             // Inherited Implementation of BuildPropertyFieldUI
             var propertyField = BuildPropertyFieldUI(property, index);
-
-            // Get the first label if it exists, and check whether its anonymous name Element 0, Element 1 etc.
-            var label = propertyField.Query<Label>().First();
-            if (label != null && label.text == property.displayName)
-            {
-                // Set default label text
-                label.text = $"Element {index}";
-                
-                // Check whether first child property is a string and override label text acoordingly
-                if (property.hasVisibleChildren)
-                {
-                    var firstChild = property.Copy();
-                    if (
-                        firstChild.NextVisible(true) &&
-                        firstChild.propertyType == SerializedPropertyType.String
-                    )
-                    {
-                        // Add case were if string is empty, to show default Element #
-                        elementContainer.TrackPropertyValue(firstChild, trackedProperty =>
-                        {
-                            label.text = trackedProperty.stringValue != "" ? trackedProperty.stringValue : $"Element {index}";
-                        });;
-                        label.text = firstChild.stringValue != "" ? firstChild.stringValue : $"Element {index}";
-                    }
-                }
-            }
+            // Set dynamic name based on first string and ListElementName
+            SetDynamicElementLabelName(property, index, propertyField);
             
             // Create Delete Button
             var deleteButtonContainer = new VisualElement();
@@ -304,8 +338,8 @@ namespace ArtificeToolkit.Editor
             
             var deleteButton = new Artifice_VisualElement_LabeledButton("-", () =>
             {
-                _property.DeleteArrayElementAtIndex(property.GetIndexInArray());
-                _property.serializedObject.ApplyModifiedProperties();
+                Property.DeleteArrayElementAtIndex(property.GetIndexInArray());
+                Property.serializedObject.ApplyModifiedProperties();
                 BuildListUI();
             });
             deleteButton.AddToClassList("delete-button");
@@ -346,16 +380,16 @@ namespace ArtificeToolkit.Editor
             DragAndDrop.AcceptDrag();
             
             // Check if types match exactly
-            var arrayChildrenType = _property.GetArrayChildrenType();
+            var arrayChildrenType = Property.GetArrayChildrenType();
             
             var data = DragAndDrop.objectReferences;
             foreach (var datum in data)
             {
                 // Add element to last position
-                _property.InsertArrayElementAtIndex(_property.arraySize > 0 ? _property.arraySize - 1 : 0);
+                Property.InsertArrayElementAtIndex(Property.arraySize > 0 ? Property.arraySize - 1 : 0);
                 
                 // Get the last element
-                var newProperty = _property.GetArrayElementAtIndex(_property.arraySize -1);
+                var newProperty = Property.GetArrayElementAtIndex(Property.arraySize -1);
                 var wasNewElementAdded = false;
                 
                 // If array children type is same with datum, simply assign it.
@@ -376,11 +410,11 @@ namespace ArtificeToolkit.Editor
                 
                 // In case nothing was added, remove newly added item and maybe console some error?
                 if(!wasNewElementAdded)
-                    _property.DeleteArrayElementAtIndex(_property.arraySize - 1);
+                    Property.DeleteArrayElementAtIndex(Property.arraySize - 1);
                 
                 // Apply/Update
-                _property.serializedObject.ApplyModifiedProperties();
-                _property.serializedObject.Update();
+                Property.serializedObject.ApplyModifiedProperties();
+                Property.serializedObject.Update();
             }
             
             // Rebuild list after loop
@@ -451,17 +485,17 @@ namespace ArtificeToolkit.Editor
             foreach (var record in _lateSwapRecord)
             {
                 // MoveArrayElement does not auto copy isExpanded, do it by hand.
-                var isExpandedX = _property.GetArrayElementAtIndex(record.X).isExpanded;
-                var isExpandedY = _property.GetArrayElementAtIndex(record.Y).isExpanded;
+                var isExpandedX = Property.GetArrayElementAtIndex(record.X).isExpanded;
+                var isExpandedY = Property.GetArrayElementAtIndex(record.Y).isExpanded;
                 
                 // Move the data
-                _property.MoveArrayElement(record.X, record.Y);
+                Property.MoveArrayElement(record.X, record.Y);
                 
                 // Exchange their swapped is expanded
-                _property.GetArrayElementAtIndex(record.Y).isExpanded = isExpandedX;
-                _property.GetArrayElementAtIndex(record.X).isExpanded = isExpandedY;
+                Property.GetArrayElementAtIndex(record.Y).isExpanded = isExpandedX;
+                Property.GetArrayElementAtIndex(record.X).isExpanded = isExpandedY;
             }
-            _property.serializedObject.ApplyModifiedProperties();
+            Property.serializedObject.ApplyModifiedProperties();
             _lateSwapRecord.Clear();
             
             // Remove dragged visuals
@@ -568,14 +602,14 @@ namespace ArtificeToolkit.Editor
         
         public void SetValueWithoutNotify(SerializedProperty newValue)
         {
-            _property = newValue.Copy();
-            SetViewPersistenceKey(_property);
+            Property = newValue.Copy();
+            SetViewPersistenceKey(Property);
             BuildListUI();
         }
         
         public SerializedProperty value
         {
-            get => _property;
+            get => Property;
             // The setter is called when the user changes the value of the ObjectField, which calls
             // OnObjectFieldValueChanged(), which calls this.
             set
@@ -606,6 +640,158 @@ namespace ArtificeToolkit.Editor
         public void SetSerializedPropertyFilter(ArtificeDrawer.SerializedPropertyFilter filter)
         {
             ArtificeDrawer.SetSerializedPropertyFilter(filter);
+        }
+
+        private void SetDynamicElementLabelName(SerializedProperty property, int index, VisualElement propertyField)
+        {
+            // Get the first label if it exists, and apply naming.
+            var label = propertyField.Query<Label>().First();
+            if (label != null && label.text == property.displayName)
+            {
+                // Cached values that may be used through-out the lifetime of the element 
+                var firstStringValue = "";
+                var listElementNameValue = "";
+                
+                // I do not like local methods, but this is really good.
+                void UpdateElementLabel()
+                {
+                    label.text = firstStringValue != string.Empty ? firstStringValue : $"Element {index}";
+                    label.text += listElementNameValue != string.Empty ? $" ({listElementNameValue})" : string.Empty;
+                }
+                
+                // Check whether first child property is a string and override label text acoordingly
+                if (property.hasVisibleChildren)
+                {
+                    var firstChild = property.Copy();
+                    if (
+                        firstChild.NextVisible(true) &&
+                        firstChild.propertyType == SerializedPropertyType.String
+                    )
+                    {
+                        // Cache first string value
+                        firstStringValue = firstChild.stringValue;
+                        
+                        // Call update method on change.
+                        propertyField.TrackPropertyValue(firstChild, trackedProperty =>
+                        {
+                            firstStringValue = firstChild.stringValue;
+                            UpdateElementLabel();
+                        });;
+                    }
+                }   
+                
+                // Append custom list name after wards.
+                var listElementName = (ListElementNameAttribute)(Property.GetCustomAttributes().FirstOrDefault(attribute => attribute is ListElementNameAttribute));
+                if (listElementName != null)
+                {
+                    var fieldPropertyName = listElementName.FieldName;
+                    var fieldProperty = property.FindPropertyRelative(fieldPropertyName);
+                    if (fieldProperty != null)
+                    {
+                        listElementNameValue = fieldProperty.GetValueString();
+                        
+                        // Subscribe to change event to update value
+                        label.TrackPropertyValue(fieldProperty, trackedProperty =>
+                        {
+                            listElementNameValue = fieldProperty.GetValueString();
+                            UpdateElementLabel();
+                        });
+                    }
+                    else
+                        Debug.LogError($"[ArtificeDrawer][ListElementName] Cannot find nested property <b>\"{fieldPropertyName}\"</b> of type <b>\"{Property.type}\"</b>");
+                }
+                
+                // After everything has been hashed for the first time
+                UpdateElementLabel();
+            }
+        }
+        
+        #endregion
+        
+        #region Context Menu Options
+        
+        private static List<GameObject> GetPrefabVariantLevels(GameObject instance)
+        {
+            var prefabLevels = new List<GameObject>();
+
+            var current = instance;
+            while (true)
+            {
+                if(PrefabUtility.IsAnyPrefabInstanceRoot(current))
+                    prefabLevels.Add(PrefabUtility.GetCorrespondingObjectFromSource(current));
+
+                if (current.transform.parent == null)
+                    break;
+                
+                current = current.transform.parent.gameObject;
+            }
+
+            return prefabLevels;
+        }
+        
+        private void ApplyToPrefab(SerializedProperty property, GameObject prefabRoot)
+        {
+            // Apply changes to the prefab
+            PrefabUtility.ApplyPropertyOverride(property, PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(prefabRoot), InteractionMode.UserAction);
+            Property.serializedObject.ApplyModifiedProperties();
+            BuildListUI();
+        }
+
+        private void RevertToPrefab(SerializedProperty property)
+        {
+            // Revert changes to match the prefab
+            PrefabUtility.RevertPropertyOverride(property, InteractionMode.UserAction);
+            Property.serializedObject.Update();
+            BuildListUI();
+        }
+        
+        private void CopyProperty()
+        {
+            // Store the current property as the "copied" property
+            _copiedProperty = Property.Copy();
+        }
+
+        private void PastePropertyNested(SerializedProperty destination, SerializedProperty source)
+        {
+            if (source.isArray)
+            {
+                destination.ClearArray();
+                destination.arraySize = source.arraySize;
+                for (var i = 0; i < destination.arraySize; i++)
+                    PastePropertyNested(destination.GetArrayElementAtIndex(i), source.GetArrayElementAtIndex(i));
+            }
+            else if (source.hasChildren)
+            {
+                // Use SerializedProperty iteration to handle children
+                var sourceChild = source.Copy();
+                var destinationChild = destination.Copy();
+
+                var enterChildren = true;
+
+                while (sourceChild.Next(enterChildren))
+                {
+                    // // Ensure we only copy properties within this object, not siblings
+                    // if (!SerializedProperty.EqualContents(sourceChild, source))
+                    //     break;
+
+                    // Move destination child to match source's path
+                    destinationChild = destination.FindPropertyRelative(sourceChild.name);
+
+                    if (destinationChild != null)
+                    {
+                        PastePropertyNested(destinationChild, sourceChild);
+                    }
+
+                    enterChildren = false; // Only enter children for the first time
+                }            
+            }
+            else
+            {
+                destination.Copy(source);
+            }
+
+            destination.serializedObject.ApplyModifiedProperties();
+            destination.serializedObject.Update();
         }
         
         #endregion

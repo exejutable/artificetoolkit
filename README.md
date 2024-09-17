@@ -87,6 +87,7 @@ These attributes can and should be used frequently. They will at a bare minimum 
 - [HideLabel](#hidelabel)
 - [InfoBox](#infobox)
 - [ConditionalInfoBox](#conditionalinfobox)
+- [ListElementName](#listelementname)
 - [MeasureUnit](#measureunit)
 
 <!-- ALL ATTRIBUTES DETAILED -->
@@ -331,6 +332,36 @@ The InfoBox allows you to add informational or warning prompts to a property. Th
 
 ### ConditionalInfoBox
 The ConditionalInfoBox allows you to optionally show an InfoBox when some condition is met, in a similar fashion as [EnableIf](#enableif).
+
+### ListElementName
+Using this attribute you can append to a list's elements, an extra identifier based on some nested field of the element type. This element can be applied to a list or array only, and the string parameter should match a child property of the element type.
+
+```c#
+[Serializable]
+public class RaceGeneralInfo
+{
+    public enum RaceType
+    {
+        Human,
+        Elf,
+        Orc
+    }
+    
+    [SerializeField] 
+    private RaceType race;
+    
+    [SerializeField] 
+    private int maxAge;
+
+    [SerializeField] 
+    private float maxHeight;
+}
+
+[ListElementName("race")]
+public List<RaceGeneralInfo> info = new();
+```
+
+![](./Documentation/artifice_listelementname.gif)
 
 ### MeasureUnit
 MeasureUnit appends any string passed to it at the right of a property. This can be commonly used to indicate whether a time value is measured in seconds or milliseconds! It can even be used as a self documented part of the code it self.
