@@ -275,15 +275,28 @@ namespace ArtificeToolkit.Editor
             // Register right-click context menu
             listHeader.AddManipulator(new ContextualMenuManipulator(evt =>
             {
-                evt.menu.AppendAction("Copy Property Path", action => ApplyToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
+                // Copy property path
+                evt.menu.AppendAction("Copy Property Path", _ => { GUIUtility.systemCopyBuffer = Property.propertyPath; }, DropdownMenuAction.AlwaysEnabled);
 
+                // Prefab Overrides
                 if (Property.prefabOverride)
                 {
                     evt.menu.AppendSeparator();
-                    evt.menu.AppendAction($"Apply to Prefab '{PrefabUtility.GetCorrespondingObjectFromSource(Property.serializedObject.targetObject).name}'", action => ApplyToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
+
+                    // This is enforced by Property.prefabOverride statement
+                    var prefabLevels = GetPrefabVariantLevels((Property.serializedObject.targetObject  as MonoBehaviour)?.gameObject);
+
+                    for (var i = prefabLevels.Count - 1; i >= 0; i--)
+                    {
+                        var prefabLevel = prefabLevels[i];
+                        var label = i > 0 ? $"Apply as Override in Prefab '{prefabLevel.name}'" : $"Apply to Prefab '{prefabLevel.name}'";
+                        evt.menu.AppendAction(label, action => ApplyToPrefab(Property, prefabLevel), DropdownMenuAction.AlwaysEnabled);
+                    }
+                    
                     evt.menu.AppendAction("Revert to Prefab", action => RevertToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
                 }
                 
+                // Copy / Paste
                 evt.menu.AppendSeparator();
                 evt.menu.AppendAction("Copy", action => CopyProperty(), DropdownMenuAction.AlwaysEnabled);
                 evt.menu.AppendAction("Paste", action => PastePropertyNested(Property, _copiedProperty), 
@@ -693,10 +706,33 @@ namespace ArtificeToolkit.Editor
             }
         }
         
-        private void ApplyToPrefab(SerializedProperty property)
+        #endregion
+        
+        #region Context Menu Options
+        
+        private static List<GameObject> GetPrefabVariantLevels(GameObject instance)
+        {
+            var prefabLevels = new List<GameObject>();
+
+            var current = instance;
+            while (true)
+            {
+                if(PrefabUtility.IsAnyPrefabInstanceRoot(current))
+                    prefabLevels.Add(PrefabUtility.GetCorrespondingObjectFromSource(current));
+
+                if (current.transform.parent == null)
+                    break;
+                
+                current = current.transform.parent.gameObject;
+            }
+
+            return prefabLevels;
+        }
+        
+        private void ApplyToPrefab(SerializedProperty property, GameObject prefabRoot)
         {
             // Apply changes to the prefab
-            PrefabUtility.ApplyPropertyOverride(property, PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(property.serializedObject.targetObject), InteractionMode.UserAction);
+            PrefabUtility.ApplyPropertyOverride(property, PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(prefabRoot), InteractionMode.UserAction);
             Property.serializedObject.ApplyModifiedProperties();
             BuildListUI();
         }
