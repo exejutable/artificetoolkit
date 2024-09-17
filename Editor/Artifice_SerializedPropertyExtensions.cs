@@ -345,6 +345,7 @@ namespace ArtificeToolkit.Editor
             }
         }
      
+        /// <summary> Copies the value of direct value of a serialized property if their SerializedPropertyType match.</summary>
         public static void Copy(this SerializedProperty property, SerializedProperty targetProperty)
         {
             if (targetProperty == null || property.propertyType != targetProperty.propertyType)
