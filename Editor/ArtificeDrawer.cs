@@ -163,18 +163,28 @@ namespace ArtificeToolkit.Editor
                 // If property has visible children, wrap it in a foldout to mimic unity's default behaviour
                 else if (property.hasVisibleChildren)
                 {
-                    var foldout = new Foldout
+                    // 
+                    var hasCustomPropertyDrawer = Artifice_CustomDrawerUtility.HasCustomDrawer(property);
+                    if (hasCustomPropertyDrawer)
                     {
-                        value = property.isExpanded,
-                        text = property.displayName
-                    };
-                    foldout.AddToClassList("nested-field-property");
-                    foldout.BindProperty(property); // Bind to make foldout state (open-closed) be persistent
+                        var customPropertyField = Artifice_CustomDrawerUtility.CreatePropertyGUI(property);
+                        container.Add(customPropertyField);
+                    }
+                    else
+                    {
+                        var foldout = new Foldout
+                        {
+                            value = property.isExpanded,
+                            text = property.displayName
+                        };
+                        foldout.AddToClassList("nested-field-property");
+                        foldout.BindProperty(property); // Bind to make foldout state (open-closed) be persistent
 
-                    foreach (var child in property.GetVisibleChildren())
-                        foldout.Add(CreatePropertyGUI(child));
+                        foreach (var child in property.GetVisibleChildren())
+                            foldout.Add(CreatePropertyGUI(child));
 
-                    container.Add(CreateCustomAttributesGUI(property, foldout));
+                        container.Add(CreateCustomAttributesGUI(property, foldout));
+                    }
                 }
                 else
                 {
