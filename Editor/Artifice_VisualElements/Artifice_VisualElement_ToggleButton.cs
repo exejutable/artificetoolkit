@@ -114,7 +114,7 @@ namespace ArtificeToolkit.Editor.VisualElements
                 _image.experimental.animation.Start(0f, 1f, 200, (elem, value) =>
                 {
                     var mappedValue = Map(value, 0f, 1f, -1f, 1f);
-                    elem.style.scale = new StyleScale(new Scale(new Vector3(mappedValue, mappedValue)));
+                    elem.style.scale = new StyleScale(new Scale(new Vector3(mappedValue, mappedValue, 1f)));
                 });
             }
         }
