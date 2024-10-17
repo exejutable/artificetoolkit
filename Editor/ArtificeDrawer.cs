@@ -140,6 +140,11 @@ namespace ArtificeToolkit.Editor
             if (_serializedPropertyFilter.Invoke(property) == false)
                 return null;
             
+            // Check if property enforces Artifice in following calls.
+            var customAttributes = property.GetCustomAttributes();
+            if (customAttributes != null && customAttributes.Any(attribute => attribute is ForceArtificeAttribute))
+                forceArtificeStyle = true;
+            
             if (ShouldUseArtificeEditorForProperty(property) || forceArtificeStyle)
             {
                 // Arrays need to use custom Artifice List Views (and not a string value!)
@@ -160,10 +165,9 @@ namespace ArtificeToolkit.Editor
                     
                     _disposableStack.Push(listView); // Add to disposable list
                 }
-                // If property has visible children, wrap it in a foldout to mimic unity's default behaviour
+                // If property has visible children, wrap it in a foldout to mimic unity's default behaviour or use any potential implemented custom property drawer.
                 else if (property.hasVisibleChildren)
                 {
-                    // 
                     var hasCustomPropertyDrawer = Artifice_CustomDrawerUtility.HasCustomDrawer(property);
                     if (hasCustomPropertyDrawer)
                     {
@@ -181,7 +185,7 @@ namespace ArtificeToolkit.Editor
                         foldout.BindProperty(property); // Bind to make foldout state (open-closed) be persistent
 
                         foreach (var child in property.GetVisibleChildren())
-                            foldout.Add(CreatePropertyGUI(child));
+                            foldout.Add(CreatePropertyGUI(child, forceArtificeStyle));
 
                         container.Add(CreateCustomAttributesGUI(property, foldout));
                     }
@@ -213,10 +217,15 @@ namespace ArtificeToolkit.Editor
         public VisualElement CreateCustomAttributesGUI(SerializedProperty property, VisualElement propertyField, List<CustomAttribute> customAttributes)
         {
             var attributeDrawers = new List<Artifice_CustomAttributeDrawer>();
+            var drawerMap = Artifice_Utilities.GetDrawerMap();
             foreach (var customAttribute in customAttributes)
             {
+                // Skip if drawer does not exist for custom attribute
+                if(drawerMap.ContainsKey(customAttribute.GetType()) == false)
+                    continue;
+                
                 // Create instance of drawer
-                var attributeDrawer = (Artifice_CustomAttributeDrawer)Activator.CreateInstance(Artifice_Utilities.GetDrawerMap()[customAttribute.GetType()]);
+                var attributeDrawer = (Artifice_CustomAttributeDrawer)Activator.CreateInstance(drawerMap[customAttribute.GetType()]);
                 attributeDrawer.Attribute = customAttribute;
                 attributeDrawers.Add(attributeDrawer);
                 _disposableStack.Push(attributeDrawer); // Add to disposable stack
@@ -248,7 +257,7 @@ namespace ArtificeToolkit.Editor
                 wrapper = attributeDrawers[i].OnWrapGUI(property, wrapper);
 
             // ON PROPERTY BOUND GUI
-            propertyField?.RegisterCallback<AttachToPanelEvent>(evt =>
+            propertyField?.schedule.Execute(() =>
             {
                 foreach (var drawer in attributeDrawers)
                     drawer.OnPropertyBoundGUI(property, propertyField);
