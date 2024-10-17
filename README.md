@@ -80,15 +80,18 @@ These attributes can and should be used frequently. They will at a bare minimum 
 - [EnableIf](#enableif)
 - [PreviewScriptable](#previewscriptable)
 - [PreviewSprite](#previewsprite)
+- [ReadOnly](#readonly)
 
 ## Miscellaneous
 - [Space](#space)
 - [Range](#range)
 - [HideLabel](#hidelabel)
+- [HideInArtifice] (#hideinartifice)
 - [InfoBox](#infobox)
 - [ConditionalInfoBox](#conditionalinfobox)
 - [ListElementName](#listelementname)
 - [MeasureUnit](#measureunit)
+- [ForceArtifice] (#forceartifice)
 
 <!-- ALL ATTRIBUTES DETAILED -->
 ## All Attributes
@@ -317,6 +320,23 @@ private List<SCR_Character> mainCharacter;
 
 ---
 
+### ReadOnly
+
+```c#
+[SerializeField, ReadOnly] 
+private float gravity = 9.81f;
+
+[SerializeField, ReadOnly, ForceArtifice]
+private Vector3 up = new Vector3(0f, 1f, 0f);
+```
+
+![readonly-example](./Documentation/artifice_readonly.jpg)
+
+
+**NOTE**: To make Vector3 and similar structs be readonly, we need to enforce the usage of artifice in their nested properties. This is why, [ForceArtifice](#forceartifice) is used.
+
+---
+
 <!-- Miscellaneous -->
 ### Space
 The Space attribute can receive up to four parameters reflecting the margin in pixels you want your element to have from top, bottom, left, right directions.
@@ -326,6 +346,9 @@ The Range attribute works on integers and floats and allows you to control them 
 
 ### HideLabel
 The HideLabel attribute as the name suggests, finds and dynamically hides the label of the label.
+
+### HideInArtifice
+The HideInArtifice label works exactly as the default HideInInspector and does as it suggests. It skips the property from being rendered.
 
 ### InfoBox
 The InfoBox allows you to add informational or warning prompts to a property. This could be useful for example to document or explain some rules regarding a specific value.
@@ -374,6 +397,10 @@ Note: Currently this only works while the inspector is open. There is nothing st
 ### MaxValue
 As [MinValue](#minvalue) but for a maximum value.
 
+### ForceArtifice
+The ArtificeDrawer is responsible for rendering the inspector using VisualElements, applying custom properties when necessary. For optimization, if no custom attributes are detected, it skips the Artifice rendering and falls back to a default IMGUIContainer.
+
+However, there are cases where we might want to enforce the use of Artifice, even for nested properties that don't have custom attributes. In these scenarios, this attribute ensures that Artifice is always used, overriding the default behavior.
 
 
 <!-- ARTIFICE VALIDATOR -->
