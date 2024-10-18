@@ -5,7 +5,8 @@
  - Bug Fix: Previously in version 2022.X, when openning the validator window a bunch of warnings would show up. This is now fixed.
  - Enchacement: OnPropertyBound override for custom property drawers now works with 100% consistency.
  - Enchacement: Now ChildGameObjectOnly deletes the default unity object selector.
- - New Attributes: HideInArtifice, ReadOnly, ForceArtifice
+ - New Attributes: HideInArtifice, ReadOnly 
+ - Documentation: Added documentation section on why order matterns + how to create your own custom attribute drawers.
 
 ## 1.1.5
  - Enhancement: Added ListElementNameAttribute which allows you to set a custom naming extension to your list elements based on sub-property string values.

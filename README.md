@@ -31,7 +31,6 @@ You can add the ArtificeToolkit as any other Unity Package. Since this is an alp
 <p align="center">
   <img src="./Documentation/artifice_addpackage.png" />
 </p>
-()
 
 <!-- CUSTOM ATTRIBUTE CATEGORIES AND LINKS -->
 # Artifice Inspector and Custom Attributes
@@ -42,6 +41,47 @@ By default, the Artifice Drawer is disabled. You can always turn it on/off throu
 <p align="center">
   <img src="./Documentation/artifice_toggle.png" />
 </p>
+
+## Why Order Matters!
+When applying custom attributes to a property, it’s important to understand the order in which they are applied during the rendering process. Internally, custom attributes are applied at the following key rendering points:
+
+1. Pre Property GUI: Before the property is drawn in the Inspector.
+2. On Property GUI: Replaces the property’s default GUI entirely.
+3. Post Property GUI: Applied after the property is drawn.
+4. Wrap Property GUI: Encapsulates all previous steps inside a new container. An example of this is how Group Attributes work.
+5. Property Bound GUI: This is called after the property has been drawn, useful when dealing with PropertyField because its children are built lazily in the UI.
+
+For most attributes, the order they are applied follows the order of declaration. However, attributes that use OnWrap GUI (like group attributes) are applied in <b>reverse order</b>, which can lead to unexpected behavior if not handled carefully.
+
+Example
+Consider this example with conflicting attributes. Both the BoxGroup and the EnableIf work by utilizing the Wrap Property GUI:
+```c#
+[SerializeField]
+private bool shouldEnable;
+
+[SerializeField, BoxGroup("Test")]
+private int x;
+
+[SerializeField, EnableIf(nameof(shouldEnable), true), BoxGroup("Test")]
+private int y;
+```
+
+If we trace how property 'y' will get rendered, it would firstly resolve the BoxGroup("Test") which has already included property 'x'. Then, it would resolve EnableIf wrapping the BoxGroup inside of the EnableIf.
+
+This is "probably" an undesired effect, unless executed by design. Its wrong, since now the enable if does not encapsulate only the 'y' property, but the entire BoxGroup which holds both 'x' and 'y'.
+
+So the correct version of the above code would be 
+```c#
+[SerializeField]
+private bool shouldEnable;
+
+[SerializeField, BoxGroup("Test")]
+private int x;
+
+[SerializeField, BoxGroup("Test"), EnableIf(nameof(shouldEnable), true)]
+private int y;
+```
+In this version, EnableIf is applied first, ensuring that property y behaves as expected—only, and the the BoxGroup is resolved, wrapping the wrapper of the EnableIf.
 
 
 ## Top 3 Recommended Attributes
@@ -432,4 +472,90 @@ To create a new CustomAttribute, you need to create the following:
   1. YourCustomAttribute inheriting from CustomAttribute. This should be placed in a runtime folder.
   2. Artifice_CustomAttributeDrawer_YourAttribute inheriting from the Artifice_CustomAttributeDrawer placed inside an Editor folder. In a similar fashion as CustomPropertyDrawers, you need to mark this class with a [CustomAttributeDrawer(typeof(YourAttribute))] to link them together.
 
-This section will be more documented in the future. For now, you can see examples of custom attributes like TitleAttribute and it's CustomAttributeDrawer_Title.
+
+## Creating New CustomAttributes
+
+To create a new `CustomAttribute`, follow these steps:
+
+1. **YourCustomAttribute**: Create your custom attribute by inheriting from `System.Attribute`. This should be placed in a **runtime** folder so it can be applied to your components or ScriptableObjects.
+   
+2. **Artifice_CustomAttributeDrawer_YourAttribute**: Create a custom attribute drawer by inheriting from `Artifice_CustomAttributeDrawer`. This drawer class must be placed inside an **Editor** folder.
+
+   To link the attribute with its drawer, mark the drawer class with `[CustomPropertyDrawer(typeof(YourAttribute))]`.
+
+### Example: `TitleAttribute`
+
+In this example, we create a custom `TitleAttribute` that adds a styled header to serialized fields in the Unity Inspector.
+
+### Step 1: Create the `TitleAttribute`
+
+Create the `TitleAttribute` in a **runtime** folder. This attribute takes a string title, which will be used as a label in the Inspector.
+
+```csharp
+using System;
+using UnityEngine;
+
+[AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+public class TitleAttribute : PropertyAttribute
+{
+    public string Title { get; }
+
+    public TitleAttribute(string title)
+    {
+        Title = title;
+    }
+}
+```
+
+### Step 2: Create the CustomDrawer
+Now, create a custom drawer for the TitleAttribute in an Editor folder. This drawer will display the title as a label in the Unity Inspector.
+
+```c#
+using UnityEditor;
+using UnityEngine.UIElements;
+using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers;
+
+[CustomPropertyDrawer(typeof(TitleAttribute))]
+public class Artifice_CustomAttributeDrawer_Title : Artifice_CustomAttributeDrawer
+{
+    private TitleAttribute _titleAttribute;
+
+    // Initialize the TitleAttribute
+    public Artifice_CustomAttributeDrawer_Title()
+    {
+        _titleAttribute = (TitleAttribute)Attribute;
+    }
+
+    // Override to insert the custom label before the property field
+    public override VisualElement OnPrePropertyGUI(SerializedProperty property)
+    {
+        // Create a label using the title from the attribute
+        return new Label(_titleAttribute.Title)
+        {
+            style =
+            {
+                unityFontStyleAndWeight = FontStyle.Bold,
+                fontSize = 14,
+                color = Color.white
+            }
+        };
+    }
+}
+```
+
+How to Use:
+You can now use the TitleAttribute in any of your MonoBehaviour or ScriptableObject classes to add custom headers to your serialized fields:
+
+```c#
+using UnityEngine;
+
+public class ExampleComponent : MonoBehaviour
+{
+    [Title("Player Settings")]
+    public float health;
+
+    [Title("Weapon Settings")]
+    public int ammoCount;
+}
+
+```
