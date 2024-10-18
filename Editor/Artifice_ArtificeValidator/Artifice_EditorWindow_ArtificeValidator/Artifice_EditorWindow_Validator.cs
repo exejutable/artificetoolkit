@@ -403,8 +403,8 @@ namespace ArtificeToolkit.Editor
         /* Mono */
         private void OnDisable()
         {
-            OnLogsRefreshEvent.RemoveAllListeners();
-            OnLogCounterRefreshedEvent.RemoveAllListeners();
+            OnLogsRefreshEvent?.RemoveAllListeners();
+            OnLogCounterRefreshedEvent?.RemoveAllListeners();
         }
 
         /// <summary> Calls <see cref="RefreshLogsCoroutine"/> but blocks main thread to run faster. </summary>

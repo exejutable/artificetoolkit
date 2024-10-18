@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ArtificeToolkit.Attributes;
 using ArtificeToolkit.Editor.Resources;
 using UnityEditor;
@@ -61,6 +62,12 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
             });
             
             return wrapper;
+        }
+
+        public override void OnPropertyBoundGUI(SerializedProperty property, VisualElement propertyField)
+        {
+            var fieldSelector = propertyField.Query<VisualElement>(className: "unity-object-field__selector").ToList().FirstOrDefault();
+            fieldSelector?.AddToClassList("hide");
         }
 
         protected override bool IsApplicableToProperty(SerializedProperty property)

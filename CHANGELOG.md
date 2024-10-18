@@ -1,5 +1,13 @@
 # Change Log:
 
+## 1.1.7
+ - Enchacement: Previously ArtificeDrawer would completely ignore custom property drawers in the project. Now, it queries and uses them if they exist!
+ - Bug Fix: Previously in version 2022.X, when openning the validator window a bunch of warnings would show up. This is now fixed.
+ - Enchacement: OnPropertyBound override for custom property drawers now works with 100% consistency.
+ - Enchacement: Now ChildGameObjectOnly deletes the default unity object selector.
+ - New Attributes: HideInArtifice, ReadOnly 
+ - Documentation: Added documentation section on why order matterns + how to create your own custom attribute drawers.
+
 ## 1.1.5
  - Enhancement: Added ListElementNameAttribute which allows you to set a custom naming extension to your list elements based on sub-property string values.
  - Enchacement: Added context menu options (apply/revert to prefab, copy and paste) to Artifice's list view. Now, it also indicates with the blue indicator if lists have been detected on the list.

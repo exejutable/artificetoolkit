@@ -1,11 +1,10 @@
-using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers;
 using ArtificeToolkit.Editor.Resources;
 using ArtificeToolkit.Editor.VisualElements;
 using CustomAttributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ListElementNameAttribute
+namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ListElementNameAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(ListElementNameAttribute))]
     public class Artifice_CustomAttributeDrawer_ListElementNameAttribute : Artifice_CustomAttributeDrawer
