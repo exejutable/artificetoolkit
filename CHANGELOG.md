@@ -1,7 +1,7 @@
 # Change Log:
 
 ## 1.1.7
- - Enchacement: Previously ArtificeDrawer would completely ignore custom property drawers in the project. Now, it queries and uses then if they exist!
+ - Enchacement: Previously ArtificeDrawer would completely ignore custom property drawers in the project. Now, it queries and uses them if they exist!
  - Bug Fix: Previously in version 2022.X, when openning the validator window a bunch of warnings would show up. This is now fixed.
  - Enchacement: OnPropertyBound override for custom property drawers now works with 100% consistency.
  - Enchacement: Now ChildGameObjectOnly deletes the default unity object selector.
