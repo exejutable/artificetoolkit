@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 // ReSharper disable InvertIf
 
@@ -26,8 +27,8 @@ namespace ArtificeToolkit.Editor
         public static Type GetTargetType(this SerializedProperty property)
         {
             // Try get direct value for optimization.
-            if (GetTargetDirect(property, out var value))
-                return value.GetType();
+            if (GetTargetTypeDirect(property, out var value))
+                return value;
             
             var propertyNames = property.propertyPath.Split('.');
             
@@ -189,7 +190,95 @@ namespace ArtificeToolkit.Editor
             }
         }
         
-        
+        /// <summary> This method returns the Type of the property using direct means. It does not support generic types, object references and enums. </summary>
+        private static bool GetTargetTypeDirect(this SerializedProperty property, out Type value)
+        {
+            // Fast path for common types
+            switch (property.propertyType)
+            {
+                case SerializedPropertyType.Integer:
+                    value = typeof(int);
+                    return true;
+                case SerializedPropertyType.Boolean:
+                    value = typeof(bool);
+                    return true;
+                case SerializedPropertyType.Float:
+                    value = typeof(float);
+                    return true;
+                case SerializedPropertyType.String:
+                    value = typeof(string);
+                    return true;
+                case SerializedPropertyType.Enum:
+                    // Skip this so GetTarget will find the actual enum, and not the integer value of it.
+                    value = null;
+                    return false;
+                case SerializedPropertyType.Color:
+                    value = typeof(Color);
+                    return true;
+                case SerializedPropertyType.Vector2:
+                    value = typeof(Vector2);
+                    return true;
+                case SerializedPropertyType.Vector3:
+                    value = typeof(Vector3);
+                    return true;
+                case SerializedPropertyType.Vector4:
+                    value = typeof(Vector4);
+                    return true;
+                case SerializedPropertyType.Rect:
+                    value = typeof(Rect);
+                    return true;
+                case SerializedPropertyType.LayerMask:
+                    value = typeof(int); // LayerMask is stored as an integer
+                    return true;
+                case SerializedPropertyType.Character:
+                    value = typeof(char); // Character stored as an integer
+                    return true;
+                case SerializedPropertyType.AnimationCurve:
+                    value = typeof(AnimationCurve);
+                    return true;
+                case SerializedPropertyType.Bounds:
+                    value = typeof(Bounds);
+                    return true;
+                case SerializedPropertyType.Quaternion:
+                    value = typeof(Quaternion);
+                    return true;
+                case SerializedPropertyType.ExposedReference:
+                    value = typeof(Object); // ExposedReference usually holds a UnityEngine.Object reference
+                    return true;
+                case SerializedPropertyType.FixedBufferSize:
+                    value = typeof(int); // Represents size as an integer
+                    return true;
+                case SerializedPropertyType.Vector2Int:
+                    value = typeof(Vector2Int);
+                    return true;
+                case SerializedPropertyType.Vector3Int:
+                    value = typeof(Vector3Int);
+                    return true;
+                case SerializedPropertyType.RectInt:
+                    value = typeof(RectInt);
+                    return true;
+                case SerializedPropertyType.BoundsInt:
+                    value = typeof(BoundsInt);
+                    return true;
+                case SerializedPropertyType.ManagedReference:
+                    value = property.managedReferenceValue?.GetType();
+                    return value != null;
+                case SerializedPropertyType.Hash128:
+                    value = typeof(Hash128);
+                    return true;
+                case SerializedPropertyType.ArraySize:
+                    value = typeof(int); // ArraySize is an integer
+                    return true;
+                    
+                // Default and unsupported types
+                case SerializedPropertyType.ObjectReference:
+                case SerializedPropertyType.Generic:
+                default:
+                    value = null;
+                    return false;
+            }
+        }
+
         /// <summary> Utility method for GetTarget </summary>
         private static object GetField(object target, string name, Type targetType = null)
         {
