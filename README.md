@@ -602,3 +602,5 @@ public class ExampleComponent : MonoBehaviour
 Serialized property type Generic does not support value tracking; callback is not set for characters
 UnityEditor.RetainedMode:UpdateSchedulers ()
 ```
+
+- The ArtificeToolkit was created with Dark Theme is mind and is currently the only supported color palette.
