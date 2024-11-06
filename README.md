@@ -118,20 +118,21 @@ These attributes can and should be used frequently. They will at a bare minimum 
 - [Title](#title)
 - [EnumToggle](#enumtoggle)
 - [EnableIf](#enableif)
-- [PreviewScriptable](#previewscriptable)
+- [Button](#button)
 - [PreviewSprite](#previewsprite)
+- [PreviewScriptable](#previewscriptable)
 - [ReadOnly](#readonly)
 
 ## Miscellaneous
 - [Space](#space)
 - [Range](#range)
 - [HideLabel](#hidelabel)
-- [HideInArtifice] (#hideinartifice)
+- [HideInArtifice](#hideinartifice)
 - [InfoBox](#infobox)
 - [ConditionalInfoBox](#conditionalinfobox)
 - [ListElementName](#listelementname)
 - [MeasureUnit](#measureunit)
-- [ForceArtifice] (#forceartifice)
+- [ForceArtifice](#forceartifice)
 
 <!-- ALL ATTRIBUTES DETAILED -->
 ## All Attributes
@@ -325,6 +326,37 @@ private float onDeathSoundFxVolume;
 
 ---
 
+### Button
+Button allows you to quickly turn any method into a button in the inspector to invoke at your hearts content. Buttons can be placed inline using an optional parameter. Otherwise they will be grouped in a sliding container to keep your inspector clean and simple.
+
+It is worth noting that buttons will always appear last in the rendering order. This is something due to change in the far future.
+
+```c#
+[SerializeField] 
+private string parameterTest = "test";
+
+[Button]
+private void TestMethod()
+{
+    Debug.Log("Invoked from editor button!");
+}
+
+[Button(false)]
+private void TestMethodInline()
+{
+    Debug.Log("Invoked from editor button!");
+}
+
+[Button("parameterTest")]
+private void TestMethodWithParameters(string parameter)
+{
+    Debug.Log($"Invoked from editor button! Dynamic Parameter: {parameter}");
+}
+```
+
+![button-example](./Documentation/artifice_button.gif)
+
+
 ### PreviewSprite
 PreviewSprite works only on the Sprite and Texture2D serialized properties. It renders an enlarged image of the selected value.
 
@@ -496,7 +528,7 @@ using System;
 using UnityEngine;
 
 [AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
-public class TitleAttribute : PropertyAttribute
+public class TitleAttribute : CustomAttribute
 {
     public string Title { get; }
 
