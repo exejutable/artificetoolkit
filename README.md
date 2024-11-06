@@ -25,6 +25,9 @@ The Artifice Toolkit offers three powerful tools:
 
 3. [Artifice Drawer](#artifice-drawer): The ArtificeDrawer is what renders everything in the ArtificeToolkit. Invoke the drawer in your Editor Scripts with a SerializedObject or SerializedProperty and you will receive the rendered result of it. This essentially makes the ArtificeDrawer a first-class citizen inspector.
 
+## Unity Version Support
+The ArtificeToolkit has been primarily tested and optimized for Unity 2022, ensuring stable and consistent performance. It is also compatible with Unity 2023, where it has been thoroughly tested to maintain functionality. While the toolkit works with Unity 2021, users may encounter occasional warnings; these will be addressed in upcoming updates to improve compatibility with older versions.
+
 ## How to install into your Unity project?
 You can add the ArtificeToolkit as any other Unity Package. Since this is an alpha testing phase, it can only be added as a local package through Windows -> Package Manager. Then press the "plus" icon and choose "Add Package from disk...". The select the package.json file and the ArtificeToolkit will be linked to your project.
 
@@ -133,6 +136,7 @@ These attributes can and should be used frequently. They will at a bare minimum 
 - [ListElementName](#listelementname)
 - [MeasureUnit](#measureunit)
 - [ForceArtifice](#forceartifice)
+
 
 <!-- ALL ATTRIBUTES DETAILED -->
 ## All Attributes
@@ -590,4 +594,11 @@ public class ExampleComponent : MonoBehaviour
     public int ammoCount;
 }
 
+```
+
+## Known Issues
+- In Unity 2021.x.x the following warning may appear due to value tracking not working generic types of serialized properties.
+```
+Serialized property type Generic does not support value tracking; callback is not set for characters
+UnityEditor.RetainedMode:UpdateSchedulers ()
 ```
