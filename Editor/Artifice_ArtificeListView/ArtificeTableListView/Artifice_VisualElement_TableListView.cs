@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -101,13 +102,17 @@ namespace ArtificeToolkit.Editor
                 // Set position of drag handler based on previous width percents
                 percentTotal += _fieldColumns[i].WidthPercent;
                 dragHandler.style.left = Length.Percent(percentTotal);
+
+                var tableListViewReference = new WeakReference<Artifice_VisualElement_TableListView>(this);
                 
                 // Set callbacks
                 var capturedI = i;
                 dragHandler.RegisterCallback<MouseDownEvent>(evt =>
                 {
-                    _selectedColumnHandler = dragHandler;
-                    OnMouseDownEventHandler(capturedI, evt);
+                    if(tableListViewReference.TryGetTarget(out var tableListView) == false)
+                       Debug.Assert(false, "Potential memory leak...");
+                    
+                    tableListView.OnMouseDownEventHandler(capturedI, evt);
                 });
             }
                 
@@ -195,6 +200,8 @@ namespace ArtificeToolkit.Editor
                 if (disposing)
                 {
                     ArtificeDrawer.Dispose();
+                    UnregisterCallback<MouseMoveEvent>(OnMouseMoveEventHandler);
+                    UnregisterCallback<MouseUpEvent>(OnMouseUpEventHandler);
                 }
 
                 _disposed = true;

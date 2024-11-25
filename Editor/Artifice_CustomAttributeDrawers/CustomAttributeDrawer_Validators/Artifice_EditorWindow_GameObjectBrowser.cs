@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ArtificeToolkit.Editor.Resources;
+using Codice.Client.BaseCommands.BranchExplorer.Layout;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,12 +26,16 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
             private readonly List<VisualElement_BrowserElement> _childrenElem;
             private string _searchText = "";
 
+            private WeakReference<VisualElement_BrowserElement> _browserElementReference;
+            
             private const int PaddingPerDepth = 20;
             
             #endregion
 
             public VisualElement_BrowserElement(GameObject gameObject, int depth, Type searchType, UnityEvent<Object> onSelectEvent)
             {
+                _browserElementReference = new WeakReference<VisualElement_BrowserElement>(this);
+                
                 _gameObject = gameObject;
                 _childrenElem = new List<VisualElement_BrowserElement>();
                 _onSelectEvent = onSelectEvent;
@@ -79,9 +84,12 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
                     // Register events
                     dropdownSymbol.RegisterCallback<MouseDownEvent>(evt =>
                     {
-                        IsExpanded = !IsExpanded;
-                        UpdateChildrenVisibility();
-                        HandleDropDownSymbolRotation(dropdownSymbol);
+                        if(_browserElementReference.TryGetTarget(out var browserElement) == false)
+                            Debug.Assert(false, "Potential memory leak...");
+                            
+                        browserElement.IsExpanded = !browserElement.IsExpanded;
+                        browserElement.UpdateChildrenVisibility();
+                        browserElement.HandleDropDownSymbolRotation(dropdownSymbol);
                     });
                 }
                 else // If not foldout symbol exists, compensate with extra padding.
@@ -89,12 +97,15 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
                 
                 container.RegisterCallback<MouseDownEvent>(evt =>
                 {
-                    if (evt.clickCount == 2 && IsValidForBrowse(_gameObject))
+                    if(_browserElementReference.TryGetTarget(out var browserElement) == false)
+                        Debug.Assert(false, "Potential memory leak...");
+                    
+                    if (evt.clickCount == 2 && browserElement.IsValidForBrowse(browserElement._gameObject))
                     {
-                        if(_searchType == typeof(GameObject))
-                            _onSelectEvent?.Invoke(_gameObject);
+                        if(browserElement._searchType == typeof(GameObject))
+                            browserElement._onSelectEvent?.Invoke(browserElement._gameObject);
                         else
-                            _onSelectEvent?.Invoke(_gameObject.GetComponent(_searchType));
+                            browserElement._onSelectEvent?.Invoke(browserElement._gameObject.GetComponent(browserElement._searchType));
                     }
                 });
                 
@@ -228,7 +239,7 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
 
         #region FIELDS
         
-        public readonly UnityEvent<Object> OnObjectSelected = new UnityEvent<Object>();
+        public readonly UnityEvent<Object> OnObjectSelected = new();
         
         private VisualElement _contentElem;
         private VisualElement_BrowserElement _rootElement;
@@ -252,9 +263,12 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
             _contentElem.Clear();
             _contentElem.Add(_rootElement);
         }
-        
+     
+        /* Mono */
         private void CreateGUI()
         {
+            
+            
             name = "Object Browser";
             
             rootVisualElement.styleSheets.Add(Artifice_Utilities.GetGlobalStyle());
@@ -281,6 +295,12 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
             // Content elem
             _contentElem = new ScrollView();
             rootVisualElement.Add(_contentElem);
+        }
+        
+        /* Mono */
+        private void OnDisable()
+        {
+            OnObjectSelected.RemoveAllListeners();
         }
     }
 }

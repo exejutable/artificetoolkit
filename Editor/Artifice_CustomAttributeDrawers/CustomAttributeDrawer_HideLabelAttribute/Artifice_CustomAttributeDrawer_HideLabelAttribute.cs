@@ -18,7 +18,8 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
             {
                 propertyField.RegisterCallback<GeometryChangedEvent>(evt =>
                 {
-                    var label = propertyField.Query<Label>().First();
+                    var target = (VisualElement)evt.currentTarget;
+                    var label = target.Query<Label>().First();
                     label?.AddToClassList("hide");
                 });
             }

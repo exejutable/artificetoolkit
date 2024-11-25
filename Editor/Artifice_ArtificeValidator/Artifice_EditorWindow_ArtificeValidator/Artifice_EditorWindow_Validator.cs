@@ -246,8 +246,9 @@ namespace ArtificeToolkit.Editor
                 
                 RegisterCallback<ClickEvent>(evt =>
                 {
-                    if(evt.clickCount == 2 && _originObject != null)
-                       Selection.SetActiveObjectWithContext(_originObject, _originObject);
+                    var listItem = (ValidatorLogListItem)evt.currentTarget;
+                    if(evt.clickCount == 2 && listItem._originObject != null)
+                       Selection.SetActiveObjectWithContext(listItem._originObject, listItem._originObject);
                 });
             }
 
@@ -272,6 +273,9 @@ namespace ArtificeToolkit.Editor
         
         #region FIELDS
  
+        // Weak Reference for lambda methods
+        private WeakReference<Artifice_EditorWindow_Validator> _validatorReference;
+        
         // Logs
         private readonly List<ValidatorLog> _logs = new();
         private readonly List<ValidatorLog> _filteredLogs = new();
@@ -323,6 +327,9 @@ namespace ArtificeToolkit.Editor
         /* Mono */
         private void Initialize()
         {
+            // Set weak reference
+            _validatorReference = new WeakReference<Artifice_EditorWindow_Validator>(this);
+            
             // Load Artifice Validator State
             if(EditorPrefs.HasKey(ConfigPathKey))
                 _config = AssetDatabase.LoadAssetAtPath<Artifice_SCR_ValidatorConfig>(EditorPrefs.GetString(ConfigPathKey));
@@ -511,7 +518,7 @@ namespace ArtificeToolkit.Editor
             // Build Tracked locations
             var trackedContainers = new ScrollView();
             trackedContainers.AddToClassList("tracked-containers-container");
-            trackedContainers.Add(BuildTrackedScenesUI());
+            // trackedContainers.Add(BuildTrackedScenesUI()); // Removed for now. It seemed obnoxious and useless. 
             trackedContainers.Add(BuildTrackedAssetFoldersUI());
             trackedContainers.Add(BuildTrackedValidatorTypesUI());
             // Add to splitpane
@@ -587,7 +594,7 @@ namespace ArtificeToolkit.Editor
             return container;
         }
         
-        private VisualElement BuildTrackedScenesUI()
+        private VisualElement BuildTrackedScenesUI() // Has been removed from the UI for now, but keep it for now in case we want to simply refactor the visuals in the future.
         {
             var container = new VisualElement();
             container.AddToClassList("tracked-list-container");
@@ -637,7 +644,7 @@ namespace ArtificeToolkit.Editor
         {
             var container = new VisualElement();
             container.AddToClassList("tracked-list-container");
-            container.AddToClassList("space-top");
+            container.AddToClassList("space-bottom");
             
             // Add list title
             var header = BuildTrackedListTitleUI("Assets");
@@ -662,7 +669,11 @@ namespace ArtificeToolkit.Editor
                     // Subscribe change, to refresh filters
                     itemElem.Toggle.RegisterValueChangedCallback(evt =>
                     {
-                        _config.assetPathsMap[assetPaths[i]] = evt.newValue;
+                        // Get reference to validator
+                        if(_validatorReference.TryGetTarget(out var validator) == false)
+                            Debug.Assert(false, "Potential memory leak...");
+                        
+                        validator._config.assetPathsMap[assetPaths[i]] = evt.newValue;
                         RefreshFilteredLogs();
                     });
                     
@@ -671,8 +682,12 @@ namespace ArtificeToolkit.Editor
                     {
                         if (evt.button == 1)
                         {
+                            // Get reference to validator
+                            if(_validatorReference.TryGetTarget(out var validator) == false)
+                                Debug.Assert(false, "Potential memory leak...");
+                            
                             var genericMenu = new GenericMenu();
-                            genericMenu.AddItem(new GUIContent("Remove path"), false, () => RemoveItem(assetPaths[i]));
+                            genericMenu.AddItem(new GUIContent("Remove path"), false, () => validator.AssetPaths_RemoveItem(listView, assetPaths[i]));
                             genericMenu.ShowAsContext();
                         }
                     });
@@ -695,6 +710,7 @@ namespace ArtificeToolkit.Editor
             });
             
             // Add context menu options
+            var validatorWeakReference = new WeakReference<Artifice_EditorWindow_Validator>(this);
             header.RegisterCallback<MouseDownEvent>(evt =>
             {
                 if (evt.button == 1)
@@ -706,29 +722,13 @@ namespace ArtificeToolkit.Editor
                         var relativePath = Artifice_Utilities.ConvertGlobalToRelativePath(path);
                         if (string.IsNullOrEmpty(relativePath))
                             return;
-                        AddItem(relativePath);
+                        
+                        if(validatorWeakReference.TryGetTarget(out var validator))
+                            validator.AssetPaths_AddItem(listView, relativePath);
                     });
                     genericMenu.ShowAsContext();
                 }
             });
-
-            // Local methods with encapsulate adding/removing items from the list's internal logic. Also helps with scoping. 
-            void AddItem(string assetPath)
-            {
-                _config.assetPathsMap.TryAdd(assetPath, true);
-                EditorUtility.SetDirty(_config);
-                assetPaths.Add(assetPath);
-                _logCounters.assetPathsMap[assetPath] = 0;
-                listView.RefreshItems();
-            }
-            void RemoveItem(string assetPath)
-            {
-                _config.assetPathsMap.Remove(assetPath);
-                EditorUtility.SetDirty(_config);
-                assetPaths.Remove(assetPath);
-                _logCounters.assetPathsMap[assetPath] = 0;
-                listView.RefreshItems();
-            }
             
             return container;
         }
@@ -876,6 +876,31 @@ namespace ArtificeToolkit.Editor
          
             Close();
             OpenWindow();
+        }
+        
+        #endregion
+        
+        #region Utility
+        
+        private void AssetPaths_AddItem(ListView listView, string assetPath)
+        {
+            _logCounters.assetPathsMap[assetPath] = 0;
+            
+            _config.assetPathsMap.TryAdd(assetPath, true);
+            EditorUtility.SetDirty(_config);
+            
+            listView.itemsSource.Add(assetPath);
+            listView.RefreshItems();
+        }
+        private void AssetPaths_RemoveItem(ListView listView, string assetPath)
+        {
+            _logCounters.assetPathsMap[assetPath] = 0;
+            
+            _config.assetPathsMap.Remove(assetPath);
+            EditorUtility.SetDirty(_config);
+            
+            listView.itemsSource.Remove(assetPath);
+            listView.RefreshItems();
         }
         
         #endregion

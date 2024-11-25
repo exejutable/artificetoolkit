@@ -39,11 +39,15 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
             wrapper.Add(browserButton);
             
             // Subscribe to button click
+            var propertyReference = new WeakReference<SerializedProperty>(property);
             browserButton.RegisterCallback<MouseDownEvent>(evt =>
             {
+                if(propertyReference.TryGetTarget(out var safeProperty) == false)
+                    Debug.Assert(false, "Potential memory leak...");
+                
                 // Get property type
-                var gameObject = ((Behaviour)property.serializedObject.targetObject).gameObject;
-                var searchType = property.GetTargetType();
+                var gameObject = ((Behaviour)safeProperty.serializedObject.targetObject).gameObject;
+                var searchType = safeProperty.GetTargetType();
                 
                 // Get mouse position and set up position struct for editor window
                 var mousePos = GUIUtility.GUIToScreenPoint(Event.current.mousePosition);
@@ -55,8 +59,8 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
                 // Subscribe to selection event
                 browser.OnObjectSelected.AddListener(obj =>
                 {
-                    property.objectReferenceValue = obj;
-                    property.serializedObject.ApplyModifiedProperties();
+                    safeProperty.objectReferenceValue = obj;
+                    safeProperty.serializedObject.ApplyModifiedProperties();
                     browser.Close();
                 });
             });
