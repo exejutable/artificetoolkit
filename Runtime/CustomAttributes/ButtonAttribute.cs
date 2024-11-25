@@ -14,11 +14,11 @@ namespace ArtificeToolkit.Attributes
 
         public ButtonAttribute(params string[] parameters)
         {
-            ShouldAddOnSlidingPanel = true;
+            ShouldAddOnSlidingPanel = false;
             ParameterNames = parameters;
         }
         
-        public ButtonAttribute(bool shouldAddOnSlidingPanel = true, params string[] parameters)
+        public ButtonAttribute(bool shouldAddOnSlidingPanel = false, params string[] parameters)
         {
             ShouldAddOnSlidingPanel = shouldAddOnSlidingPanel;
             ParameterNames = parameters;
