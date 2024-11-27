@@ -67,7 +67,7 @@ namespace ArtificeToolkit.Editor
         private const string ArtificeInspectorOn = "Artifice Toolkit/" + "\u2712 Toggle ArtificeInspector/On";
         private const string ArtificeInspectorOff = "Artifice Toolkit/" +"\u2712 Toggle ArtificeInspector/Off";
         private const string ArtificeDocumentation = "Artifice Toolkit/" +"\ud83d\udcd6 Documentation...";
-        private const string ArtificeDocumentationURL = "https://docs.google.com/document/d/1eZkRUcecHCIbccDg15Pwly1QimX_DsiZ4inF5tP_JZE/edit#heading=h.47aofgu58aiq";
+        private const string ArtificeDocumentationURL = "https://github.com/AbZorbaGames/artificetoolkit";
         
         [MenuItem(ArtificeInspectorOn, true, 0)]
         private static bool ToggleOnCheckmark()
