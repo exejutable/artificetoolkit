@@ -7,6 +7,7 @@ using ArtificeToolkit.Editor.VisualElements;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -544,7 +545,8 @@ namespace ArtificeToolkit.Editor
                 Artifice_SCR_CommonResourcesHolder.instance.PlayIcon,
                 _config.autorun
             );
-            autorunButton.OnButtonPressed += value => _config.autorun = value;
+            var configSerializedObject = new SerializedObject(_config);
+            autorunButton.BindProperty(configSerializedObject.FindProperty(nameof(_config.autorun)));
             container.Add(autorunButton);
             
             // Settings btton
