@@ -9,16 +9,14 @@ namespace ArtificeToolkit.Editor
         private void CreateGUI()
         {
             var drawer = new ArtificeDrawer();
+            drawer.SetSerializedPropertyFilter(property => property.name != "m_Script");
 
             // Get reference to serializedObject and simply call 
             var serializedObject = new SerializedObject(this);
+            
+            rootVisualElement.styleSheets.Add(Artifice_Utilities.GetStyle(typeof(ArtificeEditorWindow)));
+            rootVisualElement.AddToClassList("root-visual-element");
             rootVisualElement.Add(drawer.CreateInspectorGUI(serializedObject));
-
-            // Add padding here to avoid extra style file
-            rootVisualElement.style.paddingBottom = 5;
-            rootVisualElement.style.paddingLeft = 5;
-            rootVisualElement.style.paddingTop = 5;
-            rootVisualElement.style.paddingBottom = 5;
         }
     }
 }
