@@ -336,6 +336,10 @@ namespace ArtificeToolkit.Editor
         /// <summary> Returns an array of any <see cref="CustomAttribute"/> found in the property. Otherwise returns null. </summary>
         public static CustomAttribute[] GetCustomAttributes(this SerializedProperty property)
         {
+            // Arrays actually have a sibling "size". Their parent, is the actual property I will need to search in GetFieldNested.
+            if (property.name == "Array")
+                property = property.FindParentProperty();
+            
             var fieldInfo = GetFieldNested(property.serializedObject.targetObject, property.propertyPath);
 
             if (fieldInfo != null)

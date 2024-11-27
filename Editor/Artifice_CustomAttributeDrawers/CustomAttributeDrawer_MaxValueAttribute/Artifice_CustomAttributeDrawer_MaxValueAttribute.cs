@@ -10,7 +10,7 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
     [Artifice_CustomAttributeDrawer(typeof(MaxValueAttribute))]
     public class Artifice_CustomAttributeDrawer_MaxValueAttribute : Artifice_CustomAttributeDrawer_Validator_BASE
     {
-        public override string LogMessage { get; } = "Property value is below minimum accepted value.";
+        public override string LogMessage { get; } = "Property value is above maximum accepted value.";
         public override Sprite LogSprite { get; } = Artifice_SCR_CommonResourcesHolder.instance.ErrorIcon;
         public override LogType LogType { get; } = LogType.Error;
         
@@ -21,8 +21,13 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
 
         public override bool IsValid(SerializedProperty property)
         {
+            // This can be applied either from the property, or be injected to the property through an array parent. Check both.
             var attribute = (MaxValueAttribute)property.GetCustomAttributes().FirstOrDefault(attribute => attribute is MaxValueAttribute);
-            Debug.Assert(attribute != null, "Attribute cannot be null here.");
+            if (attribute == null)
+            {
+                attribute = (MaxValueAttribute)property.FindParentProperty().GetCustomAttributes().FirstOrDefault(parentAttribute => parentAttribute is MaxValueAttribute);
+                Debug.Assert(attribute != null , "Cannot find where the property was injected from.");
+            }
             
             switch (property.propertyType)
             {

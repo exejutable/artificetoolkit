@@ -21,8 +21,13 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
 
         public override bool IsValid(SerializedProperty property)
         {
+            // This can be applied either from the property, or be injected to the property through an array parent. Check both.
             var attribute = (MinValueAttribute)property.GetCustomAttributes().FirstOrDefault(attribute => attribute is MinValueAttribute);
-            Debug.Assert(attribute != null, "Attribute cannot be null here.");
+            if (attribute == null)
+            {
+                attribute = (MinValueAttribute)property.FindParentProperty().GetCustomAttributes().FirstOrDefault(parentAttribute => parentAttribute is MinValueAttribute);
+                Debug.Assert(attribute != null , "Cannot find where the property was injected from.");
+            }
             
             switch (property.propertyType)
             {
