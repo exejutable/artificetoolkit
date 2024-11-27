@@ -22,6 +22,7 @@ namespace ArtificeToolkit.Editor
             
             // Create property's GUI with ArtificeDrawer
             var propertyField = ArtificeDrawer.CreatePropertyGUI(property, shouldForceArtifice);
+            propertyField = ArtificeDrawer.CreateCustomAttributesGUI(property, propertyField, ChildrenInjectedCustomAttributes);
             propertyField.AddToClassList("property-field");
 
             return propertyField;
