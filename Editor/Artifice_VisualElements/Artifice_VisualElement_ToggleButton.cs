@@ -78,7 +78,6 @@ namespace ArtificeToolkit.Editor.VisualElements
             // Call visual update once to be consistent
             SetState(isPressed);
         }
-
         public Artifice_VisualElement_ToggleButton(string title, Sprite enabledSprite, Sprite disabledSprite, bool isPressed) : this()
         {
             // Set private sprites
@@ -91,7 +90,12 @@ namespace ArtificeToolkit.Editor.VisualElements
             // Call visual update once to be consistent
             SetState(isPressed);
         }
+        ~Artifice_VisualElement_ToggleButton()
+        {
+            UnregisterCallback<MouseDownEvent>(OnMouseDownEvent);
+        }
         
+        /// <summary>Sets state to given parameter. Automatically updates visuals.</summary>
         public void SetState(bool state)
         {
             _isPressed = state;
