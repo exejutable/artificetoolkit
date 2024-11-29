@@ -274,9 +274,6 @@ namespace ArtificeToolkit.Editor
         
         #region FIELDS
  
-        // Weak Reference for lambda methods
-        private WeakReference<Artifice_EditorWindow_Validator> _validatorReference;
-        
         // Logs
         private readonly List<ValidatorLog> _logs = new();
         private readonly List<ValidatorLog> _filteredLogs = new();
@@ -328,9 +325,6 @@ namespace ArtificeToolkit.Editor
         /* Mono */
         private void Initialize()
         {
-            // Set weak reference
-            _validatorReference = new WeakReference<Artifice_EditorWindow_Validator>(this);
-            
             // Load Artifice Validator State
             if(EditorPrefs.HasKey(ConfigPathKey))
                 _config = AssetDatabase.LoadAssetAtPath<Artifice_SCR_ValidatorConfig>(EditorPrefs.GetString(ConfigPathKey));
@@ -672,10 +666,7 @@ namespace ArtificeToolkit.Editor
                     itemElem.Toggle.RegisterValueChangedCallback(evt =>
                     {
                         // Get reference to validator
-                        if(_validatorReference.TryGetTarget(out var validator) == false)
-                            Debug.Assert(false, "Potential memory leak...");
-                        
-                        validator._config.assetPathsMap[assetPaths[i]] = evt.newValue;
+                        _config.assetPathsMap[assetPaths[i]] = evt.newValue;
                         RefreshFilteredLogs();
                     });
                     
@@ -684,12 +675,8 @@ namespace ArtificeToolkit.Editor
                     {
                         if (evt.button == 1)
                         {
-                            // Get reference to validator
-                            if(_validatorReference.TryGetTarget(out var validator) == false)
-                                Debug.Assert(false, "Potential memory leak...");
-                            
                             var genericMenu = new GenericMenu();
-                            genericMenu.AddItem(new GUIContent("Remove path"), false, () => validator.AssetPaths_RemoveItem(listView, assetPaths[i]));
+                            genericMenu.AddItem(new GUIContent("Remove path"), false, () => AssetPaths_RemoveItem(listView, assetPaths[i]));
                             genericMenu.ShowAsContext();
                         }
                     });

@@ -26,16 +26,12 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
             private readonly List<VisualElement_BrowserElement> _childrenElem;
             private string _searchText = "";
 
-            private WeakReference<VisualElement_BrowserElement> _browserElementReference;
-            
             private const int PaddingPerDepth = 20;
             
             #endregion
 
             public VisualElement_BrowserElement(GameObject gameObject, int depth, Type searchType, UnityEvent<Object> onSelectEvent)
             {
-                _browserElementReference = new WeakReference<VisualElement_BrowserElement>(this);
-                
                 _gameObject = gameObject;
                 _childrenElem = new List<VisualElement_BrowserElement>();
                 _onSelectEvent = onSelectEvent;
@@ -84,12 +80,9 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
                     // Register events
                     dropdownSymbol.RegisterCallback<MouseDownEvent>(evt =>
                     {
-                        if(_browserElementReference.TryGetTarget(out var browserElement) == false)
-                            Debug.Assert(false, "Potential memory leak...");
-                            
-                        browserElement.IsExpanded = !browserElement.IsExpanded;
-                        browserElement.UpdateChildrenVisibility();
-                        browserElement.HandleDropDownSymbolRotation(dropdownSymbol);
+                        IsExpanded = !IsExpanded;
+                        UpdateChildrenVisibility();
+                        HandleDropDownSymbolRotation(dropdownSymbol);
                     });
                 }
                 else // If not foldout symbol exists, compensate with extra padding.
@@ -97,15 +90,12 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
                 
                 container.RegisterCallback<MouseDownEvent>(evt =>
                 {
-                    if(_browserElementReference.TryGetTarget(out var browserElement) == false)
-                        Debug.Assert(false, "Potential memory leak...");
-                    
-                    if (evt.clickCount == 2 && browserElement.IsValidForBrowse(browserElement._gameObject))
+                    if (evt.clickCount == 2 && IsValidForBrowse(_gameObject))
                     {
-                        if(browserElement._searchType == typeof(GameObject))
-                            browserElement._onSelectEvent?.Invoke(browserElement._gameObject);
+                        if(_searchType == typeof(GameObject))
+                            _onSelectEvent?.Invoke(_gameObject);
                         else
-                            browserElement._onSelectEvent?.Invoke(browserElement._gameObject.GetComponent(browserElement._searchType));
+                            _onSelectEvent?.Invoke(_gameObject.GetComponent(_searchType));
                     }
                 });
                 

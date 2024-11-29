@@ -103,16 +103,11 @@ namespace ArtificeToolkit.Editor
                 percentTotal += _fieldColumns[i].WidthPercent;
                 dragHandler.style.left = Length.Percent(percentTotal);
 
-                var tableListViewReference = new WeakReference<Artifice_VisualElement_TableListView>(this);
-                
                 // Set callbacks
                 var capturedI = i;
                 dragHandler.RegisterCallback<MouseDownEvent>(evt =>
                 {
-                    if(tableListViewReference.TryGetTarget(out var tableListView) == false)
-                       Debug.Assert(false, "Potential memory leak...");
-                    
-                    tableListView.OnMouseDownEventHandler(capturedI, evt);
+                    OnMouseDownEventHandler(capturedI, evt);
                 });
             }
                 

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
-using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators;
 using ArtificeToolkit.Editor.VisualElements;
 using CustomAttributes;
 using UnityEditor;
@@ -213,49 +212,39 @@ namespace ArtificeToolkit.Editor
             sizeValueField.AddToClassList("size-value-field");
             sizeField.Add(sizeValueField);
 
-            var listViewWeakReference = new WeakReference<Artifice_VisualElement_AbstractListView>(this);
             sizeValueField.RegisterCallback<KeyDownEvent>(evt =>
             {
-                if(listViewWeakReference.TryGetTarget(out var listView) == false)
-                    Debug.Assert(false, "Potential memory leak...");
-                
                 // Revert any changes on Escape
                 if (evt.keyCode == KeyCode.Escape)
                 {
-                    sizeProperty.intValue = listView._children.Count;
+                    sizeProperty.intValue = _children.Count;
                 }
                 // Apply changes on Enter
-                if (evt.keyCode == KeyCode.KeypadEnter && sizeValueField.value != listView._children.Count)
+                if (evt.keyCode == KeyCode.KeypadEnter && sizeValueField.value != _children.Count)
                 {
                     sizeProperty.intValue = sizeValueField.value;
-                    listView.Property.serializedObject.ApplyModifiedProperties();
-                    listView.BuildListUI();
+                    Property.serializedObject.ApplyModifiedProperties();
+                    BuildListUI();
                 }
             });
             sizeValueField.RegisterCallback<FocusOutEvent>(evt =>
             {
-                if(listViewWeakReference.TryGetTarget(out var listView) == false)
-                    Debug.Assert(false, "Potential memory leak...");
-                
-                if (sizeValueField.value == listView._children.Count)
+                if (sizeValueField.value == _children.Count)
                     return;
                 
                 // Apply changes on focus lose (click out of value)
                 sizeProperty.intValue = sizeValueField.value;
-                listView.Property.serializedObject.ApplyModifiedProperties();
-                listView.BuildListUI();
+                Property.serializedObject.ApplyModifiedProperties();
+                BuildListUI();
             });
             
             // Add button for new elements
             var addButton = new Artifice_VisualElement_LabeledButton("+", () =>
             {
-                if(listViewWeakReference.TryGetTarget(out var listView) == false)
-                    Debug.Assert(false, "Potential memory leak...");
-                
-                listView.Property.arraySize++;
-                listView.Property.serializedObject.ApplyModifiedProperties();
-                listView.Property.serializedObject.Update();
-                listView.BuildListUI();
+                Property.arraySize++;
+                Property.serializedObject.ApplyModifiedProperties();
+                Property.serializedObject.Update();
+                BuildListUI();
             });
             addButton.AddToClassList("add-button");
             listHeader.Add(addButton);
@@ -263,17 +252,14 @@ namespace ArtificeToolkit.Editor
             // Change isExpanded on click
             listHeader.RegisterCallback<MouseDownEvent>(evt =>
             {
-                if(listViewWeakReference.TryGetTarget(out var listView) == false)
-                    Debug.Assert(false, "Potential memory leak...");
-                
                 if (evt.button != 0)
                     return;
                 
-                listView.Property.isExpanded = !listView.Property.isExpanded;
-                listView.Property.serializedObject.ApplyModifiedProperties();
+                Property.isExpanded = !Property.isExpanded;
+                Property.serializedObject.ApplyModifiedProperties();
                 
                 // change USS of arrow
-                if (listView.Property.isExpanded == false)
+                if (Property.isExpanded == false)
                 {
                     arrowSymbolLabel.RemoveFromClassList("rotate-0");
                     arrowSymbolLabel.AddToClassList("rotate-90");
@@ -284,40 +270,37 @@ namespace ArtificeToolkit.Editor
                     arrowSymbolLabel.AddToClassList("rotate-0");
                 }
                 
-                listView.BuildListUI();
+                BuildListUI();
             });
 
             // Register right-click context menu
             listHeader.AddManipulator(new ContextualMenuManipulator(evt =>
             {
-                if(listViewWeakReference.TryGetTarget(out var listView) == false)
-                    Debug.Assert(false, "Potential memory leak...");
-                
                 // Copy property path
-                evt.menu.AppendAction("Copy Property Path", _ => { GUIUtility.systemCopyBuffer = listView.Property.propertyPath; }, DropdownMenuAction.AlwaysEnabled);
+                evt.menu.AppendAction("Copy Property Path", _ => { GUIUtility.systemCopyBuffer = Property.propertyPath; }, DropdownMenuAction.AlwaysEnabled);
 
                 // Prefab Overrides
-                if (listView.Property.prefabOverride)
+                if (Property.prefabOverride)
                 {
                     evt.menu.AppendSeparator();
 
                     // This is enforced by Property.prefabOverride statement
-                    var prefabLevels = GetPrefabVariantLevels((listView.Property.serializedObject.targetObject  as MonoBehaviour)?.gameObject);
+                    var prefabLevels = GetPrefabVariantLevels((Property.serializedObject.targetObject  as MonoBehaviour)?.gameObject);
 
                     for (var i = prefabLevels.Count - 1; i >= 0; i--)
                     {
                         var prefabLevel = prefabLevels[i];
                         var label = i > 0 ? $"Apply as Override in Prefab '{prefabLevel.name}'" : $"Apply to Prefab '{prefabLevel.name}'";
-                        evt.menu.AppendAction(label, action => listView.ApplyToPrefab(listView.Property, prefabLevel), DropdownMenuAction.AlwaysEnabled);
+                        evt.menu.AppendAction(label, action => ApplyToPrefab(Property, prefabLevel), DropdownMenuAction.AlwaysEnabled);
                     }
                     
-                    evt.menu.AppendAction("Revert to Prefab", action => listView.RevertToPrefab(listView.Property), DropdownMenuAction.AlwaysEnabled);
+                    evt.menu.AppendAction("Revert to Prefab", action => RevertToPrefab(Property), DropdownMenuAction.AlwaysEnabled);
                 }
                 
                 // Copy / Paste
                 evt.menu.AppendSeparator();
-                evt.menu.AppendAction("Copy", action => listView.CopyProperty(), DropdownMenuAction.AlwaysEnabled);
-                evt.menu.AppendAction("Paste", action => listView.PastePropertyNested(listView.Property, _copiedProperty), 
+                evt.menu.AppendAction("Copy", action => CopyProperty(), DropdownMenuAction.AlwaysEnabled);
+                evt.menu.AppendAction("Paste", action => PastePropertyNested(Property, _copiedProperty), 
                     _copiedProperty != null ? DropdownMenuAction.AlwaysEnabled : DropdownMenuAction.AlwaysDisabled);
             }));
             
