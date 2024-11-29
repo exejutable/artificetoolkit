@@ -6,7 +6,7 @@ namespace ArtificeToolkit.Editor
 {
     public class ArtificeEditorWindow : EditorWindow
     {
-        private void CreateGUI()
+        protected virtual void CreateGUI()
         {
             var drawer = new ArtificeDrawer();
             drawer.SetSerializedPropertyFilter(property => property.name != "m_Script");
