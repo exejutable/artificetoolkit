@@ -20,6 +20,9 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
         public override Sprite LogSprite { get; } = Artifice_SCR_CommonResourcesHolder.instance.ErrorIcon;
         public override LogType LogType { get; } = LogType.Error;
 
+        private int _propertyBoundAttemptsCounter = 0;
+        private const int MaxPropertyBoundAttempts = 3;
+        
         #endregion
         
         public override VisualElement OnWrapGUI(SerializedProperty property, VisualElement root)
@@ -67,7 +70,20 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
         public override void OnPropertyBoundGUI(SerializedProperty property, VisualElement propertyField)
         {
             var fieldSelector = propertyField.Query<VisualElement>(className: "unity-object-field__selector").ToList().FirstOrDefault();
-            fieldSelector?.AddToClassList("hide");
+            if (fieldSelector == null)
+            {
+                _propertyBoundAttemptsCounter++;
+                if (_propertyBoundAttemptsCounter == MaxPropertyBoundAttempts)
+                {
+                    Debug.LogWarning("[Artifice] Could not detect field selector field to hide it.");
+                    return;
+                }
+                propertyField.schedule.Execute(_ => OnPropertyBoundGUI(property, propertyField));
+            }
+            else
+            {
+                fieldSelector.AddToClassList("hide");
+            }
         }
 
         protected override bool IsApplicableToProperty(SerializedProperty property)
