@@ -88,7 +88,7 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
 
         protected override bool IsApplicableToProperty(SerializedProperty property)
         {
-            return property.propertyType == SerializedPropertyType.ObjectReference;
+            return property.propertyType == SerializedPropertyType.ObjectReference && !property.IsArrayElement();
         }
         public override bool IsValid(SerializedProperty property)
         {
