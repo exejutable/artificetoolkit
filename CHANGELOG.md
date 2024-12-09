@@ -1,5 +1,16 @@
 # Change Log:
 
+## 1.1.9
+ - Fix: Abstract List View would not apply attributes to children.
+ - Fix: ChildGameObjectOnly would cause visual bug after list redraw.
+ - Enchacement: Removed from Validator the drawer of scenes. It did not contribute to anything.
+ - Enchacement: Updated Artifice_VisualElement_ToggleButton to support BindProperty.
+ - Enchacement: Reversed Button parameter usage to be more usable, and fixed bug were it would not be able to close sliding panel afterwards.
+ - Fix: Documentation menu item will now redirect user at the github page, showing the README.md
+ - Change: Max/Min attributes have been converted to validations.
+ - Change: ArtificeEditorWindow now has virtual method for CreateGUI, allowing you to extend it. It also immedietelly filters out unwanted unity serialized field.
+
+
 ## 1.1.8
  - Enchacement: Refactored ButtonAttribute to work with methods instead of proxy properties. 
  - Enchacement: Added sliging group visual element. Used in ButtonAttribute for cleaner inspector view
