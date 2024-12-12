@@ -633,12 +633,14 @@ public class ExampleComponent : MonoBehaviour
 }
 
 ```
-
+7
 ## Known Issues
 - In Unity 2021.x.x the following warning may appear due to value tracking not working generic types of serialized properties.
 ```
 Serialized property type Generic does not support value tracking; callback is not set for characters
 UnityEditor.RetainedMode:UpdateSchedulers ()
 ```
+
+- Copying an entire Artifice List requires both lists to be alive when the Paste happens. This will be fixed in the future. 
 
 - The ArtificeToolkit was created with Dark Theme is mind and is currently the only supported color palette.
