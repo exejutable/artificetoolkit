@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using ArtificeToolkit.Editor.Resources;
-using Codice.Client.BaseCommands.BranchExplorer.Layout;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
