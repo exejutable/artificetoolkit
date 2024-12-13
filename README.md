@@ -633,7 +633,7 @@ public class ExampleComponent : MonoBehaviour
 }
 
 ```
-7
+
 ## Known Issues
 - In Unity 2021.x.x the following warning may appear due to value tracking not working generic types of serialized properties.
 ```
