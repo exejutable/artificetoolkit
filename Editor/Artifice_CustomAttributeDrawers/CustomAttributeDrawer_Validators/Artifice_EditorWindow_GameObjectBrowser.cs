@@ -228,7 +228,7 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
 
         #region FIELDS
         
-        public readonly UnityEvent<Object> OnObjectSelected = new UnityEvent<Object>();
+        public readonly UnityEvent<Object> OnObjectSelected = new();
         
         private VisualElement _contentElem;
         private VisualElement_BrowserElement _rootElement;
@@ -252,9 +252,12 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
             _contentElem.Clear();
             _contentElem.Add(_rootElement);
         }
-        
+     
+        /* Mono */
         private void CreateGUI()
         {
+            
+            
             name = "Object Browser";
             
             rootVisualElement.styleSheets.Add(Artifice_Utilities.GetGlobalStyle());
@@ -281,6 +284,12 @@ namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttribute
             // Content elem
             _contentElem = new ScrollView();
             rootVisualElement.Add(_contentElem);
+        }
+        
+        /* Mono */
+        private void OnDisable()
+        {
+            OnObjectSelected.RemoveAllListeners();
         }
     }
 }

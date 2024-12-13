@@ -50,24 +50,24 @@ namespace ArtificeToolkit.Editor
         #region FIELDS
         
         protected SerializedProperty Property;
-        protected List<CustomAttribute> ChildrenInjectedCustomAttributes = new List<CustomAttribute>();
+        protected List<CustomAttribute> ChildrenInjectedCustomAttributes = new();
         protected readonly ArtificeDrawer ArtificeDrawer = new();
         
-        private readonly UIBuilder _uiBuilder = new UIBuilder();
-        private readonly List<ChildElement> _children = new List<ChildElement>();
+        private readonly UIBuilder _uiBuilder = new();
+        private readonly List<ChildElement> _children = new();
 
         private static SerializedProperty _copiedProperty; 
-        private bool _disposed = false;
+        private bool _disposed;
         
         /* Fields used for dragging elements for reposition */
-        private bool _isDraggingElement = false;
-        private ChildElement _draggedChild = null;
+        private bool _isDraggingElement;
+        private ChildElement _draggedChild;
         private float _draggedElementStartY = -1;
         private float _draggedElementHeight = -1;
         private Vector2 _mouseStartPos = Vector2.zero;
         private readonly int _animationDuration = 300; // In ms
-        private readonly HashSet<ArrayElementSwapRecord> _lateSwapRecord = new HashSet<ArrayElementSwapRecord>();
-        private readonly HashSet<VisualElement> _isBeingAnimated = new HashSet<VisualElement>();
+        private readonly HashSet<ArrayElementSwapRecord> _lateSwapRecord = new();
+        private readonly HashSet<VisualElement> _isBeingAnimated = new();
         
         #endregion
         
@@ -84,6 +84,7 @@ namespace ArtificeToolkit.Editor
             RegisterCallback<MouseUpEvent>(OnMouseUp);
             
             // Register to undo for rebuild
+            Undo.undoRedoPerformed -= BuildListUI;
             Undo.undoRedoPerformed += BuildListUI;
         }
         
@@ -326,6 +327,7 @@ namespace ArtificeToolkit.Editor
             var dragControl = new Label("=");
             dragControl.AddToClassList("drag-control");
             dragControl.RegisterCallback<MouseDownEvent>(OnMouseDown);
+            dragControl.RegisterCallback<DetachFromPanelEvent>(_ => dragControl.UnregisterCallback<MouseDownEvent>(OnMouseDown));
 
             // Inherited Implementation of BuildPropertyFieldUI
             var propertyField = BuildPropertyFieldUI(property, index);
@@ -810,6 +812,10 @@ namespace ArtificeToolkit.Editor
 
             if (disposing)
             {
+                // Handler move event
+                UnregisterCallback<MouseMoveEvent>(OnMouseMove, TrickleDown.TrickleDown);
+                UnregisterCallback<MouseUpEvent>(OnMouseUp);
+                
                 // Unregister to undo for rebuild
                 Undo.undoRedoPerformed -= BuildListUI;
                 _lateSwapRecord.Clear();

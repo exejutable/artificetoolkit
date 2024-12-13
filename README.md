@@ -13,7 +13,7 @@ To demonstrate its usage and effectiveness, see the following MonoBehaviour scri
 
 - Visually "lightweight" inspectors reduce cognitive load by removing unnecessary information.
 - A simplified interface helps developers focus on relevant details, minimizing distractions.
-- Streamlining the editor reduces mental effort, improving workflow efficiency and effectiveness.
+- Apply assertions on your serialized fields through validations, to always be sure that certain rules are being followed.
 
 
 ## What is included in the ArtificeToolkit?
@@ -28,8 +28,13 @@ The Artifice Toolkit offers three powerful tools:
 ## Unity Version Support
 The ArtificeToolkit has been primarily tested and optimized for Unity 2022, ensuring stable and consistent performance. It is also compatible with Unity 2023, where it has been thoroughly tested to maintain functionality. While the toolkit works with Unity 2021, users may encounter occasional warnings; these will be addressed in upcoming updates to improve compatibility with older versions.
 
-## How to install into your Unity project?
-You can add the ArtificeToolkit as any other Unity Package. Since this is an alpha testing phase, it can only be added as a local package through Windows -> Package Manager. Then press the "plus" icon and choose "Add Package from disk...". The select the package.json file and the ArtificeToolkit will be linked to your project.
+## How to Install into Your Unity Project 
+
+You can add the ArtificeToolkit to your Unity project as a package through Git. Follow these steps:
+- Navigate to `Window -> Package Manager` in Unity.
+- Click the **"+"** icon in the top-left corner of thePackage Manager.
+- Select **"Add package from Git URL..."**.
+- In the popup that appears, paste the following URL: https://github.com/AbZorbaGames/artificetoolkit.git
 
 <p align="center">
   <img src="./Documentation/artifice_addpackage.png" />
@@ -39,52 +44,11 @@ You can add the ArtificeToolkit as any other Unity Package. Since this is an alp
 # Artifice Inspector and Custom Attributes
 By using custom attributes in your MonoBehaviour scripts you can quickly alter the inspector's appearance. In this section, you will find all the attributes which are tested and ready for use.
 
-By default, the Artifice Drawer is disabled. You can always turn it on/off through the dedicated MenuItem "ArtificeToolkit"
+**NOTE:** By default, the Artifice Drawer is disabled. You can always turn it on/off through the dedicated MenuItem "ArtificeToolkit"
 
 <p align="center">
   <img src="./Documentation/artifice_toggle.png" />
 </p>
-
-## Why Order Matters!
-When applying custom attributes to a property, it’s important to understand the order in which they are applied during the rendering process. Internally, custom attributes are applied at the following key rendering points:
-
-1. Pre Property GUI: Before the property is drawn in the Inspector.
-2. On Property GUI: Replaces the property’s default GUI entirely.
-3. Post Property GUI: Applied after the property is drawn.
-4. Wrap Property GUI: Encapsulates all previous steps inside a new container. An example of this is how Group Attributes work.
-5. Property Bound GUI: This is called after the property has been drawn, useful when dealing with PropertyField because its children are built lazily in the UI.
-
-For most attributes, the order they are applied follows the order of declaration. However, attributes that use OnWrap GUI (like group attributes) are applied in <b>reverse order</b>, which can lead to unexpected behavior if not handled carefully.
-
-Example
-Consider this example with conflicting attributes. Both the BoxGroup and the EnableIf work by utilizing the Wrap Property GUI:
-```c#
-[SerializeField]
-private bool shouldEnable;
-
-[SerializeField, BoxGroup("Test")]
-private int x;
-
-[SerializeField, EnableIf(nameof(shouldEnable), true), BoxGroup("Test")]
-private int y;
-```
-
-If we trace how property 'y' will get rendered, it would firstly resolve the BoxGroup("Test") which has already included property 'x'. Then, it would resolve EnableIf wrapping the BoxGroup inside of the EnableIf.
-
-This is "probably" an undesired effect, unless executed by design. Its wrong, since now the enable if does not encapsulate only the 'y' property, but the entire BoxGroup which holds both 'x' and 'y'.
-
-So the correct version of the above code would be 
-```c#
-[SerializeField]
-private bool shouldEnable;
-
-[SerializeField, BoxGroup("Test")]
-private int x;
-
-[SerializeField, BoxGroup("Test"), EnableIf(nameof(shouldEnable), true)]
-private int y;
-```
-In this version, EnableIf is applied first, ensuring that property y behaves as expected—only, and the the BoxGroup is resolved, wrapping the wrapper of the EnableIf.
 
 
 ## Top 3 Recommended Attributes
@@ -136,6 +100,49 @@ These attributes can and should be used frequently. They will at a bare minimum 
 - [ListElementName](#listelementname)
 - [MeasureUnit](#measureunit)
 - [ForceArtifice](#forceartifice)
+
+
+<!-- WHY ORDER MATTERS -->
+## Why Order Matters!
+When applying custom attributes to a property, it’s important to understand the order in which they are applied during the rendering process. Internally, custom attributes are applied at the following key rendering points:
+
+1. Pre Property GUI: Before the property is drawn in the Inspector.
+2. On Property GUI: Replaces the property’s default GUI entirely.
+3. Post Property GUI: Applied after the property is drawn.
+4. Wrap Property GUI: Encapsulates all previous steps inside a new container. An example of this is how Group Attributes work.
+5. Property Bound GUI: This is called after the property has been drawn, useful when dealing with PropertyField because its children are built lazily in the UI.
+
+For most attributes, the order they are applied follows the order of declaration. However, attributes that use OnWrap GUI (like group attributes) are applied in <b>reverse order</b>, which can lead to unexpected behavior if not handled carefully.
+
+Example
+Consider this example with conflicting attributes. Both the BoxGroup and the EnableIf work by utilizing the Wrap Property GUI:
+```c#
+[SerializeField]
+private bool shouldEnable;
+
+[SerializeField, BoxGroup("Test")]
+private int x;
+
+[SerializeField, EnableIf(nameof(shouldEnable), true), BoxGroup("Test")]
+private int y;
+```
+
+If we trace how property 'y' will get rendered, it would firstly resolve the BoxGroup("Test") which has already included property 'x'. Then, it would resolve EnableIf wrapping the BoxGroup inside of the EnableIf.
+
+This is "probably" an undesired effect, unless executed by design. Its wrong, since now the enable if does not encapsulate only the 'y' property, but the entire BoxGroup which holds both 'x' and 'y'.
+
+So the correct version of the above code would be 
+```c#
+[SerializeField]
+private bool shouldEnable;
+
+[SerializeField, BoxGroup("Test")]
+private int x;
+
+[SerializeField, BoxGroup("Test"), EnableIf(nameof(shouldEnable), true)]
+private int y;
+```
+In this version, EnableIf is applied first, ensuring that property y behaves as expected—only, and the the BoxGroup is resolved, wrapping the wrapper of the EnableIf.
 
 
 <!-- ALL ATTRIBUTES DETAILED -->
@@ -339,19 +346,19 @@ It is worth noting that buttons will always appear last in the rendering order. 
 [SerializeField] 
 private string parameterTest = "test";
 
-[Button]
+[Button(true)]
 private void TestMethod()
 {
     Debug.Log("Invoked from editor button!");
 }
 
-[Button(false)]
+[Button]
 private void TestMethodInline()
 {
     Debug.Log("Invoked from editor button!");
 }
 
-[Button("parameterTest")]
+[Button(true, "parameterTest")]
 private void TestMethodWithParameters(string parameter)
 {
     Debug.Log($"Invoked from editor button! Dynamic Parameter: {parameter}");
@@ -487,6 +494,42 @@ The best way to solve bugs, is to avoid creating them. Assertions are one of the
 
 The Validator works with attributes which inherit from the ValidatorAttribute class. Such attributes have an additional implementation explaining what they are supposed to be asserting. The most common use case the [Required](#required) attribute, to make sure the property has been assigned with a reference.
 
+## Creating new CustomAttributes for your own Validations
+
+Creating your own validations is simple. You need to:
+
+1. **Create a Custom Attribute**  
+   Define a custom attribute by inheriting from `ValidatorAttribute`. This attribute encapsulates the logic for what needs to be validated. For example, you might want to ensure a property is required or falls within a specific range.
+
+2. **Implement an Artifice_CustomAttributeDrawer_Validator**  
+   Create a drawer class inheriting from `Artifice_CustomAttributeDrawer_Validator_BASE`. This class will define how the validation is performed and how any validation errors or warnings are displayed in the Unity Inspector.
+
+### Example: Required Attribute
+
+Below is an example of how to implement a "Required" attribute to ensure that a property has been assigned a reference.
+
+```csharp
+[Artifice_CustomAttributeDrawer(typeof(RequiredAttribute))]
+public class Artifice_CustomAttributeDrawer_RequiredAttribute : Artifice_CustomAttributeDrawer_Validator_BASE
+{
+    public override string LogMessage { get; } = "Property is required.";
+    public override Sprite LogSprite { get; } = Artifice_SCR_CommonResourcesHolder.instance.ErrorIcon;
+    public override LogType LogType { get; } = LogType.Error;
+
+    // Determine if this validator applies to the given property
+    protected override bool IsApplicableToProperty(SerializedProperty property)
+    {
+        return property.propertyType == SerializedPropertyType.ObjectReference;
+    }
+
+    // Validate the property
+    public override bool IsValid(SerializedProperty property)
+    {
+        return property.objectReferenceValue != null;
+    }
+}
+```
+
 
 <!-- ARTIFICE DRAWER -->
 # Artifice Drawer
@@ -502,11 +545,6 @@ When a property directly uses a CustomAttribute, the drawer will access the resp
   3. Post GUI: Appends a VisualElement after the property.
   4. Wrap GUI: Returns a new VisualElement which adds the VisualElements from the previous steps inside of it.
   5. On Bound Property GUI: Executes code when the OnGUI VisualElement is attached in the inspector.
-
-## Creating new CustomAttributes
-To create a new CustomAttribute, you need to create the following:
-  1. YourCustomAttribute inheriting from CustomAttribute. This should be placed in a runtime folder.
-  2. Artifice_CustomAttributeDrawer_YourAttribute inheriting from the Artifice_CustomAttributeDrawer placed inside an Editor folder. In a similar fashion as CustomPropertyDrawers, you need to mark this class with a [CustomAttributeDrawer(typeof(YourAttribute))] to link them together.
 
 
 ## Creating New CustomAttributes
@@ -595,12 +633,14 @@ public class ExampleComponent : MonoBehaviour
 }
 
 ```
-
+7
 ## Known Issues
 - In Unity 2021.x.x the following warning may appear due to value tracking not working generic types of serialized properties.
 ```
 Serialized property type Generic does not support value tracking; callback is not set for characters
 UnityEditor.RetainedMode:UpdateSchedulers ()
 ```
+
+- Copying an entire Artifice List requires both lists to be alive when the Paste happens. This will be fixed in the future. 
 
 - The ArtificeToolkit was created with Dark Theme is mind and is currently the only supported color palette.

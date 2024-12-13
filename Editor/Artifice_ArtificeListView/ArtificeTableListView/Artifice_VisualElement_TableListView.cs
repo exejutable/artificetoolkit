@@ -101,12 +101,11 @@ namespace ArtificeToolkit.Editor
                 // Set position of drag handler based on previous width percents
                 percentTotal += _fieldColumns[i].WidthPercent;
                 dragHandler.style.left = Length.Percent(percentTotal);
-                
+
                 // Set callbacks
                 var capturedI = i;
                 dragHandler.RegisterCallback<MouseDownEvent>(evt =>
                 {
-                    _selectedColumnHandler = dragHandler;
                     OnMouseDownEventHandler(capturedI, evt);
                 });
             }
@@ -195,6 +194,8 @@ namespace ArtificeToolkit.Editor
                 if (disposing)
                 {
                     ArtificeDrawer.Dispose();
+                    UnregisterCallback<MouseMoveEvent>(OnMouseMoveEventHandler);
+                    UnregisterCallback<MouseUpEvent>(OnMouseUpEventHandler);
                 }
 
                 _disposed = true;

@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace ArtificeToolkit.Editor.VisualElements
 {
-    public class Artifice_VisualElement_ToggleButton : VisualElement
+    public class Artifice_VisualElement_ToggleButton : BindableElement, INotifyValueChanged<bool>
     {
         public string Text
         {
@@ -40,7 +40,7 @@ namespace ArtificeToolkit.Editor.VisualElements
         private readonly Label _label;
         private readonly Image _image;
         
-        private bool _isPressed;
+        private bool _value;
         private readonly Sprite _enabledSprite;
         private readonly Sprite _disabledSprite;
         
@@ -78,7 +78,6 @@ namespace ArtificeToolkit.Editor.VisualElements
             // Call visual update once to be consistent
             SetState(isPressed);
         }
-
         public Artifice_VisualElement_ToggleButton(string title, Sprite enabledSprite, Sprite disabledSprite, bool isPressed) : this()
         {
             // Set private sprites
@@ -91,22 +90,16 @@ namespace ArtificeToolkit.Editor.VisualElements
             // Call visual update once to be consistent
             SetState(isPressed);
         }
+        ~Artifice_VisualElement_ToggleButton()
+        {
+            UnregisterCallback<MouseDownEvent>(OnMouseDownEvent);
+        }
         
+        /// <summary>Sets state to given parameter. Calls update visuals and sets value from INotifyValueChanged interface.</summary>
         public void SetState(bool state)
         {
-            _isPressed = state;
-            if (_isPressed)
-            {
-                Sprite = _enabledSprite;
-                RemoveFromClassList("toggle-button-not-pressed");
-                AddToClassList("toggle-button-pressed");
-            }
-            else
-            {
-                Sprite = _disabledSprite;
-                AddToClassList("toggle-button-not-pressed");
-                RemoveFromClassList("toggle-button-pressed");
-            }
+            value = state;
+            UpdateVisuals();
             
             // Play animation of transition
             if (_enabledSprite != _disabledSprite)
@@ -118,11 +111,57 @@ namespace ArtificeToolkit.Editor.VisualElements
                 });
             }
         }
+
+        #region INotifyValueChanged
+        
+        public bool value 
+        {
+            get => _value;
+            // The setter is called when the user changes the value of the toogle, which calls OnMouseDownEvent(), which calls this.
+            set
+            {
+                if (value == this.value)
+                    return;
+
+                var previous = this.value;
+                SetValueWithoutNotify(value);
+                UpdateVisuals();
+
+                using (var evt = ChangeEvent<bool>.GetPooled(previous, value))
+                {
+                    evt.target = this;
+                    SendEvent(evt);
+                }
+            }
+        }
+        
+        public void SetValueWithoutNotify(bool newValue)
+        {
+            _value = newValue;
+        }
+        
+        #endregion
+        
+        private void UpdateVisuals()
+        {
+            if (_value)
+            {
+                Sprite = _enabledSprite;
+                RemoveFromClassList("toggle-button-not-pressed");
+                AddToClassList("toggle-button-pressed");
+            }
+            else
+            {
+                Sprite = _disabledSprite;
+                AddToClassList("toggle-button-not-pressed");
+                RemoveFromClassList("toggle-button-pressed");
+            }
+        }
         
         private void OnMouseDownEvent(MouseDownEvent evt)
         {
-            SetState(!_isPressed);
-            OnButtonPressed?.Invoke(_isPressed);
+            SetState(!_value);
+            OnButtonPressed?.Invoke(_value);
         }
         
         #region Utilities

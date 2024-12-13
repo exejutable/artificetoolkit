@@ -7,6 +7,7 @@ using ArtificeToolkit.Editor.VisualElements;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -246,8 +247,9 @@ namespace ArtificeToolkit.Editor
                 
                 RegisterCallback<ClickEvent>(evt =>
                 {
-                    if(evt.clickCount == 2 && _originObject != null)
-                       Selection.SetActiveObjectWithContext(_originObject, _originObject);
+                    var listItem = (ValidatorLogListItem)evt.currentTarget;
+                    if(evt.clickCount == 2 && listItem._originObject != null)
+                       Selection.SetActiveObjectWithContext(listItem._originObject, listItem._originObject);
                 });
             }
 
@@ -511,7 +513,7 @@ namespace ArtificeToolkit.Editor
             // Build Tracked locations
             var trackedContainers = new ScrollView();
             trackedContainers.AddToClassList("tracked-containers-container");
-            trackedContainers.Add(BuildTrackedScenesUI());
+            // trackedContainers.Add(BuildTrackedScenesUI()); // Removed for now. It seemed obnoxious and useless. 
             trackedContainers.Add(BuildTrackedAssetFoldersUI());
             trackedContainers.Add(BuildTrackedValidatorTypesUI());
             // Add to splitpane
@@ -537,7 +539,8 @@ namespace ArtificeToolkit.Editor
                 Artifice_SCR_CommonResourcesHolder.instance.PlayIcon,
                 _config.autorun
             );
-            autorunButton.OnButtonPressed += value => _config.autorun = value;
+            var configSerializedObject = new SerializedObject(_config);
+            autorunButton.BindProperty(configSerializedObject.FindProperty(nameof(_config.autorun)));
             container.Add(autorunButton);
             
             // Settings btton
@@ -587,7 +590,7 @@ namespace ArtificeToolkit.Editor
             return container;
         }
         
-        private VisualElement BuildTrackedScenesUI()
+        private VisualElement BuildTrackedScenesUI() // Has been removed from the UI for now, but keep it for now in case we want to simply refactor the visuals in the future.
         {
             var container = new VisualElement();
             container.AddToClassList("tracked-list-container");
@@ -637,7 +640,7 @@ namespace ArtificeToolkit.Editor
         {
             var container = new VisualElement();
             container.AddToClassList("tracked-list-container");
-            container.AddToClassList("space-top");
+            container.AddToClassList("space-bottom");
             
             // Add list title
             var header = BuildTrackedListTitleUI("Assets");
@@ -662,6 +665,7 @@ namespace ArtificeToolkit.Editor
                     // Subscribe change, to refresh filters
                     itemElem.Toggle.RegisterValueChangedCallback(evt =>
                     {
+                        // Get reference to validator
                         _config.assetPathsMap[assetPaths[i]] = evt.newValue;
                         RefreshFilteredLogs();
                     });
@@ -672,7 +676,7 @@ namespace ArtificeToolkit.Editor
                         if (evt.button == 1)
                         {
                             var genericMenu = new GenericMenu();
-                            genericMenu.AddItem(new GUIContent("Remove path"), false, () => RemoveItem(assetPaths[i]));
+                            genericMenu.AddItem(new GUIContent("Remove path"), false, () => AssetPaths_RemoveItem(listView, assetPaths[i]));
                             genericMenu.ShowAsContext();
                         }
                     });
@@ -695,6 +699,7 @@ namespace ArtificeToolkit.Editor
             });
             
             // Add context menu options
+            var validatorWeakReference = new WeakReference<Artifice_EditorWindow_Validator>(this);
             header.RegisterCallback<MouseDownEvent>(evt =>
             {
                 if (evt.button == 1)
@@ -706,29 +711,13 @@ namespace ArtificeToolkit.Editor
                         var relativePath = Artifice_Utilities.ConvertGlobalToRelativePath(path);
                         if (string.IsNullOrEmpty(relativePath))
                             return;
-                        AddItem(relativePath);
+                        
+                        if(validatorWeakReference.TryGetTarget(out var validator))
+                            validator.AssetPaths_AddItem(listView, relativePath);
                     });
                     genericMenu.ShowAsContext();
                 }
             });
-
-            // Local methods with encapsulate adding/removing items from the list's internal logic. Also helps with scoping. 
-            void AddItem(string assetPath)
-            {
-                _config.assetPathsMap.TryAdd(assetPath, true);
-                EditorUtility.SetDirty(_config);
-                assetPaths.Add(assetPath);
-                _logCounters.assetPathsMap[assetPath] = 0;
-                listView.RefreshItems();
-            }
-            void RemoveItem(string assetPath)
-            {
-                _config.assetPathsMap.Remove(assetPath);
-                EditorUtility.SetDirty(_config);
-                assetPaths.Remove(assetPath);
-                _logCounters.assetPathsMap[assetPath] = 0;
-                listView.RefreshItems();
-            }
             
             return container;
         }
@@ -876,6 +865,31 @@ namespace ArtificeToolkit.Editor
          
             Close();
             OpenWindow();
+        }
+        
+        #endregion
+        
+        #region Utility
+        
+        private void AssetPaths_AddItem(ListView listView, string assetPath)
+        {
+            _logCounters.assetPathsMap[assetPath] = 0;
+            
+            _config.assetPathsMap.TryAdd(assetPath, true);
+            EditorUtility.SetDirty(_config);
+            
+            listView.itemsSource.Add(assetPath);
+            listView.RefreshItems();
+        }
+        private void AssetPaths_RemoveItem(ListView listView, string assetPath)
+        {
+            _logCounters.assetPathsMap[assetPath] = 0;
+            
+            _config.assetPathsMap.Remove(assetPath);
+            EditorUtility.SetDirty(_config);
+            
+            listView.itemsSource.Remove(assetPath);
+            listView.RefreshItems();
         }
         
         #endregion
