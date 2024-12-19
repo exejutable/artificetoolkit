@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using ArtificeToolkit.Attributes;
-using ArtificeToolkit.Editor.VisualElements;
+using ArtificeToolkit.AEditor.VisualElements;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_EnumToggleAttribute
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_EnumToggleAttribute
 {
     /// <summary> Custom VisualAttribute drawer for <see cref="EnumToggleAttribute"/> </summary>
     [Artifice_CustomAttributeDrawer(typeof(EnumToggleAttribute))]

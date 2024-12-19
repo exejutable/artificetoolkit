@@ -6,7 +6,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     using ValidatorLog = Artifice_EditorWindow_Validator.ValidatorLog;
     

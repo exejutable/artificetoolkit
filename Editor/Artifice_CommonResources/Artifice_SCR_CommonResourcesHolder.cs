@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace ArtificeToolkit.Editor.Resources
+namespace ArtificeToolkit.AEditor.Resources
 {
     [FilePath("Artifice/CommonResourcesHolder.holder", FilePathAttribute.Location.PreferencesFolder)]
     public class Artifice_SCR_CommonResourcesHolder : ScriptableSingleton<Artifice_SCR_CommonResourcesHolder>

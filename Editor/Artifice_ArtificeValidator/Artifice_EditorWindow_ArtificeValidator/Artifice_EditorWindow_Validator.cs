@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ArtificeToolkit.Editor.Resources;
-using ArtificeToolkit.Editor.VisualElements;
+using ArtificeToolkit.AEditor.Resources;
+using ArtificeToolkit.AEditor.VisualElements;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -18,7 +18,7 @@ using Toggle = UnityEngine.UIElements.Toggle;
 
 // ReSharper disable InconsistentNaming
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     public class Artifice_EditorWindow_Validator : EditorWindow, IHasCustomMenu
     {   

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ArtificeToolkit.Attributes;
-using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers;
-using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ButtonAttribute;
+using ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers;
+using ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ButtonAttribute;
 using CustomAttributes;
 using Editor.Artifice_VisualElements;
 using UnityEditor;
@@ -18,7 +18,7 @@ using SpaceAttribute = ArtificeToolkit.Attributes.SpaceAttribute;
 // ReSharper disable MemberCanBeMadeStatic.Local
 // ReSharper disable RedundantIfElseBlock
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     [InitializeOnLoad]
     public sealed class ArtificeDrawer : IDisposable

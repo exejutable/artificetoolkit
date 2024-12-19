@@ -5,7 +5,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_InfoBoxAttribute
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_InfoBoxAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(ConditionalInfoBoxAttribute))]
     public class Artifice_CustomAttributeDrawer_ConditionalInfoBoxAttribute : Artifice_CustomAttributeDrawer_InfoBoxAttribute

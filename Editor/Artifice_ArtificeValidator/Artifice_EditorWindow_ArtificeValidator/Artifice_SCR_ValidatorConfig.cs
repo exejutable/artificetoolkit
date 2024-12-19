@@ -1,11 +1,11 @@
 using System;
 using ArtificeToolkit.Attributes;
-using ArtificeToolkit.Editor.Artifice_SerializedDictionary;
+using ArtificeToolkit.AEditor.Artifice_SerializedDictionary;
 using UnityEngine;
 
 // ReSharper disable InconsistentNaming
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     /// <summary> Searches the entire scene and gathers validation logs. </summary>
     [Serializable]

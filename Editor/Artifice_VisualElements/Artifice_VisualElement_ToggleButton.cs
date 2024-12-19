@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.VisualElements
+namespace ArtificeToolkit.AEditor.VisualElements
 {
     public class Artifice_VisualElement_ToggleButton : BindableElement, INotifyValueChanged<bool>
     {

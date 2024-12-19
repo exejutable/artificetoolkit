@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
-using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators;
+using ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     using ValidatorLog = Artifice_EditorWindow_Validator.ValidatorLog;
 

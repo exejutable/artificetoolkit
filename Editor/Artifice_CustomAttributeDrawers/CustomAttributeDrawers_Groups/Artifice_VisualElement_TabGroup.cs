@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     /// <summary> VisualElement that drives the TaGroup logic and style </summary>
     public class Artifice_VisualElement_TabGroup : Artifice_VisualElement_Group

@@ -3,7 +3,7 @@ using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     [Artifice_CustomAttributeDrawer(typeof(GroupAttribute))]
     public abstract class Artifice_CustomAttributeDrawer_GroupAttribute : Artifice_CustomAttributeDrawer

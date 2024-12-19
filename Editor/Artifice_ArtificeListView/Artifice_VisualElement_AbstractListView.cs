@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
-using ArtificeToolkit.Editor.VisualElements;
+using ArtificeToolkit.AEditor.VisualElements;
 using CustomAttributes;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     public abstract class Artifice_VisualElement_AbstractListView : BindableElement, INotifyValueChanged<SerializedProperty>, IDisposable, IArtifice_Persistence
     {

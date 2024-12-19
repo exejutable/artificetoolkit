@@ -2,7 +2,7 @@ using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_TitleAttribute
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_TitleAttribute
 {
     /// <summary> Custom VisualAttribute drawer for <see cref="TitleAttribute"/></summary>
     [Artifice_CustomAttributeDrawer(typeof(TitleAttribute))]

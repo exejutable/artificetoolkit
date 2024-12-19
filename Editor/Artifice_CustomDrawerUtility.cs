@@ -4,7 +4,7 @@ using System.Reflection;
 using System;
 using UnityEditor.UIElements;
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit
 {
     /// <summary> Code written with the help of Unity Support. </summary>
     public static class Artifice_CustomDrawerUtility

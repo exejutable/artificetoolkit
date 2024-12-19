@@ -1,9 +1,9 @@
 using ArtificeToolkit.Attributes;
-using ArtificeToolkit.Editor.Resources;
+using ArtificeToolkit.AEditor.Resources;
 using UnityEditor;
 using UnityEngine;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators
 {
     [Artifice_CustomAttributeDrawer(typeof(RequiredAttribute))]
     public class Artifice_CustomAttributeDrawer_RequiredAttribute : Artifice_CustomAttributeDrawer_Validator_BASE

@@ -1,8 +1,8 @@
 using System.Collections;
-using ArtificeToolkit.Editor.Resources;
+using ArtificeToolkit.AEditor.Resources;
 using UnityEngine;
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     using ValidatorLog = Artifice_EditorWindow_Validator.ValidatorLog;
 

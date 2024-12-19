@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 // ReSharper disable InvertIf
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     public static class Artifice_SerializedPropertyExtensions
     {

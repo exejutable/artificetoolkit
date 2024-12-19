@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 // ReSharper disable InvertIf
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     /// <summary>Helper class to compartmentalize rebuilding of VisualElements.</summary>
     /// <remarks>This way we avoid rebuilding everything when a change e.g. OrientationChange occurs.</remarks>

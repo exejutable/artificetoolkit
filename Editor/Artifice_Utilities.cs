@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers;
+using ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     /// <summary>Provides utilities to other Editor scripts.</summary>
     /// <example>Get the style for a specific <see cref="VisualElement"/>.</example>

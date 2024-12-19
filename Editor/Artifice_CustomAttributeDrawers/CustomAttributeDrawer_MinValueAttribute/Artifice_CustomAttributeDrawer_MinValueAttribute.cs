@@ -1,11 +1,11 @@
 using System.Linq;
 using ArtificeToolkit.Attributes;
-using ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators;
-using ArtificeToolkit.Editor.Resources;
+using ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_Validators;
+using ArtificeToolkit.AEditor.Resources;
 using UnityEditor;
 using UnityEngine;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_MinValueAttribute
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_MinValueAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(MinValueAttribute))]
     public class Artifice_CustomAttributeDrawer_MinValueAttribute : Artifice_CustomAttributeDrawer_Validator_BASE

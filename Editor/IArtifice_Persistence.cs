@@ -1,4 +1,4 @@
-namespace ArtificeToolkit.Editor
+namespace ArtificeToolkit.AEditor
 {
     public interface IArtifice_Persistence
     {

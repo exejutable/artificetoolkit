@@ -2,7 +2,7 @@ using ArtificeToolkit.Attributes;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     /// <summary> Utility VisualElement used for <see cref="Artifice_CustomAttributeDrawer_BoxGroupAttribute"/> </summary>
     /// <remarks> Offers API for setting and reseting its content container. </remarks>

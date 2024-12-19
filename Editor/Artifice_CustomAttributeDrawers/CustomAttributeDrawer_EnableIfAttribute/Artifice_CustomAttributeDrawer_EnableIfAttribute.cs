@@ -5,7 +5,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_EnableIfAttribute
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_EnableIfAttribute
 {
     /// <summary> Custom VisualAttribute drawer for <see cref="EnableIfAttribute"/> </summary>
     [Artifice_CustomAttributeDrawer(typeof(EnableIfAttribute))]

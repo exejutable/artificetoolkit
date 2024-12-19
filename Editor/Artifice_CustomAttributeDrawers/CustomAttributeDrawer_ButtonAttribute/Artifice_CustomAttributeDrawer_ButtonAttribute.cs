@@ -6,7 +6,7 @@ using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ButtonAttribute
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_ButtonAttribute
 {
     [Serializable]
     [Artifice_CustomAttributeDrawer(typeof(ButtonAttribute))]

@@ -2,7 +2,7 @@ using ArtificeToolkit.Attributes;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_BorderAttribute
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawer_BorderAttribute
 {
     [Artifice_CustomAttributeDrawer(typeof(BorderAttribute))]
     public class Artifice_CustomAttributeDrawer_BorderAttribute : Artifice_CustomAttributeDrawer

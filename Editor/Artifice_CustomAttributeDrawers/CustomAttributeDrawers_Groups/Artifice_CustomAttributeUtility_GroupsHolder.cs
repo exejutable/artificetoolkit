@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers.CustomAttributeDrawers_Groups
 {
     /// <summary> Singleton class to store shared <see cref="Artifice_VisualElement_Group"/> between properties </summary>
     public class Artifice_CustomAttributeUtility_GroupsHolder

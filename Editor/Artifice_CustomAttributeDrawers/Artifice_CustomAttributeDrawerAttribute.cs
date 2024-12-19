@@ -2,7 +2,7 @@ using System;
 using ArtificeToolkit.Attributes;
 using UnityEngine;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers
 {
     /// <summary> This attribute marks specific classes as drawers for <see cref="CustomAttribute"/> </summary>
     [AttributeUsage(AttributeTargets.Class)]

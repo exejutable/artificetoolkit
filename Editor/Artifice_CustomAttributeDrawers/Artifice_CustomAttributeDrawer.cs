@@ -2,7 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace ArtificeToolkit.Editor.Artifice_CustomAttributeDrawers
+namespace ArtificeToolkit.AEditor.Artifice_CustomAttributeDrawers
 {
     /// <summary> Base class for all custom AttributeDrawers.</summary>
     public abstract class Artifice_CustomAttributeDrawer : IDisposable
